@@ -1,1 +1,0 @@
-[First look at Capillaries UI](./2023-02-18-ui/README.md)
