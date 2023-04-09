@@ -1,0 +1,235 @@
+<html>
+
+<head>
+  <title>Capillaries blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+  <link rel="stylesheet" href="../../css/bootstrap.min.css">
+  <style>
+    body {
+      border-top: 4px solid #666;
+    }
+
+    h1 {
+      font-weight: bold;
+      float:left;
+    }
+
+    h2 {
+      border-bottom: 1px solid #ccc;
+      padding-bottom: .2em;
+    }
+
+    div.footer {
+      border-top: 1px solid #ccc;
+      padding: 1em 0 .5em;
+      margin-top: 3em;
+    }
+
+    img.logo {
+      margin-right: 1em;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="row" style="margin-top: 10px; margin-bottom: 20px;">
+      <div class="col-lg-6">
+        <img src="../../i/logo.svg" alt="Capillaries logo" class="pull-left logo" style="width:40px">
+        <h1>Capillaries: notes</h1>
+      </div>
+
+      <div class="col-lg-3">
+        <ul class="nav nav-pills pull-right" style="margin-top: 20px">
+          <li><a href="../index.html">Blog home</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3">
+        <ul class="nav nav-pills pull-right" style="margin-top: 20px">
+          <li><a href="https://github.com/capillariesio/capillaries">Source code and documentation</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h4>2023-04-08</h4>
+        <h3>Use Capillaries to calculate ARK portfolio performance</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h4>What is this?</h4>
+        <p>Recently, a new Capillaries integration test was added: <a href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md">Portfolio performance calculation</a>. It mimics the process performed by an investment bank at the end of each quarter or year: for each individual portfolio, combined return rate is calculated for a specific period. This test uses data for six portfolios maintained by <a href="https://ark-funds.com/">ARK</a>, and calculates yearly performance for the whole portfolio and for each sector using <a href="https://en.wikipedia.org/wiki/Time-weighted_return">time-weighted annualized return (TWR)</a> formula.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h4>What's so cool about it?</h4>
+        <p>The test performs calculations for six portfolios only, but the process can be easily scaled out to tens or hundreds of thousands of portfolios. And this is exactly the challenge that investment bank IT departments are facing on a regular basis: provide each client (there may be hundreds of thousands of them) with a personalized rate of return, and do that, say, overnight.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h4>Why ARK?</h4>
+        <p>Because ARK made their trades info publicly available, so we can claim that this Capillaries test is as close to the real production environment as possible and compare results delivered by Capillaries to the official ARK performance numbers.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h4>What does it do, exactly?</h4>
+        <p>This test uses holdings and transaction history for each account, given by CSV files:</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-3">
+        <p>Account list:</p>
+        <table class="table table-striped text-right" style="font-size:smaller">
+          <thead>
+            <th class="text-right">account_id</th><th class="text-right">earliest_period_start</th>
+          </thead>
+          <tbody>
+            <tr><td>ARKK</td><td>2020-12-31</td></tr>
+            <tr><td>ARKW</td><td>2020-12-31</td></tr>
+            <tr><td>ARKF</td><td>2020-12-31</td></tr>
+            <tr><td>ARKQ</td><td>2020-12-31</td></tr>
+            <tr><td>ARKG</td><td>2020-12-31</td></tr>
+            <tr><td>ARKX</td><td>2020-12-31</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-lg-4">
+        <p>End-of-month holdings history:</p>
+        <table class="table table-striped text-right" style="font-size:smaller">
+          <thead>
+            <th class="text-right">account_id</th><th class="text-right">d</th><th class="text-right">ticker</th><th class="text-right">qty</th>
+          </thead>
+          <tbody>
+            <tr><td>ARKK</td><td>2020-09-30</td><td>TSLA</td><td>0</td></tr>
+            <tr><td>ARKK</td><td>2020-12-31</td><td>TSLA</td><td>2660439</td></tr>
+            <tr><td>ARKK</td><td>2021-03-31</td><td>TSLA</td><td>3757949</td></tr>
+            <tr><td>ARKK</td><td>...</td><td>TSLA</td><td>...</td></tr>
+            <tr><td>ARKK</td><td>2020-09-30</td><td>NVTA</td><td>0</td></tr>
+            <tr><td>ARKK</td><td>2020-12-31</td><td>NVTA</td><td>17462614</td></tr>
+            <tr><td>ARKK</td><td>2021-03-31</td><td>NVTA</td><td>15282622</td></tr>
+            <tr><td>ARKK</td><td>...</td><td>NVTA</td><td>...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-lg-5">
+        <p>Transaction history:</p>
+        <table class="table table-striped text-right" style="font-size:smaller">
+          <thead>
+            <th class="text-right">ts</th><th class="text-right">account_id</th><th class="text-right">ticker</th><th class="text-right">qty</th><th class="text-right">price</th>
+          </thead>
+          <tbody>
+            <tr><td>2020-10-16</td><td>ARKK</td><td>TSLA</td><td>2466031</td><td>439.67</td></tr>
+            <tr><td>2020-10-20</td><td>ARKK</td><td>TSLA</td><td>18992</td><td>421.94</td></tr>
+            <tr><td>...</td><td>ARKK</td><td>TSLA</td><td>...</td><td>...</td></tr>
+            <tr><td>2020-10-16</td><td>ARKK</td><td>NVTA</td><td>17671295</td><td>47.03</td></tr>
+            <tr><td>2020-10-30</td><td>ARKK</td><td>NVTA</td><td>-16630</td><td>39.21</td></tr>
+            <tr><td>...</td><td>ARKK</td><td>NVTA</td><td>...</td><td>...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+            
+    <div class="row">
+      <div class="col-lg-12">
+        <p>It applies <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/portfolio_quicktest/py/portfolio_calc.py">Python formulas</a> that calculate time-weighted returns, to this holding and transaction data.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <p>As a result, it produces a <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/out/portfolio_quicktest/account_period_sector_perf_baseline.csv">CSV file with period returns for each account, per sector</a>:</p>
+        <table class="table table-striped text-right">
+          <thead>
+            <th class="text-right">ARK fund</th><th class="text-right">Period</th><th class="text-right">Sector</th><th class="text-right">Time-weighted annualized return %</th>
+          </thead>
+          <tbody>
+            <tr><td>ARKF</td><td>2021</td><td>All</td><td>-19.12</td></tr>
+            <tr><td>ARKF</td><td>2021</td><td>Communication Services</td><td>-40.67</td></tr>
+            <tr><td>ARKF</td><td>2021</td><td>Consumer Cyclical</td><td>-22.28</td></tr>
+            <tr><td>ARKF</td><td>2021</td><td>...</td><td>...</td></tr>
+            <tr><td>ARKF</td><td>2021Q1</td><td>All</td><td>176.50</td></tr>
+            <tr><td>ARKF</td><td>2021Q1</td><td>Communication Services</td><td>-5.08</td></tr>
+            <tr><td>ARKF</td><td>2021Q1</td><td>Consumer Cyclical</td><td>-19.41</td></tr>
+            <tr><td>ARKF</td><td>...</td><td>...</td><td>...</td></tr>
+            <tr><td>ARKG</td><td>2021</td><td>Communication Services</td><td>16.66</td></tr>
+            <tr><td>ARKG</td><td>2021</td><td>Consumer Cyclical</td><td>0.00</td></tr>
+            <tr><td>ARKG</td><td>2021</td><td>...</td><td>...</td></tr>
+            <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+          </tbody>
+        </table>
+        <p>A few technicalities are covered in the integration test <a href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md">README.md file</a>.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h4>How accurate is this calculation?</h4>
+        <p>Quick answer: not very accurate, mostly because of the lack of reliable source data
+          (see <a href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md#how-accurate-are-these-numbers">Portfolio performance calculation integration test</a> details.
+          But, considering all those shortcomings, time-weighted annualized return % calculated by Capillaries are somewhat close to the official ARK numbers (I am not sure which calculation method they use):</p>
+        <table class="table table-striped text-right">
+          <thead>
+            <th class="text-right">ARK fund</th><th class="text-right">Period</th><th class="text-right">Capillaries</th><th class="text-right">Official ARK</th>
+          </thead>
+          <tbody>
+            <tr><td>ARKF</td><td>2021</td><td>-19.12</td><td>-17.70</td></tr>
+            <tr><td>ARKF</td><td>2022</td><td>-63.35</td><td>-64.99</td></tr>
+            <tr><td>ARKG</td><td>2021</td><td>-33.84</td><td>-33.89</td></tr>
+            <tr><td>ARKG</td><td>2022</td><td>-50.87</td><td>-53.94</td></tr>
+            <tr><td>ARKK</td><td>2021</td><td>-23.98</td><td>-23.36</td></tr>
+            <tr><td>ARKK</td><td>2022</td><td>-68.07</td><td>-66.99</td></tr>
+            <tr><td>ARKQ</td><td>2021</td><td>-1.52</td><td>1.90</td></tr>
+            <tr><td>ARKQ</td><td>2022</td><td>-61.45</td><td>-46.70</td></tr>
+            <tr><td>ARKW</td><td>2021</td><td>-19.49</td><td>-16.65</td></tr>
+            <tr><td>ARKW</td><td>2022</td><td>-65.28</td><td>-67.49</td></tr>
+            <tr><td>ARKX</td><td>2021</td><td>-10.55</td><td>-5.65</td></tr>
+            <tr><td>ARKX</td><td>2022</td><td>-48.75</td><td>-34.20</td></tr>
+        </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h4>UI snapshot</h4>
+        <p>Below is a scraped snapshot of Capillaries UI after running full portfolio performance calculation.
+          Click on the screenshot and navigate through status screens - all blue elements are clickable, buttons
+          are disabled (button tooltips are working though).</p>
+        <p>The navigation starts at the very top "Keyspaces" level.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <a href="./scrape-all-complete/-hash-.html"><img src="./i/2023-04-08-complete.png" style="margin-bottom:20px;" /></a>
+      </div>
+    </div>
+    
+
+    <div class=" footer">
+        <p>&copy;
+          <script type="text/javascript">document.write("2022-" + new Date().getFullYear());</script>
+          Capillaries.io
+        </p>
+      </div>
+
+    </div>
+</body>
+
+</html>
