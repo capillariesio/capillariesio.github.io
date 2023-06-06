@@ -58,58 +58,64 @@
     <div class="row">
       <div class="col-lg-12">
         <h4>2023-04-08</h4>
-        <h3>Use Capillaries to calculate ARK portfolio performance</h3>
+        <h2>Use Capillaries to calculate ARK portfolio performance</h2>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12">
-        <h4>What is this?</h4>
+        <h3>What is this?</h3>
         <p>Recently, a new Capillaries integration test was added: <a href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md">Portfolio performance calculation</a>. It mimics the process performed by an investment bank at the end of each quarter or year: for each individual portfolio, combined return rate is calculated for a specific period. This test uses data for six portfolios maintained by <a href="https://ark-funds.com/">ARK</a>, and calculates yearly performance for the whole portfolio and for each sector using <a href="https://en.wikipedia.org/wiki/Time-weighted_return">time-weighted annualized return (TWR)</a> formula.</p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12">
-        <h4>What's so cool about it?</h4>
+        <h3>What's so cool about it?</h3>
         <p>The test performs calculations for six portfolios only, but the process can be easily scaled out to tens or hundreds of thousands of portfolios. And this is exactly the challenge that investment bank IT departments are facing on a regular basis: provide each client (there may be hundreds of thousands of them) with a personalized rate of return, and do that, say, overnight.</p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12">
-        <h4>Why ARK?</h4>
+        <h3>Why ARK?</h3>
         <p>Because ARK made their trades info publicly available, so we can claim that this Capillaries test is as close to the real production environment as possible and compare results delivered by Capillaries to the official ARK performance numbers.</p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12">
-        <h4>What does it do, exactly?</h4>
-        <p>This test uses holdings and transaction history for each account, given by CSV files:</p>
+        <h3>What does it do, exactly?</h3>
+        <hr/>
+        <h4>1. Input</h4>
+        <hr/>
+        <p>This test uses holdings and transaction history for each account, in <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/in/portfolio_quicktest">CSV files</a>:</p>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-3">
-        <p>Account list:</p>
+      <div class="col-lg-4">
+        <h5>Accounts</h5>
+        <hr/>
         <table class="table table-striped text-right" style="font-size:smaller">
           <thead>
-            <th class="text-right">account_id</th><th class="text-right">earliest_period_start</th>
+            <th class="text-right">account_id</th><th class="text-right">name</th>
           </thead>
           <tbody>
-            <tr><td>ARKK</td><td>2020-12-31</td></tr>
-            <tr><td>ARKW</td><td>2020-12-31</td></tr>
-            <tr><td>ARKF</td><td>2020-12-31</td></tr>
-            <tr><td>ARKQ</td><td>2020-12-31</td></tr>
-            <tr><td>ARKG</td><td>2020-12-31</td></tr>
-            <tr><td>ARKX</td><td>2020-12-31</td></tr>
+            <tr><td>ARKK</td><td>ARK Innovation ETF</td></tr>
+            <tr><td>ARKW</td><td>ARK Next Generation Internet ETF</td></tr>
+            <tr><td>ARKF</td><td>ARK Fintech Innovation ETF</td></tr>
+            <tr><td>ARKQ</td><td>ARK Autonomous Tech. & Robotics ETF</td></tr>
+            <tr><td>ARKG</td><td>ARK Genomic Revolution ETF</td></tr>
+            <tr><td>ARKX</td><td>ARK Space Exploration & Innovation ETF</td></tr>
+            <tr><td>...</td><td>...</td></tr>
           </tbody>
         </table>
       </div>
 
       <div class="col-lg-4">
-        <p>End-of-month holdings history:</p>
+        <h5>End-of-month holdings history</h5>
+        <hr/>
         <table class="table table-striped text-right" style="font-size:smaller">
           <thead>
             <th class="text-right">account_id</th><th class="text-right">d</th><th class="text-right">ticker</th><th class="text-right">qty</th>
@@ -127,8 +133,9 @@
         </table>
       </div>
 
-      <div class="col-lg-5">
-        <p>Transaction history:</p>
+      <div class="col-lg-4">
+        <h5>Transaction history</h5>
+        <hr/>
         <table class="table table-striped text-right" style="font-size:smaller">
           <thead>
             <th class="text-right">ts</th><th class="text-right">account_id</th><th class="text-right">ticker</th><th class="text-right">qty</th><th class="text-right">price</th>
@@ -144,17 +151,72 @@
         </table>
       </div>
     </div>
-            
+
     <div class="row">
       <div class="col-lg-12">
-        <p>It applies <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/portfolio_quicktest/py/portfolio_calc.py">Python formulas</a> that calculate time-weighted returns, to this holding and transaction data.</p>
+        <hr/>
+        <h4>2. Processing</h4>
+        <hr/>
+        <p>The test applies <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/portfolio_quicktest/py/portfolio_calc.py">Python formulas</a> that calculate time-weighted return (twr) and compound annual growth rate (cagr) using a simulated third-party end-of-day price and company info providers:</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-7">
+
+<pre class="python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;"># Build ticker-level cf history, build sector cf history,</span>
+<span style="color: #808080; font-style: italic;"># calculate twr/cagr for each sector</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> txns_and_holdings_to_twr_cagr_by_sector<span style="color: black;">&#40;</span>
+    period_start_eod<span style="color: #66cc66;">,</span> period_end_eod<span style="color: #66cc66;">,</span> period_start_holdings<span style="color: #66cc66;">,</span> all_txns<span style="color: #66cc66;">,</span>
+    <strong>eod_price_provider</strong><span style="color: #66cc66;">,</span> <strong>company_info_provider</strong><span style="color: black;">&#41;</span>:
+    ticker_cf_history <span style="color: #66cc66;">=</span> txns_and_holdings_to_ticker_cf_history<span style="color: black;">&#40;</span>
+        period_start_eod<span style="color: #66cc66;">,</span> period_end_eod<span style="color: #66cc66;">,</span> period_start_holdings<span style="color: #66cc66;">,</span> all_txns<span style="color: #66cc66;">,</span>
+        <strong>eod_price_provider</strong><span style="color: black;">&#41;</span>
+    group_cf_history_map <span style="color: #66cc66;">=</span> group_cf_history_by_sector<span style="color: black;">&#40;</span>
+      <strong>company_info_provider</strong><span style="color: #66cc66;">,</span> ticker_cf_history<span style="color: #66cc66;">,</span> <strong>eod_price_provider</strong><span style="color: black;">&#41;</span>
+    sector_perf_map <span style="color: #66cc66;">=</span> <span style="color: black;">&#123;</span><span style="color: black;">&#125;</span>
+    <span style="color: #ff7700;font-weight:bold;">for</span> sector<span style="color: #66cc66;">,</span> group_cf_history <span style="color: #ff7700;font-weight:bold;">in</span> group_cf_history_map.<span style="color: black;">items</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+        <span style="color: #ff7700;font-weight:bold;">if</span> <span style="color: #008000;">len</span><span style="color: black;">&#40;</span>group_cf_history<span style="color: black;">&#41;</span> <span style="color: #66cc66;">&lt;</span> <span style="color: #ff4500;">2</span>:
+            twr <span style="color: #66cc66;">=</span> <span style="color: #ff4500;">0.0</span>
+            cagr <span style="color: #66cc66;">=</span> <span style="color: #ff4500;">0.0</span>
+        <span style="color: #ff7700;font-weight:bold;">else</span>:    
+            twr<span style="color: #66cc66;">,</span> cagr <span style="color: #66cc66;">=</span> twr_cagr<span style="color: black;">&#40;</span>group_cf_history<span style="color: black;">&#41;</span>
+        sector_perf_map<span style="color: black;">&#91;</span>sector<span style="color: black;">&#93;</span> <span style="color: #66cc66;">=</span> <span style="color: black;">&#123;</span><span style="color: #483d8b;">&quot;twr&quot;</span>: <span style="color: #008000;">round</span><span style="color: black;">&#40;</span>twr<span style="color: #66cc66;">,</span> <span style="color: #ff4500;">4</span><span style="color: black;">&#41;</span><span style="color: #66cc66;">,</span> <span style="color: #483d8b;">&quot;cagr&quot;</span>: <span style="color: #008000;">round</span><span style="color: black;">&#40;</span>cagr<span style="color: #66cc66;">,</span> <span style="color: #ff4500;">4</span><span style="color: black;">&#41;</span><span style="color: black;">&#125;</span>
+    <span style="color: #ff7700;font-weight:bold;">return</span> sector_perf_map
+</pre>
+
+      </div>
+
+      <div class="col-lg-5">
+<pre class="python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;"># Get EOD price for a specific ticker for a specific date</span>
+<span style="color: #ff7700;font-weight:bold;">class</span> PortfolioTestEodPriceProvider:
+  <span style="color: #ff7700;font-weight:bold;">def</span> get_price<span style="color: black;">&#40;</span>d<span style="color: #66cc66;">,</span>ticker<span style="color: black;">&#41;</span>:
+    ...
+</pre>
+
+<pre class="python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;"># Returns all available sectors and sector tickers</span>
+<span style="color: #ff7700;font-weight:bold;">class</span> PortfolioTestCompanyInfoProvider:
+  <span style="color: #ff7700;font-weight:bold;">def</span> get_sectors<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+    ...
+  <span style="color: #ff7700;font-weight:bold;">def</span> get_sector_tickers<span style="color: black;">&#40;</span>sector<span style="color: black;">&#41;</span>:
+    ...
+</pre>
+
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12">
-        <p>As a result, it produces a <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/out/portfolio_quicktest/account_period_sector_perf_baseline.csv">CSV file with period returns for each account, per sector</a>:</p>
-        <table class="table table-striped text-right">
+        <hr/>
+        <h4>3. Output</h4>
+        <hr/>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-8">
+        <p>As a result, the test produces a <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/out/portfolio_quicktest/account_period_sector_perf_baseline.csv">CSV file with period returns</a> for each account, per sector:</p>
+        <table class="table table-striped text-right"  style="font-size:smaller">
           <thead>
             <th class="text-right">ARK fund</th><th class="text-right">Period</th><th class="text-right">Sector</th><th class="text-right">Time-weighted annualized return %</th>
           </thead>
@@ -179,10 +241,10 @@
 
     <div class="row">
       <div class="col-lg-12">
-        <h4>How accurate is this calculation?</h4>
+        <h3>How accurate is this calculation?</h3>
         <p>Quick answer: not very accurate, mostly because of the lack of reliable source data
-          (see <a href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md#how-accurate-are-these-numbers">Portfolio performance calculation integration test</a> details.
-          But, considering all those shortcomings, time-weighted annualized return % calculated by Capillaries are somewhat close to the official ARK numbers (I am not sure which calculation method they use):</p>
+          (see <a href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md#how-accurate-are-these-numbers">Portfolio performance calculation integration test</a> details).
+          But, considering all the shortcomings, time-weighted annualized return % calculated by Capillaries are somewhat close to the official ARK numbers (I am not sure which calculation method they use):</p>
         <table class="table table-striped text-right">
           <thead>
             <th class="text-right">ARK fund</th><th class="text-right">Period</th><th class="text-right">Capillaries</th><th class="text-right">Official ARK</th>
@@ -207,7 +269,7 @@
 
     <div class="row">
       <div class="col-lg-12">
-        <h4>UI snapshot</h4>
+        <h3>UI snapshot</h3>
         <p>Below is a scraped snapshot of Capillaries UI after running full portfolio performance calculation.
           Click on the screenshot and navigate through status screens - all blue elements are clickable, buttons
           are disabled (button tooltips are working though).</p>
