@@ -80,33 +80,43 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-lg-8">
         <h3>The rationale</h3>
-        <p>In the end of the day, using any piece of technology is about saving money. This document is an attempt to
-          estimate the potential costs of implementing a Capillaries-based solution for <a
-            href="https://capillaries.io/blog/2023-04-08-portfolio/index.html">portfolio performance calculation</a>. It
-          mostly focuses on scalability aspects, while all calculation details have been covered already in <a
-            href="https://capillaries.io/blog/2023-04-08-portfolio/index.html">that blog post</a>.</p>
-        <p>This test give a realistic estimate of time and money an organization may need to allocate to produce
-          portfolio performance results from raw data files, assuming that obtaining stock price for a specific date
-          takes zero time and resources (involved stock quotes for 2020-2021 are hardcoded in the Python script that
-          calculates portfolio performance).</p>
-          <p>All AWS provisioning tasks were performed using Capillaries <a href="https://github.com/capillariesio/capillaries/tree/main/test/deploy">cloud deployment toolkit</a>. The code for preparing test data is in test/code/porfolio/bigtest, configuration data is in test/data/cfg/portfolio_bigtest.</p>
+        <p>At the end of the day, using any piece of technology is about saving money.
+          This document attempts to estimate the potential costs of implementing a Capillaries-based solution for <a href="https://capillaries.io/blog/2023-04-08-portfolio/index.html">portfolio performance calculation</a>.
+          It mainly focuses on scalability aspects, while all calculation details have already been covered in <a
+            href="https://capillaries.io/blog/2023-04-08-portfolio/index.html">that blog post</a>.
+        </p>
+        <p>
+          This test gives a realistic estimate of the time and money an organization may need to allocate to produce
+          portfolio performance results from raw data files, assuming that obtaining stock prices for a specific date
+          takes zero time and resources (the involved stock quotes for 2020-2021 are hardcoded in the Python script that calculates portfolio performance).
+        </p>
+          <p>
+            All AWS provisioning tasks were performed using the Capillaries <a href="https://github.com/capillariesio/capillaries/tree/main/test/deploy">cloud deployment toolkit</a>. The code for preparing test data is in test/code/porfolio/bigtest, and configuration data is in test/data/cfg/portfolio_bigtest.
+          </p>
+      </div>
+      <div class="col-lg-4">
+        <img src="./i/ark-scale.jpg" style="width:360px"/>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12">
         <h3>Numbers and charts</h3>
-        <p>The following tables and charts tell the story of 3 AWS-based test environments running the same
-          <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/portfolio_bigtest/script.json">portfolio_bigtest script</a> against the same raw data set:</p>
+        <p>
+          The following tables and charts tell the story of three AWS-based test environments running the same <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/portfolio_bigtest/script.json">portfolio_bigtest script</a> against the same raw dataset:
+        </p>
         <ul>
-          <li>996 accounts stored in one 4kb Parquet file</li>
-          <li>14,683,696 transactions stored in 500 4-6kb Parquet files</li>
-          <li>713,800 end-of-month holding records stored in 10 4-6kb Parquet files</li>
+          <li>996 accounts stored in one 4KB Parquet file</li>
+          <li>14,683,696 transactions stored in 500 4-6KB Parquet files</li>
+          <li>713,800 end-of-month holding records stored in 10 4-6KB Parquet files</li>
         </ul>
-        <p>The charts show Prometheus statistics for all 3 environments. Top graph is CPU usage, bottom
-          graph is Cassandra writes/s. Open graphs in a separate browser tab to enlarge them.</p>
+        <p>
+          The charts show Prometheus statistics for all three environments.
+          The top graph displays CPU usage, and the bottom graph shows Cassandra writes/s.
+          Open the graphs in a separate browser tab to enlarge them.
+        </p>
       </div>
     </div>
 
@@ -481,25 +491,32 @@
 
     <div class="row">
       <div class="col-lg-12">
-        <p>There are a few distinctive areas on each scenario graph</p>
+        <p>There are a few distinct areas on each scenario graph.</p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12">
         <h4>ETL: load transactions</h4>
-        <p>This is the plateau in the beginning. Daemons with 64, 128, or 256 total cores load 500 parquet files with 14
-          million transactions. Cassandra nodes are at ~90%, daemon instances at 50-60%. Also, account and holding
-          data
-          is loaded, but the amounts are a few orders of magnitude smaller, they can be ignored.</p>
-        <p>Cassandra writes per second are at 300K, 650K, 1.35m</p>
-        <h4>Joins: for each account, all correspondent transactions are combined into a single JSON string</h4>
-        <p>This is where the CPU usage drops, details discussed below. Writes are very few.
+        <p>This is the plateau at the beginning.
+          Daemons with 64, 128, or 256 total cores load 500 Parquet files with 14 million transactions.
+          Cassandra nodes are at around 90%, daemon instances at 50-60%.
+          Also, account and holding data are loaded, but the amounts are orders of magnitude smaller; they can be ignored.</p>
+        <p>
+          Cassandra writes per second are at 300K, 650K, 1.35M
+        </p>
+        <h4>Joins: For each account, all corresponding transactions are combined into a single JSON string.</h4>
+        <p>
+          This is where the CPU usage drops; details are discussed below. Writes are very few.
         </p>
         <h4>Python calculations</h4>
-        <p>Daemon instances are at 100% CPU running Python code for portfolio performance calculation for 996 JSON strings. Database activity is almost zero.</p>
+        <p>
+          Daemon instances are at 100% CPU running Python code for portfolio performance calculation for 996 JSON strings. Database activity is almost zero.
+        </p>
         <h4>Producing summaries</h4>
-        <p>Daemon instances produce totals, CPU usage 40-90%. Database activity at minimum.</p>
+        <p>
+          Daemon instances produce totals; CPU usage is 40-90%. Database activity is at a minimum.
+        </p>
       </div>
     </div>
 
@@ -514,16 +531,19 @@
     <div class="row">
       <div class="col-lg-12">
         <h4>Why can't we have 100% CPU usage when we do joins?</h4>
-        <p>All 3 runs of the 8-node scenario were web-scraped and saved <a href="./scrape-8/-hash-.html">here</a>. Let's
-          take a closer look at the step <a
-            href="scrape-8/-hash-ks-portfolio_bigtest-run-3-node-2_account_txns_outer-batch_history.html"><strong>2_account_txns_outer</strong>
-            in run 3</a>. Its execution timeline is below. Open it in a separate
-          browser tab, zoom in to see individual lines and move mouse pointer over them to see batch number and
-          execution time - the longer the execution takes, the longer the line:</p>
+        <p>
+          All three runs of the 8-node scenario were web-scraped and saved <a href="./scrape-8/-hash-.html">here</a>.
+          Let's take a closer look at the step
+          <a href="scrape-8/-hash-ks-portfolio_bigtest-run-3-node-2_account_txns_outer-batch_history.html"><strong>2_account_txns_outer</strong> in run 3</a>.
+          Its execution timeline is below.
+          Open it in a separate browser tab, zoom in to see individual lines and move the mouse pointer over them to see batch number and execution time - the longer the execution takes, the longer the line:
+        </p>
         <img src="i/1000-batch-txn-join.svg" alt="" />
-        <p> Some lines are merely points - execution took only a fraction of a second. Let's get the
-          numbers by looking for "read 0:", "read: 1", "read: 2", "read: 3", "read: 4", "read: 5", and "read: 6" on the <a
-          href="scrape-8/-hash-ks-portfolio_bigtest-run-3-node-2_account_txns_outer-batch_history.html">batch history page</a>:</p>
+        <p>
+          Some lines are merely points - execution took only a fraction of a second.
+          Let's get the numbers by looking for "read 0:", "read: 1", "read: 2", "read: 3", "read: 4", "read: 5", and "read: 6" on the <a
+          href="scrape-8/-hash-ks-portfolio_bigtest-run-3-node-2_account_txns_outer-batch_history.html">batch history page</a>:
+        </p>
         <ul>
           <li>batches with 0 items: 363 occurrences</li>
           <li>batches with 1 item: 367 occurrences</li>
@@ -534,12 +554,12 @@
           <li>batches with 6 items: 0 occurrences</li>
         </ul>
         <p>
-          A batch with zero items means: daemon worker looked for accounts with primary key hash (Cassandra token)
-          between lower and upper
-          boundary for this batch, and found nothing. This batch turned out empty and no records were generated as a
-          result. A batch with one item means there was one account with primary key hash matching batch criteria,
-          daemon worker looked for all transactions for this account, found a few thousand and created an out put record
-          for this account. Two items in the batch means two accounts, and so on.
+          A batch with zero items means: a daemon worker looked for accounts with a primary key hash (Cassandra token)
+          between the lower and upper boundary for this batch and found nothing.
+          This batch turned out empty, and no records were generated as a result.
+          A batch with one item means there was one account with a primary key hash matching batch criteria;
+          a daemon worker looked for all transactions for this account, found a few thousand,
+          and created an output record for this account. Two items in the batch mean two accounts, and so on.
         </p>
         <p>There are two problems here.</p>
       </div>
@@ -548,26 +568,30 @@
     <div class="row">
       <div class="col-lg-8">
         <h5>1. A few "heavy" batches</h5>
-        <p>Each of those 51*3 + 10*4 + 6*5 = 223 "heavy" batches with 3,4 and 5 items (accounts) is processed as a
-          single atomic task by Capillaries daemon workers. So, in our stress test environment, daemon threads that end
-          up processing batches with 0,1, or 2 items finish their job early and have nothing to do, while those
-          processing batches with 3,4, and 5 items keep working for a much longer time. In a real production
-          environment, those "light-weighted" 1,2,3-item threads would be busy with other tasks created by other
-          Capillaries scripts (maybe unrelated to porfolio
-          performance calculation). But in our scenario, they just do nothing, driving our overall CPU usage down.
+        <p>
+          Each of those 51*3 + 10*4 + 6*5 = 223 "heavy" batches with 3, 4, and 5 items (accounts) is processed
+          as a single atomic task by Capillaries daemon workers. So, in our stress test environment, daemon threads
+          that end up processing batches with 0, 1, or 2 items finish their job early and have nothing to do,
+          while those processing batches with 3, 4, and 5 items keep working for a much longer time.
+          In a real production environment, those "light-weighted" 1, 2, 3-item threads would be busy with
+          other tasks created by other Capillaries scripts (maybe unrelated to portfolio performance calculation).
+          But in our scenario, they just do nothing, driving our overall CPU usage down.
         </p>
       </div>
       <div class="col-lg-4">
         <h5>2. A lot of empty batches</h5>
-        <p>About a third of the batches ends up with no accounts in them. When processing a batch like this, daemon
-          worker thread queries the database for the account data, waits for the result, receives empty dataset and
-          declares the batch complete. No actual join is performed.</p>
+        <p>
+          About a third of the batches end up with no accounts in them.
+          When processing a batch like this, a daemon worker thread queries the database for the account data,
+          waits for the result, receives an empty dataset, and declares the batch complete. No actual join is performed.
+        </p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12">
-        <p>Let's generalize our findings. The test works with <strong>996</strong> accounts, and the
+        <p>
+          Let's generalize our findings. The test works with <strong>996</strong> accounts, and the
           number of batches specified for <strong>2_account_txns_outer</strong> by the script is
           <strong>1000</strong>:
         </p>
@@ -583,20 +607,16 @@
   }
           </pre>
         <p>
-          Let's calculate the theoretical probability of a batch (it's also convenient to call it a bucket as they
-          do in computer science) receiving a
-          specified amount of items uniformely distributed across the domain. We will do that for 100,
-          <strong>1000</strong> (our case), and 10000 buckets. We can do that with a <a href="poisson.html">simple
-            Python program.</a>
+          Let's calculate the theoretical probability of a batch (it's also convenient to call it a bucket as they do in computer science) receiving a specified amount of items uniformly distributed across the domain. We will do that for 100, <strong>1000</strong> (our case), and 10,000 buckets. We can do that with a <a href="poisson.html">simple Python program.</a>.
         </p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12">
-        <p>The output is below. As you can see, our findings for the 1000-bucket item distribution match the
-          theoretical numbers produced by this Python program pretty closely - those "heavy" buckets/batches are
-          <mark>highlighted</mark>:
+        <p>
+          The output is below. As you can see, our findings for the 1000-bucket item distribution match the
+          theoretical numbers produced by this Python program pretty closely - those "heavy" buckets/batches are <mark>highlighted</mark>:
         </p>
       </div>
     </div>
@@ -684,43 +704,40 @@
 
     <div class="row">
       <div class="col-lg-12">
-        <p>If we want to minimize the probability of getting batches with 3 and more items, we
-          have to substantially increase the number of batches. And we have to pay for that with CPU, network, queue
-          and database resources spent on empty batches (for example, ~90% of the batches are empty if 996-items are
-          spread
-          among 10000-batches). And remember: it's
-          just a probability, so there is no guarantee that those "heavy" batches do not occur once in a while.</p>
-        <p>For example, CPU usage pattern doesn't change much even when the number of batches is 10000, and we get
-          these frequencies:</p>
+        <p>
+          If we want to minimize the probability of getting batches with 3 or more items, we have to substantially increase the number of batches. And we have to pay for that with CPU, network, queue, and database resources spent on empty batches (for example, ~90% of the batches are empty if 996 items are spread among 10,000 batches). And remember: it's just a probability, so there is no guarantee that those "heavy" batches do not occur once in a while.
+        </p>
+        <p>
+          For example, the CPU usage pattern doesn't change much even when the number of batches is 10,000, and we get these frequencies:
+        </p>
         <ul>
           <li>batches with 0 items: 9052 occurrences</li>
           <li>batches with 1 item: 901 occurrences</li>
           <li>batches with 2 items: 46 occurrences</li>
           <li>batches with 3 items: 3 occurrences</li>
         </ul>
-        <p>The <a href="i/10000-batch-txn-join.svg" alt="">2_account_txns_outer 10000-batch
-            execution
-            timeline</a> answers the question why CPU usage on this step is still around 40% (open this link in a
-          separate tab and zoom in to the maximum): for 90% of the batches, daemon worker thread just queries
-          Cassandra
-          for the account info, waits for the result, finds nothing and declares the batch processed. Perhaps, if
-          the
-          network+database
-          latency
-          was lower, daemon worker threads would be busier.</p>
+        <p>
+          The <a href="i/10000-batch-txn-join.svg" alt="">2_account_txns_outer 10,000-batch
+          execution timeline</a> answers the question of why CPU usage on this step is still around 40%
+          (open this link in a separate tab and zoom in to the maximum): for 90% of the batches,
+          a daemon worker thread just queries Cassandra for the account info, waits for the result,
+          finds nothing, and declares the batch processed. Perhaps, if the network+database latency
+          were lower, daemon worker threads would be busier.</p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12">
         <h4>Bonus chapter: Poisson distribution</h4>
-        <p>The challenge we are facing here is very well-known among hash table implementers: when a bucket in a
-          hash table receives too many items (the word <i>collisions</i>is used) the implementation should resolve
+        <p>
+          The challenge we are facing here is very well-known among hash table implementers: when a bucket in a
+          hash table receives too many items (the word <i>collisions</i> is used), the implementation should resolve
           them without allowing hash table performance to degrade to O(n). Hash table developers know: when the
-          number of items and buckets is large, the frequency of items in buckets follows a <a href="https://en.wikipedia.org/wiki/Poisson_distribution">Poisson distribution</a>. This
-          helps them
-          choose proper parameters for their implementations.</p>
-        <p>We can forget about the Python program above, and estimate the number of items in a bucket
+          number of items and buckets is large, the frequency of items in buckets follows a <a href="https://en.wikipedia.org/wiki/Poisson_distribution">Poisson distribution</a>.
+          This helps them choose proper parameters for their implementations.
+        </p>
+        <p>
+          We can forget about the Python program above and estimate the number of items in a bucket
           using this graph for <span style="color:00A000;">100 (green)</span>, <span style="color:E00000;">1000
             (red)</span> and <span style="color:0000FF;">10000 (blue)</span> buckets (same color scheme as Python
           program
@@ -737,22 +754,24 @@
 
     <div class="row">
       <div class="col-lg-12">
-        <p>From the graph: larger number of buckets (smaller <strong>&lambda;</strong> in Poisson distribution) leads to
+        <p>
+          From the graph: a larger number of buckets (smaller <strong>&lambda;</strong> in Poisson distribution) leads to
           more empty buckets and fewer buckets with item count > 1. Otherwise, setups with a smaller number of buckets get us very
-          few empty buckets, but a lot of "heavy" buckets. Both empty and "heavy" buckets are bad if we want to get 100% CPU usage. Pick your <i>poison</i>.</p>
-        <p>One of the most critical statistics for hash tables is "load factor": the number of entries occupied in
+          few empty buckets, but a lot of "heavy" buckets. Both empty and "heavy" buckets are bad if we want to get 100% CPU usage. Pick your <i>poison</i>.
+        </p>
+        <p>
+          One of the most critical statistics for hash tables is the "load factor": the number of entries occupied in
           the hash table divided by is the number of buckets. In our case, it's 996/1000=0.996. And this is the
           <strong>&lambda;</strong> in Poisson distribution formula. Acceptable figures of hash table load factor
           range around 0.6 to 0.75 (a lot of empty buckets and a suppressed "tail" of the Poisson distribution curve).
-          To keep
-          load factor within this range, hash table implementation may use
+          To keep load factor within this range, hash table implementation may use
           re-hashing techniques that change the number of buckets.
         </p>
-        <p>Can we do something like that in Capillaries? For example, we could create buckets (batches) of different
+        <p>
+          Can we do something like that in Capillaries? For example, we could create buckets (batches) of different
           sizes to spread items evenly across buckets. But that would require an extra pre-run against all items in
-          Cassandra table, and it probably has be an atomic operation, therefore not scalable. Another potential soulution
-          would be using some low-latency techniques
-          (like Redis counters) for marking empty batches: 1_read_accounts step marks empty batches, and
+          the Cassandra table, and it probably has to be an atomic operation, therefore not scalable. Another potential soulution
+          would be using some low-latency techniques (like Redis counters) for marking empty batches: 1_read_accounts step marks empty batches, and
           2_account_txns_outer declares them complete without the costly Cassandra roundrip. A potential Capillaries improvement to think about.</p>
       </div>
     </div>

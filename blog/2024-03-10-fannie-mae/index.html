@@ -1,0 +1,328 @@
+<html>
+
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HQ9863ZP35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HQ9863ZP35');
+</script>
+  <title>Capillaries blog: analyze how Fannie Mae transfers credit risk from taxpayers to investors - mortgage by mortgage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+  <link rel="stylesheet" href="../../css/bootstrap.min.css">
+  <style>
+    body {
+      border-top: 4px solid #666;
+    }
+
+    h1 {
+      font-weight: bold;
+      float: left;
+    }
+
+    h2 {
+      border-bottom: 1px solid #ccc;
+      padding-bottom: .2em;
+    }
+
+    div.footer {
+      border-top: 1px solid #ccc;
+      padding: 1em 0 .5em;
+      margin-top: 3em;
+    }
+
+    img {
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    img.logo {
+      margin-left: 0px;
+      margin-top: 0px;
+      margin-right: 1em;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="row" style="margin-top: 10px; margin-bottom: 20px;">
+      <div class="col-lg-6">
+        <img src="../../i/logo.svg" alt="Capillaries logo" class="pull-left logo" style="width:40px">
+        <h1>Capillaries: notes</h1>
+      </div>
+
+      <div class="col-lg-3">
+        <ul class="nav nav-pills pull-right" style="margin-top: 20px">
+          <li><a href="../index.html">Blog home</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3">
+        <ul class="nav nav-pills pull-right" style="margin-top: 20px">
+          <li><a href="https://github.com/capillariesio/capillaries">Source code and documentation</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h4>2024-04-15</h4>
+        <h2>Capillaries: analyze how Fannie Mae transfers credit risk from taxpayers to investors - mortgage by mortgage, payment by payment</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-8">
+        <h3>Background</h3>
+        <p>
+          Since 2013, following the "Big Short," Fannie Mae has been issuing mortgage-backed bonds as part of its
+          "Connecticut Avenue Securities" (CAS) program. This typically occurs several times a year in the form of so-called "deals."
+          For each deal, Fannie Mae selects a pool of qualified mortgage loans and issues bonds that enable investors to receive a portion
+          of the interest payments from the mortgages in that pool. In return, investors are exposed to the risks associated with those mortgages.
+        </p>
+        <p>
+          For each deal, Fannie Mae publishes data about the mortgage pool. The data comes in the form of a
+          <a href="https://www.fanniemae.com/newsroom/fannie-mae-news/connecticut-avenue-securities-2023-r08-deal">press release like this one</a>
+          and as a dataset that can be downloaded for free from
+          <a href="https://capitalmarkets.fanniemae.com/tools-applications/data-dynamics/data-dynamics-single-family-crt-data">this website</a>.
+          The full directory of all deals is available <a href=""https://capitalmarkets.fanniemae.com/credit-risk-transfer/single-family-credit-risk-transfer/connecticut-avenue-securities/connecticut-avenue-securities-transactions">here</a>.
+        </p>
+        <p>
+          Every month, the datasets are updated with payment information for each mortgage.
+          Each row in the dataset is a record of the scheduled payment for a specific mortgage.
+          Here is a <a href="./p/CAS_2019-R04_G2_122023.txt">sample fragment</a> of a dataset for the
+          <a href=""https://www.fanniemae.com/newsroom/fannie-mae-news/fannie-mae-prices-1-billion-connecticut-avenue-securities-cas-remic-deal">2019 R04 G2</a>
+          deal, downloaded in January 2024,
+          with payment information updated on December 20th, 2023, and the scheduled payment date is October 20th, 2023
+          (the latest reported payment as of December 20, 2023 - there is a time lag in reporting).
+        </p>
+        <p>
+          Fannie Mae's Data Dynamics application provides
+          <a href="https://datadynamics.fanniemae.com/data-dynamics/#/report/15/CAS">monthly updates on CAS deal performance</a>.
+          But what if an investor wants to take a closer look at underlying mortgage performance?
+        </p>
+      </div>
+      <div class="col-lg-4">
+        <img src="./i/standard-and-poors.jpg"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <p>
+          Capillaries provides an integration test called
+          <a href="https://github.com/capillariesio/capillaries/tree/main/test/code/fannie_mae">fannie_mae</a> that processes
+          Fannie Mae datasets for 2022 (24,071,388 payment records) and 2023 (5,102,932 payment records) deals,
+          focusing on payment accuracy for mortgages sold by different sellers. Data processing diagrams:
+        </p>
+        <ul>
+          <li><a href="./i/dot-fanniemae-idx.svg">index-level detailed diagram</a></li>
+          <li><a href="./i/dot-fanniemae-fields.svg">field-level detailed diagram</a></li>
+        </ul>
+        <p>
+          This test gives a realistic estimate of the time and money an organization may need to allocate to analyze this amount of Fannie Mae data.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <h3>Numbers and charts</h3>
+        <p>
+          The following tables and charts tell the story of the AWS-based test environment running the
+          <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/fannie_mae_quicktest/script.json">fannie_mae script</a>
+          against the 2022-2023 datasets mentioned above, presented as 287 Parquet files, totaling 459MB, with approximately 25 million payment records.
+        </p>
+        <p>The charts show Prometheus statistics for the AWS environments. The top graph displays CPU usage,
+          the middle one shows Cassandra writes, and the bottom one illustrates Cassandra reads.
+          Open the graphs in a separate browser tab to enlarge them.
+        </p>
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h4>4 x c7g.16xlarge Cassandra cluster (256 cores)</h4>
+        <hr />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="row no-gutters">
+          <table class="table table-striped text-right" style="font-size:smaller">
+            <thead>
+              <th class="text-right"></th>
+              <th class="text-right">Flavor</th>
+              <th class="text-right">Cores</th>
+              <th class="text-right">RAM</th>
+              <th class="text-right">Hourly USD</th>
+              <th class="text-right">Qty</th>
+              <th class="text-right">Hourly rate x qty</th>
+              <th class="text-right">Total cores</th>
+              <th class="text-right">Total RAM</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Prometheus</td>
+                <td>c7g.medium</td>
+                <td>1</td>
+                <td>2</td>
+                <td>0.0363</td>
+                <td>1</td>
+                <td>$0.0363</td>
+                <td>1</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>RabbitMQ</td>
+                <td>c7g.medium</td>
+                <td>1</td>
+                <td>2</td>
+                <td>0.0363</td>
+                <td>1</td>
+                <td>$0.0363</td>
+                <td>1</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Bastion</td>
+                <td>c7g.large</td>
+                <td>2</td>
+                <td>4</td>
+                <td>0.0725</td>
+                <td>1</td>
+                <td>$0.0725</td>
+                <td>2</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Cassandra</td>
+                <td>c7g.16xlarge</td>
+                <td>64</td>
+                <td>128</td>
+                <td>2.903</td>
+                <td>4</td>
+                <td>$11.6120</td>
+                <td>256</td>
+                <td>512</td>
+              </tr>
+              <tr>
+                <td>Daemon<br />(24 workers, 16 writers)</td>
+                <td>c7g.4xlarge</td>
+                <td>16</td>
+                <td>32</td>
+                <td>0.58</td>
+                <td>4</td>
+                <td>$2.32</td>
+                <td>64</td>
+                <td>128</td>
+              </tr>
+              <tr>
+                <td>Total</td>
+                <td><br></td>
+                <td><br></td>
+                <td><br></td>
+                <td><br></td>
+                <td>11</td>
+                <td>$14.0771</td>
+                <td>324</td>
+                <td>648</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row no-gutters">
+          <table class="table table-striped text-right" style="font-size:smaller">
+            <tbody>
+              <tr>
+                <td>Run times (sec)</td>
+                <td>1380</td>
+              </tr>
+              <tr>
+                <td>Avg run time (sec)</td>
+                <td><strong>1380</strong></td>
+              </tr>
+              <tr>
+                <td>Avg cost of run</td>
+                <td><strong>$5.3962</strong></td>
+              </tr>
+              <tr>
+                <td>Cost of setup (10 min)</td>
+                <td>$2.3462</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <img src="i/2024-03-10-cpu-write-read.png" alt="">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <p>There are a few distinct areas on the graph.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h4>ETL: loading approximately 25 million payment records</h4>
+        <p>This shows an initial (uneven) CPU plateau matching the elevated areas in writes (peaking at around 450k w/s) and reads (peaking at around 220k r/s).</p>
+        <h4>Distinct and join: searching for distinct deals and sellers and combining payment records into one-row-per-mortgage summaries</h4>
+        <p>30% CPU usage, very few writes, ~75k reads/s.</p>
+        <h4>Python formulas: calculating payment accuracy statistics for each mortgage</h4>
+        <p>Daemon instances are at 100% CPU, running Python code for around 1.65 million JSON strings (total number of loans in 2022-2023 deals). Database activity is almost zero.</p>
+        <h4>Producing summaries</h4>
+        <p>Daemons show a flat 20% CPU usage, with minimal activity on the database. Joins on deals and sellers reveal that many batches end up doing nothing due to the data skew issue <a href="../2023-11-15-portfolio-scale/index.html">discussed in a previous post</a>.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h3>Results</h3>
+        <p>The process produces 3 Parquet files:</p>
+        <ul>
+          <li>loan_summaries_calculated.parquet: 295MB, 1,650,347 rows (one row per each loan participating in CAS programs in 2022-2023)</li>
+          <li><a href="./p/deal_summaries.txt">deal_summaries</a>: 17 rows, one row per deal, <a href="./p/deal_summaries.parquet">Parquet file</a></li>
+          <li><a href="./p/deal_seller_summaries.txt">deal_seller_summaries</a>: 450 rows, one row per deal-seller pair, <a href="./p/deal_seller_summaries.parquet">Parquet file</a></li>
+        </ul>
+        <p>Just for the sake of the demo, let's show someting that Fannie Mae reports will not tell you - the percentage of missing payments per deal per seller. A simple Excel pivot table using data from deal_seller_summaries.parquet shows this:</p>
+      </div>
+      <div class="col-lg-12">
+        <img src="i/2024-03-10-pivot-missed-payments-per-deal-per-seller.png" alt="">
+      </div>
+      <div class="col-lg-12">
+        <p>Is it possible to tell that some sellers tend to sell mortgages to less responsible borrowers?
+          From this dataset - hardly, but running this calculation for older mortgages may reveal something.
+          Just a reminder: this test dataset was downloaded from the Fannie Mae website in January 2024.
+          The monthly reporting period range for mortgages in these 2022-2023 deals is November 2021 to October 2023.
+          This means the longest payment sequence on hand is only 24 months.
+        </p>
+        <p>
+          Can we tell a difference between G1 and G2 deals? We probably can:
+          G2 mortgages tend to have a slightly higher rate of missing payments.
+        </p>
+      </div>
+    </div>
+
+    <div class=" footer">
+      <p>&copy;
+        <script type="text/javascript">document.write("2022-" + new Date().getFullYear());</script>
+        Capillaries.io
+      </p>
+    </div>
+
+  </div>
+</body>
+
+</html>
