@@ -1,0 +1,588 @@
+<html>
+<head><link rel="stylesheet" href="../../css/bootstrap.min.css">
+<link rel="stylesheet" href="../../css/overrides.css">
+</head>
+<body><div class="container">
+
+<h2>1_read_txns</h2>
+<h3>Script node 1_read_txns:</h3>
+<pre id="json">{
+  "1_read_txns": {
+    "type": "file_table",
+    "desc": "Load txns from csv",
+    "explicit_run_only": true,
+    "r": {
+      "urls": [
+        "{dir_in}/txns.csv"
+      ],
+      "csv": {
+        "hdr_line_idx": 0,
+        "first_data_line_idx": 1
+      },
+      "columns": {
+        "col_ts": {
+          "csv": {
+            "col_hdr": "ts"
+          },
+          "col_type": "string"
+        },
+        "col_account_id": {
+          "csv": {
+            "col_hdr": "account_id"
+          },
+          "col_type": "string"
+        },
+        "col_ticker": {
+          "csv": {
+            "col_hdr": "ticker"
+          },
+          "col_type": "string"
+        },
+        "col_qty": {
+          "csv": {
+            "col_hdr": "qty",
+            "col_format": "%d"
+          },
+          "col_type": "int"
+        },
+        "col_price": {
+          "csv": {
+            "col_hdr": "price",
+            "col_format": "%f"
+          },
+          "col_type": "float"
+        }
+      }
+    },
+    "w": {
+      "name": "txns",
+      "having": "w.ts > \"{period_start_eod}\" && w.ts <= \"{period_end_eod}\"",
+      "fields": {
+        "account_id": {
+          "expression": "r.col_account_id",
+          "type": "string"
+        },
+        "ts": {
+          "expression": "r.col_ts",
+          "type": "string"
+        },
+        "txn_json": {
+          "expression": "strings.ReplaceAll(fmt.Sprintf(`{'ts':'%s','t':'%s','q':%d,'p':%s}`, r.col_ts, r.col_ticker, r.col_qty, decimal2(r.col_price)), `'`,`\"`)",
+          "type": "string"
+        }
+      },
+      "indexes": {
+        "idx_txns_account_id": "non_unique(account_id)"
+      }
+    }
+  }
+}</pre>
+<h3>Script node 1_read_txns produces Cassandra table txns:</h3>
+<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">ts</th><th class="text-right">txn_json</th></thead><tbody>
+<tr><td>6094664611844062359</td><td>ARKW</td><td>0</td><td>2021-04-14</td><td>{"ts":"2021-04-14","t":"FSLY","q":1532,"p":71.92}</td></tr>
+<tr><td>8537883289672171463</td><td>ARKF</td><td>0</td><td>2022-02-03</td><td>{"ts":"2022-02-03","t":"SNAP","q":-933,"p":24.5}</td></tr>
+<tr><td>2749076004491469954</td><td>ARKQ</td><td>0</td><td>2021-11-12</td><td>{"ts":"2021-11-12","t":"BIDU","q":-368,"p":170.57}</td></tr>
+<tr><td>7445773725017646389</td><td>ARKK</td><td>0</td><td>2021-05-07</td><td>{"ts":"2021-05-07","t":"TWLO","q":37128,"p":307.15}</td></tr>
+<tr><td>8993784235489443377</td><td>ARKK</td><td>0</td><td>2021-11-12</td><td>{"ts":"2021-11-12","t":"SKLZ","q":-26172,"p":12.5}</td></tr>
+<tr><td>206487046063108640</td><td>ARKW</td><td>0</td><td>2022-09-20</td><td>{"ts":"2022-09-20","t":"NNDM","q":-3,"p":2.45}</td></tr>
+<tr><td>3354548830737968360</td><td>ARKG</td><td>0</td><td>2022-10-20</td><td>{"ts":"2022-10-20","t":"ONVO","q":896,"p":1.71}</td></tr>
+<tr><td>8851154163572220846</td><td>ARKQ</td><td>0</td><td>2022-10-28</td><td>{"ts":"2022-10-28","t":"AVAV","q":-1166,"p":90.14}</td></tr>
+<tr><td>151913958205174664</td><td>ARKG</td><td>0</td><td>2021-05-04</td><td>{"ts":"2021-05-04","t":"GH","q":-7216,"p":148.19}</td></tr>
+<tr><td>8571157745347545844</td><td>ARKK</td><td>0</td><td>2021-12-29</td><td>{"ts":"2021-12-29","t":"HOOD","q":-43488,"p":17.11}</td></tr>
+</tbody></table>
+<h2>1_read_accounts</h2>
+<h3>Script node 1_read_accounts:</h3>
+<pre id="json">{
+  "1_read_accounts": {
+    "type": "file_table",
+    "desc": "Load accounts from csv",
+    "explicit_run_only": true,
+    "r": {
+      "urls": [
+        "{dir_in}/accounts.csv"
+      ],
+      "csv": {
+        "hdr_line_idx": 0,
+        "first_data_line_idx": 1
+      },
+      "columns": {
+        "col_account_id": {
+          "csv": {
+            "col_hdr": "account_id"
+          },
+          "col_type": "string"
+        },
+        "col_earliest_period_start": {
+          "csv": {
+            "col_hdr": "earliest_period_start"
+          },
+          "col_type": "string"
+        }
+      }
+    },
+    "w": {
+      "name": "accounts",
+      "having": "w.earliest_period_start <= \"{period_start_eod}\"",
+      "fields": {
+        "account_id": {
+          "expression": "r.col_account_id",
+          "type": "string"
+        },
+        "earliest_period_start": {
+          "expression": "r.col_earliest_period_start",
+          "type": "string"
+        }
+      }
+    }
+  }
+}</pre>
+<h3>Script node 1_read_accounts produces Cassandra table accounts:</h3>
+<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">earliest_period_start</th></thead><tbody>
+<tr><td>748401470040242660</td><td>ARKK</td><td>0</td><td>2020-12-31</td></tr>
+<tr><td>6621936461880082804</td><td>ARKF</td><td>0</td><td>2020-12-31</td></tr>
+<tr><td>1522209384545663127</td><td>ARKW</td><td>0</td><td>2020-12-31</td></tr>
+<tr><td>2380715082357295080</td><td>ARKG</td><td>0</td><td>2020-12-31</td></tr>
+<tr><td>6520205207003275793</td><td>ARKX</td><td>0</td><td>2020-12-31</td></tr>
+<tr><td>5559895917703115577</td><td>ARKQ</td><td>0</td><td>2020-12-31</td></tr>
+</tbody></table>
+<h2>1_read_period_holdings</h2>
+<h3>Script node 1_read_period_holdings:</h3>
+<pre id="json">{
+  "1_read_period_holdings": {
+    "type": "file_table",
+    "desc": "Load holdings from csv",
+    "explicit_run_only": true,
+    "r": {
+      "urls": [
+        "{dir_in}/holdings.csv"
+      ],
+      "csv": {
+        "hdr_line_idx": 0,
+        "first_data_line_idx": 1
+      },
+      "columns": {
+        "col_eod": {
+          "csv": {
+            "col_hdr": "d"
+          },
+          "col_type": "string"
+        },
+        "col_account_id": {
+          "csv": {
+            "col_hdr": "account_id"
+          },
+          "col_type": "string"
+        },
+        "col_ticker": {
+          "csv": {
+            "col_hdr": "ticker"
+          },
+          "col_type": "string"
+        },
+        "col_qty": {
+          "csv": {
+            "col_hdr": "qty",
+            "col_format": "%d"
+          },
+          "col_type": "int"
+        }
+      }
+    },
+    "w": {
+      "name": "period_holdings",
+      "having": "\"{period_start_eod}\" <= w.eod && w.eod <= \"{period_end_eod}\"",
+      "fields": {
+        "account_id": {
+          "expression": "r.col_account_id",
+          "type": "string"
+        },
+        "eod": {
+          "expression": "r.col_eod",
+          "type": "string"
+        },
+        "holding_json": {
+          "expression": "fmt.Sprintf(`{\"d\":\"%s\",\"t\":\"%s\",\"q\":%d}`, r.col_eod, r.col_ticker, r.col_qty)",
+          "type": "string"
+        }
+      },
+      "indexes": {
+        "idx_period_holdings_account_id": "non_unique(account_id)"
+      }
+    }
+  }
+}</pre>
+<h3>Script node 1_read_period_holdings produces Cassandra table period_holdings:</h3>
+<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">eod</th><th class="text-right">holding_json</th></thead><tbody>
+<tr><td>3627048727756061332</td><td>ARKG</td><td>0</td><td>2021-09-30</td><td>{"d":"2021-09-30","t":"RXRX","q":2579819}</td></tr>
+<tr><td>8287230363971292020</td><td>ARKG</td><td>0</td><td>2022-06-30</td><td>{"d":"2022-06-30","t":"PSTG","q":96}</td></tr>
+<tr><td>5319247020631446615</td><td>ARKG</td><td>0</td><td>2022-03-31</td><td>{"d":"2022-03-31","t":"RXRX","q":2805336}</td></tr>
+<tr><td>7526792138041706793</td><td>ARKQ</td><td>0</td><td>2021-12-31</td><td>{"d":"2021-12-31","t":"AAPL","q":4428}</td></tr>
+<tr><td>9212097814667019221</td><td>ARKW</td><td>0</td><td>2022-06-30</td><td>{"d":"2022-06-30","t":"PTON","q":108}</td></tr>
+<tr><td>9099265454404077304</td><td>ARKK</td><td>0</td><td>2021-12-31</td><td>{"d":"2021-12-31","t":"ROKU","q":4366656}</td></tr>
+<tr><td>4931918534139433940</td><td>ARKQ</td><td>0</td><td>2022-06-30</td><td>{"d":"2022-06-30","t":"GOOG","q":11157}</td></tr>
+<tr><td>8525672620437568734</td><td>ARKW</td><td>0</td><td>2021-06-30</td><td>{"d":"2021-06-30","t":"PATH","q":1217709}</td></tr>
+<tr><td>3636653097072487864</td><td>ARKG</td><td>0</td><td>2020-12-31</td><td>{"d":"2020-12-31","t":"PATH","q":0}</td></tr>
+<tr><td>2128151280515633266</td><td>ARKW</td><td>0</td><td>2022-06-30</td><td>{"d":"2022-06-30","t":"BEKE","q":86}</td></tr>
+</tbody></table>
+<h2>2_account_txns_outer</h2>
+<h3>Script node 2_account_txns_outer:</h3>
+<pre id="json">{
+  "2_account_txns_outer": {
+    "type": "table_lookup_table",
+    "desc": "For each account, merge all txns into single json string",
+    "r": {
+      "table": "accounts",
+      "expected_batches_total": 10
+    },
+    "l": {
+      "index_name": "idx_txns_account_id",
+      "join_on": "r.account_id",
+      "group": true,
+      "join_type": "left"
+    },
+    "w": {
+      "name": "account_txns",
+      "fields": {
+        "account_id": {
+          "expression": "r.account_id",
+          "type": "string"
+        },
+        "txns_json": {
+          "expression": "string_agg(l.txn_json,\",\")",
+          "type": "string"
+        }
+      }
+    }
+  }
+}</pre>
+<h3>Script node 2_account_txns_outer produces Cassandra table account_txns:</h3>
+<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">txns_json</th></thead><tbody>
+<tr><td>3719903644314909584</td><td>ARKF</td><td>5</td><td>{"ts":"2022-02-04","t":"Z","q":-2835,"p":48.94},{"ts":"2022-12-31","t":"IPOB","q":-872035,"p":29.5}, ...</td></tr>
+<tr><td>7337640464596222089</td><td>ARKX</td><td>6</td><td>{"ts":"2021-04-23","t":"AIR","q":-286,"p":119.13},{"ts":"2021-07-20","t":"AVAV","q":8887,"p":96.85}, ...</td></tr>
+<tr><td>4577965328217475423</td><td>ARKK</td><td>0</td><td>{"ts":"2021-03-04","t":"SQ","q":266809,"p":218.41},{"ts":"2021-03-11","t":"SQ","q":120492,"p":241.72 ...</td></tr>
+<tr><td>7773052335557492403</td><td>ARKG</td><td>5</td><td>{"ts":"2022-05-10","t":"PSNL","q":86800,"p":4.4},{"ts":"2022-01-21","t":"IOVA","q":-15248,"p":13.96} ...</td></tr>
+<tr><td>2948673979393982941</td><td>ARKW</td><td>5</td><td>{"ts":"2021-05-28","t":"NFLX","q":-465,"p":502.81},{"ts":"2021-04-30","t":"PYPL","q":-34800,"p":262. ...</td></tr>
+<tr><td>6410928427592534468</td><td>ARKQ</td><td>3</td><td>{"ts":"2022-06-15","t":"AVAV","q":-38717,"p":83.61},{"ts":"2022-05-11","t":"SNPS","q":-117,"p":260.8 ...</td></tr>
+</tbody></table>
+<h2>2_account_period_holdings_outer</h2>
+<h3>Script node 2_account_period_holdings_outer:</h3>
+<pre id="json">{
+  "2_account_period_holdings_outer": {
+    "type": "table_lookup_table",
+    "desc": "For each account, merge all holdings into single json string",
+    "r": {
+      "table": "accounts",
+      "expected_batches_total": 10
+    },
+    "l": {
+      "index_name": "idx_period_holdings_account_id",
+      "join_on": "r.account_id",
+      "group": true,
+      "join_type": "left"
+    },
+    "w": {
+      "name": "account_period_holdings",
+      "fields": {
+        "account_id": {
+          "expression": "r.account_id",
+          "type": "string"
+        },
+        "holdings_json": {
+          "expression": "string_agg(l.holding_json,\",\")",
+          "type": "string"
+        }
+      },
+      "indexes": {
+        "idx_account_period_holdings_account_id": "unique(account_id)"
+      }
+    }
+  }
+}</pre>
+<h3>Script node 2_account_period_holdings_outer produces Cassandra table account_period_holdings:</h3>
+<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">holdings_json</th></thead><tbody>
+<tr><td>2297870030956086858</td><td>ARKK</td><td>0</td><td>{"d":"2022-12-31","t":"PATH","q":0},{"d":"2022-12-31","t":"MTLS","q":0},{"d":"2021-03-31","t":"COIN" ...</td></tr>
+<tr><td>3798263933557717806</td><td>ARKF</td><td>5</td><td>{"d":"2022-06-30","t":"ROKU","q":0},{"d":"2022-06-30","t":"BABA","q":200},{"d":"2021-06-30","t":"HDB ...</td></tr>
+<tr><td>5291018643877674808</td><td>ARKQ</td><td>3</td><td>{"d":"2021-12-31","t":"ROK","q":1248},{"d":"2022-12-31","t":"WKHS","q":0},{"d":"2022-06-30","t":"ISR ...</td></tr>
+<tr><td>7126461419439144862</td><td>ARKW</td><td>5</td><td>{"d":"2022-03-31","t":"FTCH","q":101},{"d":"2021-06-30","t":"JD","q":1452974},{"d":"2022-03-31","t": ...</td></tr>
+<tr><td>6490459023829990771</td><td>ARKX</td><td>6</td><td>{"d":"2021-06-30","t":"XLNX","q":17088},{"d":"2022-03-31","t":"GOOG","q":2899},{"d":"2021-06-30","t" ...</td></tr>
+<tr><td>3073048863807356155</td><td>ARKG</td><td>5</td><td>{"d":"2022-03-31","t":"CLLS","q":606},{"d":"2021-03-31","t":"PRME","q":0},{"d":"2020-12-31","t":"PHR ...</td></tr>
+</tbody></table>
+<h2>3_build_account_period_activity</h2>
+<h3>Script node 3_build_account_period_activity:</h3>
+<pre id="json">{
+  "3_build_account_period_activity": {
+    "type": "table_lookup_table",
+    "desc": "For each account, merge holdings and txns",
+    "r": {
+      "table": "account_txns",
+      "expected_batches_total": 10
+    },
+    "l": {
+      "index_name": "idx_account_period_holdings_account_id",
+      "join_on": "r.account_id",
+      "group": false,
+      "join_type": "left"
+    },
+    "w": {
+      "name": "account_period_activity",
+      "fields": {
+        "account_id": {
+          "expression": "r.account_id",
+          "type": "string"
+        },
+        "txns_json": {
+          "expression": " \"[\" + r.txns_json + \"]\" ",
+          "type": "string"
+        },
+        "holdings_json": {
+          "expression": " \"[\" + l.holdings_json + \"]\" ",
+          "type": "string"
+        }
+      }
+    }
+  }
+}</pre>
+<h3>Script node 3_build_account_period_activity produces Cassandra table account_period_activity:</h3>
+<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">holdings_json</th><th class="text-right">txns_json</th></thead><tbody>
+<tr><td>2832510643465443886</td><td>ARKW</td><td>6</td><td>[{"d":"2022-03-31","t":"FTCH","q":101},{"d":"2021-06-30","t":"JD","q":1452974},{"d":"2022-03-31","t" ...</td><td>[{"ts":"2021-05-28","t":"NFLX","q":-465,"p":502.81},{"ts":"2021-04-30","t":"PYPL","q":-34800,"p":262 ...</td></tr>
+<tr><td>3797016840160679147</td><td>ARKX</td><td>1</td><td>[{"d":"2021-06-30","t":"XLNX","q":17088},{"d":"2022-03-31","t":"GOOG","q":2899},{"d":"2021-06-30","t ...</td><td>[{"ts":"2021-04-23","t":"AIR","q":-286,"p":119.13},{"ts":"2021-07-20","t":"AVAV","q":8887,"p":96.85} ...</td></tr>
+<tr><td>8724188995369700700</td><td>ARKQ</td><td>9</td><td>[{"d":"2021-12-31","t":"ROK","q":1248},{"d":"2022-12-31","t":"WKHS","q":0},{"d":"2022-06-30","t":"IS ...</td><td>[{"ts":"2022-06-15","t":"AVAV","q":-38717,"p":83.61},{"ts":"2022-05-11","t":"SNPS","q":-117,"p":260. ...</td></tr>
+<tr><td>6149240839756633886</td><td>ARKK</td><td>4</td><td>[{"d":"2022-12-31","t":"PATH","q":0},{"d":"2022-12-31","t":"MTLS","q":0},{"d":"2021-03-31","t":"COIN ...</td><td>[{"ts":"2021-03-04","t":"SQ","q":266809,"p":218.41},{"ts":"2021-03-11","t":"SQ","q":120492,"p":241.7 ...</td></tr>
+<tr><td>1335953350070866378</td><td>ARKF</td><td>2</td><td>[{"d":"2022-06-30","t":"ROKU","q":0},{"d":"2022-06-30","t":"BABA","q":200},{"d":"2021-06-30","t":"HD ...</td><td>[{"ts":"2022-02-04","t":"Z","q":-2835,"p":48.94},{"ts":"2022-12-31","t":"IPOB","q":-872035,"p":29.5} ...</td></tr>
+<tr><td>1945457872909272069</td><td>ARKG</td><td>8</td><td>[{"d":"2022-03-31","t":"CLLS","q":606},{"d":"2021-03-31","t":"PRME","q":0},{"d":"2020-12-31","t":"PH ...</td><td>[{"ts":"2022-05-10","t":"PSNL","q":86800,"p":4.4},{"ts":"2022-01-21","t":"IOVA","q":-15248,"p":13.96 ...</td></tr>
+</tbody></table>
+<h2>4_calc_account_period_perf</h2>
+<h3>Script node 4_calc_account_period_perf:</h3>
+<pre id="json">{
+  "4_calc_account_period_perf": {
+    "type": "table_custom_tfm_table",
+    "custom_proc_type": "py_calc",
+    "desc": "Apply Python-based calculations to account holdings and txns",
+    "r": {
+      "table": "account_period_activity",
+      "expected_batches_total": 10
+    },
+    "p": {
+      "python_code_urls": [
+        "{dir_py}/portfolio_test_company_info_provider.py",
+        "{dir_py}/portfolio_test_eod_price_provider.py",
+        "{dir_py}/portfolio_calc.py"
+      ],
+      "calculated_fields": {
+        "perf_json": {
+          "expression": "txns_and_holdings_to_twr_cagr_by_sector_year_quarter_json(\"{period_start_eod}\", \"{period_end_eod}\", r.holdings_json, r.txns_json, PortfolioTestEodPriceProvider, PortfolioTestCompanyInfoProvider)",
+          "type": "string"
+        }
+      }
+    },
+    "w": {
+      "name": "account_period_perf",
+      "fields": {
+        "account_id": {
+          "expression": "r.account_id",
+          "type": "string"
+        },
+        "perf_json": {
+          "expression": "p.perf_json",
+          "type": "string"
+        }
+      }
+    }
+  }
+}</pre>
+<h3>Script node 4_calc_account_period_perf produces Cassandra table account_period_perf:</h3>
+<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">perf_json</th></thead><tbody>
+<tr><td>4248855088935145245</td><td>ARKQ</td><td>9</td><td>{"2021": {"All": {"cagr": -0.0152, "twr": -0.0152}, "Communication Services": {"cagr": 0.062, "twr": ...</td></tr>
+<tr><td>5754198081589614465</td><td>ARKK</td><td>6</td><td>{"2021": {"All": {"cagr": -0.2398, "twr": -0.2398}, "Communication Services": {"cagr": -0.3183, "twr ...</td></tr>
+<tr><td>32049402890064872</td><td>ARKW</td><td>3</td><td>{"2021": {"All": {"cagr": -0.1949, "twr": -0.1949}, "Communication Services": {"cagr": -0.293, "twr" ...</td></tr>
+<tr><td>6887364451659257268</td><td>ARKF</td><td>6</td><td>{"2021": {"All": {"cagr": -0.1912, "twr": -0.1912}, "Communication Services": {"cagr": -0.4067, "twr ...</td></tr>
+<tr><td>1210483319197080237</td><td>ARKG</td><td>5</td><td>{"2021": {"All": {"cagr": -0.3384, "twr": -0.3384}, "Communication Services": {"cagr": 0.1666, "twr" ...</td></tr>
+<tr><td>8662263145276984767</td><td>ARKX</td><td>9</td><td>{"2021": {"All": {"cagr": -0.1055, "twr": -0.1055}, "Communication Services": {"cagr": 0.1719, "twr" ...</td></tr>
+</tbody></table>
+<h2>5_tag_by_period</h2>
+<h3>Script node 5_tag_by_period:</h3>
+<pre id="json">{
+  "5_tag_by_period": {
+    "type": "table_custom_tfm_table",
+    "custom_proc_type": "tag_and_denormalize",
+    "desc": "Tag accounts by period name",
+    "r": {
+      "table": "account_period_perf",
+      "expected_batches_total": 10
+    },
+    "p": {
+      "tag_field_name": "period",
+      "tag_criteria": {
+        "2021": "re.MatchString(`\"2021\":`, r.perf_json)",
+        "2021Q1": "re.MatchString(`\"2021Q1\":`, r.perf_json)",
+        "2021Q2": "re.MatchString(`\"2021Q2\":`, r.perf_json)",
+        "2021Q3": "re.MatchString(`\"2021Q3\":`, r.perf_json)",
+        "2021Q4": "re.MatchString(`\"2021Q4\":`, r.perf_json)",
+        "2022": "re.MatchString(`\"2022\":`, r.perf_json)",
+        "2022Q1": "re.MatchString(`\"2022Q1\":`, r.perf_json)",
+        "2022Q2": "re.MatchString(`\"2022Q2\":`, r.perf_json)",
+        "2022Q3": "re.MatchString(`\"2022Q3\":`, r.perf_json)",
+        "2022Q4": "re.MatchString(`\"2022Q4\":`, r.perf_json)"
+      }
+    },
+    "w": {
+      "name": "account_period_perf_by_period",
+      "fields": {
+        "period": {
+          "expression": "p.period",
+          "type": "string"
+        },
+        "account_id": {
+          "expression": "r.account_id",
+          "type": "string"
+        },
+        "perf_json": {
+          "expression": "r.perf_json",
+          "type": "string"
+        }
+      }
+    }
+  }
+}</pre>
+<h3>Script node 5_tag_by_period produces Cassandra table account_period_perf_by_period:</h3>
+<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">perf_json</th><th class="text-right">period</th></thead><tbody>
+<tr><td>2301350812461955568</td><td>ARKX</td><td>4</td><td>{"2021": {"All": {"cagr": -0.1055, "twr": -0.1055}, "Communication Services": {"cagr": 0.1719, "twr" ...</td><td>2021Q1</td></tr>
+<tr><td>866427567196545781</td><td>ARKX</td><td>4</td><td>{"2021": {"All": {"cagr": -0.1055, "twr": -0.1055}, "Communication Services": {"cagr": 0.1719, "twr" ...</td><td>2022Q2</td></tr>
+<tr><td>4305724992942530394</td><td>ARKW</td><td>0</td><td>{"2021": {"All": {"cagr": -0.1949, "twr": -0.1949}, "Communication Services": {"cagr": -0.293, "twr" ...</td><td>2022</td></tr>
+<tr><td>3506165740456469425</td><td>ARKX</td><td>4</td><td>{"2021": {"All": {"cagr": -0.1055, "twr": -0.1055}, "Communication Services": {"cagr": 0.1719, "twr" ...</td><td>2021Q4</td></tr>
+<tr><td>6014420459670152276</td><td>ARKK</td><td>7</td><td>{"2021": {"All": {"cagr": -0.2398, "twr": -0.2398}, "Communication Services": {"cagr": -0.3183, "twr ...</td><td>2022Q3</td></tr>
+<tr><td>5206005914013788577</td><td>ARKG</td><td>6</td><td>{"2021": {"All": {"cagr": -0.3384, "twr": -0.3384}, "Communication Services": {"cagr": 0.1666, "twr" ...</td><td>2022Q3</td></tr>
+<tr><td>7276369387634914856</td><td>ARKX</td><td>4</td><td>{"2021": {"All": {"cagr": -0.1055, "twr": -0.1055}, "Communication Services": {"cagr": 0.1719, "twr" ...</td><td>2021Q3</td></tr>
+<tr><td>4939073054866503199</td><td>ARKX</td><td>4</td><td>{"2021": {"All": {"cagr": -0.1055, "twr": -0.1055}, "Communication Services": {"cagr": 0.1719, "twr" ...</td><td>2021</td></tr>
+<tr><td>8519649678683220496</td><td>ARKG</td><td>6</td><td>{"2021": {"All": {"cagr": -0.3384, "twr": -0.3384}, "Communication Services": {"cagr": 0.1666, "twr" ...</td><td>2021Q4</td></tr>
+<tr><td>1011747997712188466</td><td>ARKW</td><td>0</td><td>{"2021": {"All": {"cagr": -0.1949, "twr": -0.1949}, "Communication Services": {"cagr": -0.293, "twr" ...</td><td>2021Q4</td></tr>
+</tbody></table>
+<h2>5_tag_by_sector</h2>
+<h3>Script node 5_tag_by_sector:</h3>
+<pre id="json">{
+  "5_tag_by_sector": {
+    "type": "table_custom_tfm_table",
+    "custom_proc_type": "tag_and_denormalize",
+    "desc": "Tag accounts by sector",
+    "r": {
+      "table": "account_period_perf_by_period",
+      "expected_batches_total": 10
+    },
+    "p": {
+      "tag_field_name": "sector",
+      "tag_criteria": {
+        "All": "re.MatchString(`\"All\":`, r.perf_json)",
+        "Communication Services": "re.MatchString(`\"Communication Services\":`, r.perf_json)",
+        "Consumer Cyclical": "re.MatchString(`\"Consumer Cyclical\":`, r.perf_json)",
+        "Consumer Defensive": "re.MatchString(`\"Consumer Defensive\":`, r.perf_json)",
+        "Financial Services": "re.MatchString(`\"Financial Services\":`, r.perf_json)",
+        "Healthcare": "re.MatchString(`\"Healthcare\":`, r.perf_json)",
+        "Industrials": "re.MatchString(`\"Industrials\":`, r.perf_json)",
+        "Real Estate": "re.MatchString(`\"Real Estate\":`, r.perf_json)",
+        "Technology": "re.MatchString(`\"Technology\":`, r.perf_json)"
+      }
+    },
+    "w": {
+      "name": "account_period_perf_by_period_sector",
+      "fields": {
+        "period": {
+          "expression": "r.period",
+          "type": "string"
+        },
+        "sector": {
+          "expression": "p.sector",
+          "type": "string"
+        },
+        "account_id": {
+          "expression": "r.account_id",
+          "type": "string"
+        },
+        "perf_json": {
+          "expression": "r.perf_json",
+          "type": "string"
+        }
+      }
+    }
+  }
+}</pre>
+<h3>Script node 5_tag_by_sector produces Cassandra table account_period_perf_by_period_sector:</h3>
+<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">perf_json</th><th class="text-right">period</th><th class="text-right">sector</th></thead><tbody>
+<tr><td>7386729081242772131</td><td>ARKK</td><td>6</td><td>{"2021": {"All": {"cagr": -0.2398, "twr": -0.2398}, "Communication Services": {"cagr": -0.3183, "twr ...</td><td>2022</td><td>Real Estate</td></tr>
+<tr><td>7885994906415857591</td><td>ARKX</td><td>2</td><td>{"2021": {"All": {"cagr": -0.1055, "twr": -0.1055}, "Communication Services": {"cagr": 0.1719, "twr" ...</td><td>2021Q3</td><td>Industrials</td></tr>
+<tr><td>3875373934942218337</td><td>ARKG</td><td>1</td><td>{"2021": {"All": {"cagr": -0.3384, "twr": -0.3384}, "Communication Services": {"cagr": 0.1666, "twr" ...</td><td>2021Q4</td><td>Industrials</td></tr>
+<tr><td>6659090532009110941</td><td>ARKG</td><td>2</td><td>{"2021": {"All": {"cagr": -0.3384, "twr": -0.3384}, "Communication Services": {"cagr": 0.1666, "twr" ...</td><td>2022</td><td>Technology</td></tr>
+<tr><td>4527750636945363271</td><td>ARKQ</td><td>8</td><td>{"2021": {"All": {"cagr": -0.0152, "twr": -0.0152}, "Communication Services": {"cagr": 0.062, "twr": ...</td><td>2021Q2</td><td>Industrials</td></tr>
+<tr><td>6028308816403437768</td><td>ARKF</td><td>3</td><td>{"2021": {"All": {"cagr": -0.1912, "twr": -0.1912}, "Communication Services": {"cagr": -0.4067, "twr ...</td><td>2021Q3</td><td>Technology</td></tr>
+<tr><td>790259125313532897</td><td>ARKQ</td><td>5</td><td>{"2021": {"All": {"cagr": -0.0152, "twr": -0.0152}, "Communication Services": {"cagr": 0.062, "twr": ...</td><td>2021</td><td>Consumer Cyclical</td></tr>
+<tr><td>3758119568617691312</td><td>ARKK</td><td>0</td><td>{"2021": {"All": {"cagr": -0.2398, "twr": -0.2398}, "Communication Services": {"cagr": -0.3183, "twr ...</td><td>2021</td><td>Industrials</td></tr>
+<tr><td>774241328638003701</td><td>ARKK</td><td>3</td><td>{"2021": {"All": {"cagr": -0.2398, "twr": -0.2398}, "Communication Services": {"cagr": -0.3183, "twr ...</td><td>2021Q2</td><td>Consumer Cyclical</td></tr>
+<tr><td>5212306113402980237</td><td>ARKF</td><td>3</td><td>{"2021": {"All": {"cagr": -0.1912, "twr": -0.1912}, "Communication Services": {"cagr": -0.4067, "twr ...</td><td>2021Q3</td><td>Real Estate</td></tr>
+</tbody></table>
+<h2>6_perf_json_to_columns</h2>
+<h3>Script node 6_perf_json_to_columns:</h3>
+<pre id="json">{
+  "6_perf_json_to_columns": {
+    "type": "table_custom_tfm_table",
+    "custom_proc_type": "py_calc",
+    "desc": "Use Python to read perf json and save stats as columns",
+    "r": {
+      "table": "account_period_perf_by_period_sector",
+      "expected_batches_total": 100
+    },
+    "p": {
+      "python_code_urls": [
+        "{dir_py}/json_to_columns.py"
+      ],
+      "calculated_fields": {
+        "twr": {
+          "expression": "json_to_twr(r.perf_json, r.period, r.sector)",
+          "type": "float"
+        },
+        "cagr": {
+          "expression": "json_to_cagr(r.perf_json, r.period, r.sector)",
+          "type": "float"
+        }
+      }
+    },
+    "w": {
+      "name": "account_period_sector_twr_cagr",
+      "fields": {
+        "account_id": {
+          "expression": "r.account_id",
+          "type": "string"
+        },
+        "period": {
+          "expression": "r.period",
+          "type": "string"
+        },
+        "sector": {
+          "expression": "r.sector",
+          "type": "string"
+        },
+        "twr": {
+          "expression": "p.twr",
+          "type": "float"
+        },
+        "cagr": {
+          "expression": "p.cagr",
+          "type": "float"
+        }
+      }
+    }
+  }
+}</pre>
+<h3>Script node 6_perf_json_to_columns produces Cassandra table account_period_sector_twr_cagr:</h3>
+<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">cagr</th><th class="text-right">period</th><th class="text-right">sector</th><th class="text-right">twr</th></thead><tbody>
+<tr><td>9091398839048991460</td><td>ARKK</td><td>81</td><td>8.88</td><td>2022Q3</td><td>Healthcare</td><td>2.17</td></tr>
+<tr><td>2956647170574212773</td><td>ARKK</td><td>26</td><td>-65.02</td><td>2022</td><td>Consumer Cyclical</td><td>-65.02</td></tr>
+<tr><td>6017792783863458197</td><td>ARKF</td><td>25</td><td>-44.21</td><td>2022Q3</td><td>Communication Services</td><td>-13.68</td></tr>
+<tr><td>7918358483323623063</td><td>ARKX</td><td>34</td><td>-39.5</td><td>2022Q3</td><td>Industrials</td><td>-11.9</td></tr>
+<tr><td>7457282946141367707</td><td>ARKG</td><td>65</td><td>-30.74</td><td>2021Q1</td><td>Financial Services</td><td>-8.66</td></tr>
+<tr><td>2051940333335580608</td><td>ARKF</td><td>30</td><td>-42.3</td><td>2022Q4</td><td>Communication Services</td><td>-12.94</td></tr>
+<tr><td>467099065024923780</td><td>ARKG</td><td>16</td><td>-66.06</td><td>2022Q1</td><td>All</td><td>-23.39</td></tr>
+<tr><td>4793009141456092103</td><td>ARKK</td><td>42</td><td>-85.25</td><td>2022Q2</td><td>Communication Services</td><td>-37.95</td></tr>
+<tr><td>1668642860725665609</td><td>ARKG</td><td>50</td><td>-2.49</td><td>2022Q2</td><td>Communication Services</td><td>-0.63</td></tr>
+<tr><td>4172230767046282068</td><td>ARKF</td><td>63</td><td>-69.22</td><td>2021Q4</td><td>Communication Services</td><td>-25.69</td></tr>
+</tbody></table>
+</div></body>
+</head>
