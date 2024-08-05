@@ -14,7 +14,7 @@ for row in reader:
         continue
     if row_idx == 0:
         print( '<thead><th class="text-right">' + '</th><th class="text-right">'.join(row) + "</th></thead><tbody>" )
-    else:
+    elif row_idx < 11:
         vals = []
         for val in row:
             if len(val) > 100:
@@ -23,6 +23,5 @@ for row in reader:
                 vals.append(val)
         print( "<tr><td>" + "</td><td>".join(vals) + "</td></tr>" )
     row_idx += 1
-    if row_idx == 11:
-        break
 print( "</tbody></table>")
+print( f"<p>Total {row_idx - 1} rows</p>" )
