@@ -1,0 +1,1247 @@
+<svg viewBox="0 0 1200 700"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink" onload="run();" style="font-family:verdana;font-size:24;text-anchor:left;dominant-baseline:auto;fill:black">
+	<!--<script href="./a.js"></script>-->
+	<script>
+	<![CDATA[
+
+const DUR_GENERIC_MOVE = 2000;
+const DUR_OPACITY = 100;
+const DUR_OPEN_ENVELOPE = 300;
+const DUR_CRUNCH_DATA = 3000;
+const DUR_SEND_TASKS = 5000;
+const DUR_DENORMALIZE = 3000;
+
+const DELAY_AFTER_NODE_DESC = 3000;
+const DELAY_AFTER_OPEN_ENVELOPE = 3000;
+const DELAY_AFTER_SHOW_UI = 3000;
+const DELAY_AFTER_SHOW = 1000;
+const DELAY_BETWEEN_RUNS = 1000;
+const DELAY_IN_THE_END_OF_ACTION = 1000;
+const DELAY_AFTER_GENERIC_MOVE=1000;
+
+var durGenericMove;
+var durOpacity;
+var durOpenEnvelope;
+var durCrunchData;
+var durSendTasks;
+var durDenormalize;
+
+var delayAfterNodeDesc;
+var delayAfterOpenEnvelope;
+var delayAfterShowUi;
+var delayAfterShow;
+var delayBetweenRuns;
+var delayInTheEndOfAction;
+var delayAfterGenericMove;
+
+function setSpeed(speed) {
+    durGenericMove = DUR_GENERIC_MOVE*speed;
+    durOpacity = DUR_OPACITY*speed;
+    durOpenEnvelope = DUR_OPEN_ENVELOPE*speed;
+    durCrunchData = DUR_CRUNCH_DATA*speed;
+    durSendTasks = DUR_SEND_TASKS*speed;
+    durDenormalize = DUR_DENORMALIZE*speed;
+    
+    delayAfterNodeDesc = DELAY_AFTER_NODE_DESC*speed;
+    delayAfterOpenEnvelope = DELAY_AFTER_OPEN_ENVELOPE*speed;
+    delayAfterShowUi = DELAY_AFTER_SHOW_UI*speed;
+    delayAfterShow = DELAY_AFTER_SHOW*speed;
+    delayBetweenRuns = DELAY_BETWEEN_RUNS*speed;
+    delayInTheEndOfAction = DELAY_IN_THE_END_OF_ACTION*speed;
+    delayAfterGenericMove=DELAY_AFTER_GENERIC_MOVE*speed;
+}
+
+function clearData() {
+    for (const t of document.getElementsByClassName('calculated-number')) {
+        t.textContent = "";
+    }
+}
+async function crunchData(dur) {
+    const calcInterval = setInterval(function () {
+        const min = 1000;
+        const max = 9999;
+        for (const t of document.getElementsByClassName('calculated-number')) {
+            t.textContent = (Math.round(Math.random() * (max - min) + min)).toString();
+        }
+    }, 100);
+    await new Promise(r => setTimeout(r, dur));
+    clearInterval(calcInterval);
+}
+
+function showLkpTable() {
+    document.getElementById("showLkpTableAnimation").beginElement();
+}
+function hideLkpTable() {
+    document.getElementById("hideLkpTableAnimation").beginElement();
+}
+function showLkpData() {
+    document.getElementById("showLkpDataAnimation").beginElement();
+}
+function hideLkpData() {
+    document.getElementById("hideLkpDataAnimation").beginElement();
+}
+function showChunkData() {
+    document.getElementById("showChunkDataAnimation").beginElement();
+}
+function hideChunkData() {
+    document.getElementById("hideChunkDataAnimation").beginElement();
+}
+
+function animateHide(elId, dur) {
+    const el = document.getElementById(elId);
+    if (!el) {
+        return;
+    }
+    const a = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+    a.setAttribute("attributeType", "XML");
+    a.setAttribute("attributeName", "opacity");
+    a.setAttribute("begin", "indefinite");
+    a.setAttribute("dur", (dur/1000).toString()+'s');
+    a.setAttribute("values", '1;0');
+    a.setAttribute("fill", "freeze");
+    aId = elId + "_animateOpacityHide";
+    a.setAttribute("id", aId);
+    previous_a = document.getElementById(aId);
+    if (previous_a) {
+        el.removeChild(previous_a);
+    }
+    el.appendChild(a)
+    a.beginElement();
+}
+
+function animateShow(elId, dur) {
+    const el = document.getElementById(elId);
+    if (!el) {
+        return;
+    }
+    const a = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+    a.setAttribute("attributeType", "XML");
+    a.setAttribute("attributeName", "opacity");
+    a.setAttribute("begin", "indefinite");
+    a.setAttribute("dur", (dur/1000).toString()+'s');
+    a.setAttribute("values", '0;1');
+    a.setAttribute("fill", "freeze");
+    aId = elId + "_animateOpacityShow";
+    a.setAttribute("id", aId);
+    previous_a = document.getElementById(aId);
+    if (previous_a) {
+        el.removeChild(previous_a);
+    }
+    el.appendChild(a)
+    a.beginElement();
+}
+
+function animateMotion(elId, dur, keyPoints, keyTimes, path) {
+    const a = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
+    a.setAttribute("attributeType", "XML");
+    a.setAttribute("begin", "indefinite");
+    a.setAttribute("dur", (dur/1000).toString()+'s');
+    a.setAttribute("keyPoints", keyPoints);
+    a.setAttribute("keyTimes", keyTimes);
+    a.setAttribute("path", path);
+    a.setAttribute("fill", "freeze");
+    aId = elId + "_animateMotion";
+    a.setAttribute("id", aId);
+    el = document.getElementById(elId);
+    previous_a = document.getElementById(aId);
+    if (previous_a) {
+        el.removeChild(previous_a);
+    }
+    el.appendChild(a)
+    a.beginElement();
+}
+
+function removeAnimateMotion(elId) {
+    aId = elId + "_animationMotion";
+    el = document.getElementById(elId);
+    previous_a = document.getElementById(aId);
+    if (previous_a) {
+        el.removeChild(previous_a);
+    }
+}
+
+function move(elId, x, y) {
+    el = document.getElementById(elId);
+    el.setAttribute('x', x);
+    el.setAttribute('y', y);
+}
+
+function createElement(defId, elId, parentId) {
+    const el = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    el.setAttribute("href", '#' + defId);
+    el.setAttribute("id", elId);
+    var parentEl;
+    if (parentId) {
+        parentEl = document.getElementById(parentId);
+    }
+    previous_el = document.getElementById(elId);
+    if (previous_el) {
+        if (parentEl) {
+            parentEl.removeChild(previous_el);
+        } else {
+            previous_el.remove();
+        }
+    }
+    if (parentEl) {
+        parentEl.appendChild(el);
+    } else {
+        document.documentElement.appendChild(el);
+    }
+}
+
+function removeElement(elId) {
+    el = document.getElementById(elId);
+    if (el && el.parentElement) {
+        el.parentElement.removeChild(el);
+    }
+}
+
+
+function removeAnimatedScripts() {
+    removeElement('s1');
+    removeElement('s2');
+}
+
+
+
+function createChunkData(isDuplicates) {
+    createElement('row', 'c1r1', 'chunk_data')
+    move("c1r1", 40, 90);
+    createElement('row', 'c1r2', 'chunk_data')
+    move("c1r2", 40, 109.5);
+    if (isDuplicates) {
+        createElement('row', 'c1r3', 'chunk_data')
+        move("c1r3", 40, 109.5);
+        createElement('row', 'c1r4', 'chunk_data')
+        move("c1r4", 40, 109.5);
+    }
+    createElement('row', 'c2r1', 'chunk_data')
+    move("c2r1", 40, 129);
+    createElement('row', 'c2r2', 'chunk_data')
+    move("c2r2", 40, 148.5);
+    if (isDuplicates) {
+        createElement('row', 'c2r3', 'chunk_data')
+        move("c2r3", 40, 148.5);
+    }
+}
+
+function createLookupData() {
+    createElement('row', 'lkp11', 'lookup_data')
+    move("lkp11", 40, 269.5);
+    createElement('row', 'lkp12', 'lookup_data')
+    move("lkp12", 40, 289);
+    createElement('row', 'lkp21', 'lookup_data')
+    move("lkp21", 40, 250);
+    createElement('row', 'lkp22', 'lookup_data')
+    move("lkp22", 40, 308.5);
+}
+
+function readLookupDataFromTable() {
+    animateMotion("lkp11", durGenericMove, "0;0;1;1", "0;0.1;0.6;1", "M0 0 L415 -169.5"); // 455, 100
+    animateMotion("lkp12", durGenericMove, "0;0;1;1", "0;0.2;0.7;1", "M0 0 L415 -169.5");
+    animateMotion("lkp21", durGenericMove, "0;0;1;1", "0;0.3;0.8;1", "M0 0 L715 -150"); // 75, 100
+    animateMotion("lkp22", durGenericMove, "0;0;1;1", "0;0.4;0.9;1", "M0 0 L715 -189");    
+}
+
+function removeAnimatedBaseChunkData() {
+    removeElement('c1r1');
+    removeElement('c1r2');
+    removeElement('c2r1');
+    removeElement('c2r2');
+}
+
+function removeDenormalizedChunkData() {
+    removeElement('c1r3');
+    removeElement('c1r4');
+    removeElement('c2r3');
+}
+
+function readChunkDataFromTable(isDuplicates) {
+    animateMotion("c1r1", durGenericMove, "0;1;1", "0;0.3;1", "M0 0 L300 10"); // 340, 100
+    animateMotion("c1r2", durGenericMove, "0;1;1", "0;0.3;1", "M0 0 L300 10");
+    if (isDuplicates) {
+        animateMotion("c1r3", durGenericMove, "0;1;1", "0;0.3;1", "M0 0 L300 10");
+        animateMotion("c1r4", durGenericMove, "0;1;1", "0;0.3;1", "M0 0 L300 10");
+    }
+    animateMotion("c2r1", durGenericMove, "0;0;1;1", "0;0.2;0.5;1", "M0 0 L600 -29"); // 640, 100
+    animateMotion("c2r2", durGenericMove, "0;0;1;1", "0;0.2;0.5;1", "M0 0 L600 -29");
+    if (isDuplicates) {
+        animateMotion("c2r3", durGenericMove, "0;0;1;1", "0;0.2;0.5;1", "M0 0 L600 -29"); // 640, 100
+    }
+}
+
+function createShadowTargetTable() {
+    createElement('table', 'shadow_target_table', 'target_table')
+    move("shadow_target_table", 40, 410);
+}
+
+function setActionDesc(txt) {
+    document.getElementById('action_desc').textContent = txt;
+}
+
+function setNodeDesc(txt) {
+    document.getElementById('node_desc').textContent = txt;
+}
+
+
+
+// Actions
+
+
+
+
+async function actionPullMsg(msg1, msg2){
+    setActionDesc('Worker pulls task from queue');
+
+    createElement('closed_envelope', 'e1', undefined);
+    document.getElementById('e1').setAttribute('opacity', '0');
+    move("e1", 570, 410);
+    createElement('closed_envelope', 'e2', undefined);
+    document.getElementById('e2').setAttribute('opacity', '0');
+    move("e2", 570, 410);
+
+    animateShow('e1', durOpacity);
+    animateShow('e2', durOpacity);
+    animateMotion("e1", durGenericMove, "0;1;1", "0;0.6;1", "M0 0 L-220 -250"); // 350, 160
+    animateMotion("e2", durGenericMove, "0;0;1;1", "0;0.3;0.9;1", "M0 0 L80 -250"); // 650, 160
+    await new Promise(r => setTimeout(r, durGenericMove));
+
+    document.getElementById('msg_11').textContent = msg1;
+    document.getElementById('msg_12').textContent = msg2;
+    document.getElementById('msg_21').textContent = msg1;
+    document.getElementById('msg_22').textContent = msg2;
+
+    animateHide('e1', durOpenEnvelope);
+    animateHide('e2', durOpenEnvelope);
+    animateShow('open_envelope_1', durOpenEnvelope);
+    animateShow('open_envelope_2', durOpenEnvelope);
+    await new Promise(r => setTimeout(r, delayAfterOpenEnvelope));
+
+    removeElement('e1');
+    removeElement('e2');
+    animateHide('open_envelope_1', durOpacity);
+    animateHide('open_envelope_2', durOpacity);
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+}
+
+async function actionDownloadScript(){
+    setActionDesc('Worker downloads Capillaries script for this task');
+
+    createElement('capiscript', 's1', 'capillaries_script');
+    move("s1", 1045, 180);
+    createElement('capiscript', 's2', 'capillaries_script');
+    move("s2", 1045, 180);
+    animateShow('capillaries_script', durOpacity);
+    animateShow('user_data', durOpacity);
+    await new Promise(r => setTimeout(r, delayAfterShow));
+
+    animateMotion("s1", durGenericMove, "0;1;1", "0;0.6;1", "M0 0 L-695 30");
+    animateMotion("s2", durGenericMove, "0;0;1;1", "0;0.3;0.9;1", "M0 0 L-395 30");
+    await new Promise(r => setTimeout(r, durGenericMove));
+
+    await new Promise(r => setTimeout(r, delayAfterGenericMove));
+
+    setActionDesc('');
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+}
+
+async function actionReadChunkDataFromTable(isDuplicates){
+    setActionDesc('Worker reads one data chunk from source table');
+    createChunkData(isDuplicates);
+
+    animateShow('db', durOpacity);
+    animateShow('source_table', durOpacity);
+    animateShow('chunk_data', durOpacity);
+    await new Promise(r => setTimeout(r, delayAfterShow));
+
+    readChunkDataFromTable(isDuplicates);
+    await new Promise(r => setTimeout(r, durGenericMove));
+
+    await new Promise(r => setTimeout(r, delayAfterGenericMove));
+
+    setActionDesc('');
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+}
+
+async function actionReadChunkDataFromFile(){
+    setActionDesc('Worker reads data file');
+
+    createElement('row', 'c1r1', 'chunk_data')
+    move("c1r1", 1015, 380);
+    createElement('row', 'c1r2', 'chunk_data')
+    move("c1r2", 1015, 399.5);
+    createElement('row', 'c2r1', 'chunk_data')
+    move("c2r1", 1015, 419);
+    createElement('row', 'c2r2', 'chunk_data')
+    move("c2r2", 1015, 438.5);
+
+    animateShow('source_data', durOpacity);
+    animateShow('chunk_data', durOpacity);
+    await new Promise(r => setTimeout(r, delayAfterShow));
+
+    animateMotion("c1r1", durGenericMove, "0;1;1", "0;0.3;1", "M0 0 L-675 -280"); // 340, 100
+    animateMotion("c1r2", durGenericMove, "0;1;1", "0;0.3;1", "M0 0 L-675 -280");
+    animateMotion("c2r1", durGenericMove, "0;0;1;1", "0;0.2;0.5;1", "M0 0 L-375 -319"); // 640, 100
+    animateMotion("c2r2", durGenericMove, "0;0;1;1", "0;0.2;0.5;1", "M0 0 L-375 -319");
+    await new Promise(r => setTimeout(r, durGenericMove));
+
+    await new Promise(r => setTimeout(r, delayAfterGenericMove));
+
+    setActionDesc('');
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+}
+
+async function actionReadLookupDataFromTable(){
+    setActionDesc('Worker reads lookup data for each row in the chunk');
+    createLookupData();
+
+    animateShow('lookup_table', durOpacity);
+    animateShow('lookup_data', durOpacity);
+    await new Promise(r => setTimeout(r, delayAfterShow));
+
+    readLookupDataFromTable();
+    await new Promise(r => setTimeout(r, durGenericMove));
+
+    await new Promise(r => setTimeout(r, delayAfterGenericMove));
+
+    setActionDesc('');
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+}
+
+async function actionDownloadFormulas(){
+    setActionDesc('Worker downloads Python formulas');
+
+    createElement('formula', 'f1', 'python_formulas')
+    move("f1", 1050, 410);
+    createElement('formula', 'f2', 'python_formulas')
+    move("f2", 1050, 410);
+    animateShow('python_formulas', durOpacity);
+    await new Promise(r => setTimeout(r, delayAfterShow));
+
+    animateMotion("f1", durGenericMove, "0;1;1", "0;0.6;1", "M0 0 L-515 -290"); // 535,120
+    animateMotion("f2", durGenericMove, "0;0;1;1", "0;0.3;0.9;1", "M0 0 L-210 -290"); // 835,120		
+    await new Promise(r => setTimeout(r, durGenericMove));
+
+    await new Promise(r => setTimeout(r, delayAfterGenericMove));
+
+    setActionDesc('');
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+}
+
+async function actionRunPython(){
+    setActionDesc('Worker runs Python calculations');
+
+    createElement('python', 'p1', undefined)
+    document.getElementById('p1').setAttribute('opacity', '0');
+    move("p1", 520, 175);
+    createElement('python', 'p2', undefined)
+    document.getElementById('p2').setAttribute('opacity', '0');
+    move("p2", 820, 175);
+
+    animateShow('p1', durOpacity);
+    animateShow('p2', durOpacity);
+    await crunchData(durCrunchData);
+
+    await new Promise(r => setTimeout(r, delayAfterShow));
+
+    animateHide('f1', durOpacity);
+    animateHide('f2', durOpacity);
+    animateHide('p1', durOpacity);
+    animateHide('p2', durOpacity);
+
+    setActionDesc('');
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+
+    removeElement('p1');
+    removeElement('p2');
+    removeElement('f1');
+    removeElement('f2');
+}
+
+async function actionRunGopher(){
+    setActionDesc('Worker executes Go one-liner data processing expressions');
+
+    createElement('gopher', 'g1', undefined)
+    document.getElementById('g1').setAttribute('opacity', '0');
+    move("g1", 530, 175);
+    createElement('gopher', 'g2', undefined)
+    document.getElementById('g2').setAttribute('opacity', '0');
+    move("g2", 830, 175);
+
+    animateShow('g1', durOpacity);
+    animateShow('g2', durOpacity);
+    await crunchData(durCrunchData);
+
+    await new Promise(r => setTimeout(r, delayAfterShow));
+
+    animateHide('g1', durOpacity);
+    animateHide('g2', durOpacity);
+    setActionDesc('');
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+
+    removeElement('g1');
+    removeElement('g2');
+}
+
+async function actionWriteFileChunkDataToTable(){
+    setActionDesc('Worker writes data chunk to target table');
+
+    animateShow('db', durOpacity);
+    animateShow('source_table', durOpacity);
+    animateShow('target_table', durOpacity);
+    await new Promise(r => setTimeout(r, delayAfterShow));
+
+    animateMotion("c1r1", durGenericMove, "0;1;1", "0;0.3;1", "M-675 -280 L-975 30");
+    animateMotion("c1r2", durGenericMove, "0;1;1", "0;0.3;1", "M-675 -280 L-975 30");
+    animateMotion("c2r1", durGenericMove, "0;0;1;1", "0;0.2;0.5;1", "M-375 -319 L-975 30.5");
+    animateMotion("c2r2", durGenericMove, "0;0;1;1", "0;0.2;0.5;1", "M-375 -319 L-975 30.5");
+    await new Promise(r => setTimeout(r, durGenericMove));
+
+    await new Promise(r => setTimeout(r, delayAfterGenericMove));
+
+    setActionDesc('');
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+}
+
+async function actionWriteTableChunkDataToTable(isDuplicates, isLookup){
+    setActionDesc('Worker writes data chunk to target table');
+
+    animateShow('target_table', durOpacity);
+    await new Promise(r => setTimeout(r, delayAfterShow));
+
+
+    animateMotion("c1r1", durGenericMove, "0;1;1", "0;0.5;1", "M300 10 L0 320");
+    animateMotion("c1r2", durGenericMove, "0;1;1", "0;0.5;1", "M300 10 L0 320");
+    if (isDuplicates) {
+        animateMotion("c1r3", durGenericMove, "0;1;1", "0;0.5;1", "M300 29.5 L0 320");
+        animateMotion("c1r4", durGenericMove, "0;1;1", "0;0.5;1", "M300 49 L0 320");
+    }
+    animateMotion("c2r1", durGenericMove, "0;0;1;1", "0;0.3;0.8;1", "M600 -29 L0 320");
+    animateMotion("c2r2", durGenericMove, "0;0;1;1", "0;0.3;0.8;1", "M600 -29 L0 320");
+    if (isDuplicates) {
+        animateMotion("c2r3", durGenericMove, "0;0;1;1", "0;0.3;0.8;1", "M600 -9.5 L0 320");
+    }
+
+    if (isLookup){
+        animateMotion("lkp11", durGenericMove, "0;1;1", "0;0.5;1", "M415 -169.5 L0 140.5");
+        animateMotion("lkp12", durGenericMove, "0;1;1", "0;0.5;1", "M415 -169.5 L0 140.5");
+        animateMotion("lkp21", durGenericMove, "0;0;1;1", "0;0.3;0.8;1", "M715 -150 L0 200");
+        animateMotion("lkp22", durGenericMove, "0;0;1;1", "0;0.3;0.8;1", "M715 -189 L0 161");    
+    }
+    await new Promise(r => setTimeout(r, durGenericMove));
+
+    if (isDuplicates) {
+        removeDenormalizedChunkData();
+    }
+
+    if (isLookup) {
+        removeElement('lkp11');
+        removeElement('lkp12');
+        removeElement('lkp21');
+        removeElement('lkp22');        
+    }
+
+    await new Promise(r => setTimeout(r, delayAfterGenericMove));
+
+    setActionDesc('');
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+}
+
+async function actionWriteTableChunkDataToFile(){
+    setActionDesc('Worker writes data chunk to file');
+
+    animateShow('result_data', durOpacity);
+    await new Promise(r => setTimeout(r, durOpacity));
+
+    animateMotion("c1r1", durGenericMove, "0;1;1", "0;0.5;1", "M300 10 L975 290");
+    animateMotion("c1r2", durGenericMove, "0;1;1", "0;0.5;1", "M300 10 L975 290");
+    animateMotion("c2r1", durGenericMove, "0;0;1;1", "0;0.3;0.8;1", "M600 -29 L975 290");
+    animateMotion("c2r2", durGenericMove, "0;0;1;1", "0;0.3;0.8;1", "M600 -29 L975 290");
+    await new Promise(r => setTimeout(r, durGenericMove));
+
+    await new Promise(r => setTimeout(r, delayAfterGenericMove));
+
+    setActionDesc('');
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+}
+
+async function actionTargetTableBecomesSourceTableForFileChunk(){
+    setActionDesc('Target table becomes source for the next step');
+    createShadowTargetTable();
+    await new Promise(r => setTimeout(r, durOpacity));
+
+    animateMotion("c1r1", durGenericMove, "0;1", "0;1", "M-975 30 L-975 -290");
+    animateMotion("c1r2", durGenericMove, "0;1", "0;1", "M-975 30 L-975 -290");
+    animateMotion("c2r1", durGenericMove, "0;1", "0;1", "M-975 30.5 L-975 -289.5");
+    animateMotion("c2r2", durGenericMove, "0;1", "0;1", "M-975 30.5 L-975 -289.5");
+    animateMotion('shadow_target_table', durGenericMove, '0;1', '0;1', 'M0 0 L 0 -320');
+    await new Promise(r => setTimeout(r, durGenericMove));
+
+    removeElement('shadow_target_table');
+    await new Promise(r => setTimeout(r, delayAfterGenericMove));
+    
+    setActionDesc('');
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+}
+
+async function actionTargetTableBecomesSourceTableForTableChunk(){
+    setActionDesc('Target table becomes source for the next step');
+    createShadowTargetTable();
+    await new Promise(r => setTimeout(r, durOpacity));
+
+    animateMotion("c1r1", durGenericMove, "0;1", "0;1", "M0 320 L0 0");
+    animateMotion("c1r2", durGenericMove, "0;1", "0;1", "M0 320 L0 0");
+    animateMotion("c2r1", durGenericMove, "0;1", "0;1", "M0 320 L0 0");
+    animateMotion("c2r2", durGenericMove, "0;1", "0;1", "M0 320 L0 0");
+    animateMotion('shadow_target_table', durGenericMove, '0;1', '0;1', 'M0 0 L 0 -320');
+    await new Promise(r => setTimeout(r, durGenericMove));
+    
+    removeElement('shadow_target_table');
+    await new Promise(r => setTimeout(r, delayAfterGenericMove));
+
+    setActionDesc('');
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+}
+
+async function actionDenormalize(){
+    setActionDesc('Worker tags and denormalizes chunk data');
+
+    animateMotion("c1r3", durDenormalize, "0;1;1", "0;0.3;1", "M300 10 L300 29.5");
+    animateMotion("c1r4", durDenormalize, "0;1;1", "0;0.3;1", "M300 10 L300 49");
+    animateMotion("c2r3", durDenormalize, "0;0;1;1", "0;0.2;0.5;1", "M600 -29 L600 -9.5"); // 640, 100
+    await new Promise(r => setTimeout(r, durDenormalize));
+
+    setActionDesc('');
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+}
+
+async function actionDistinct(){
+    setActionDesc('Worker deduplicates data');
+
+    animateHide("c1r2", durOpacity);
+    animateHide("c2r2", durOpacity);
+    await new Promise(r => setTimeout(r, durDenormalize));
+
+    setActionDesc('');
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+}
+
+
+// Nodes
+
+
+
+async function runPython() {
+    setNodeDesc('Transform: Python calculations');
+    setTfmNavigator('tfmPython');
+    await new Promise(r => setTimeout(r, delayAfterNodeDesc));
+
+    await actionPullMsg('Python', 'calculations');
+    await actionDownloadScript();
+    await actionReadChunkDataFromTable(false);
+    await actionDownloadFormulas();
+    await actionRunPython();
+    await actionRunGopher();
+    await actionWriteTableChunkDataToTable(false, false);
+    await actionTargetTableBecomesSourceTableForTableChunk();
+
+    // Hide tables and db data
+    animateHide('db', durOpacity);
+    animateHide('source_table', durOpacity);
+    animateHide('target_table', durOpacity);
+    animateHide('chunk_data', durOpacity);
+
+    // Hide user data
+    animateHide('user_data', durOpacity);
+    animateHide('capillaries_script', durOpacity);
+    animateHide('python_formulas', durOpacity);
+
+    removeAnimatedScripts();
+    removeAnimatedBaseChunkData();
+
+    setNodeDesc('');
+}
+
+async function runDenormalize() {
+    setNodeDesc('Transform: tag and denormalize');
+    setTfmNavigator('tfmDenormalize');
+    await new Promise(r => setTimeout(r, delayAfterNodeDesc));
+    
+    await actionPullMsg('tag and', 'denormalize');
+    await actionDownloadScript();
+    await actionReadChunkDataFromTable(true);
+    await actionDenormalize();
+    await actionRunGopher();
+    await actionWriteTableChunkDataToTable(true, false);
+    await actionTargetTableBecomesSourceTableForTableChunk();
+
+    // Hide tables and db data
+    animateHide('db', durOpacity);
+    animateHide('source_table', durOpacity);
+    animateHide('target_table', durOpacity);
+    animateHide('chunk_data', durOpacity);
+
+    // Hide user data
+    animateHide('user_data', durOpacity);
+    animateHide('capillaries_script', durOpacity);
+
+    removeAnimatedScripts();
+    removeAnimatedBaseChunkData();
+
+    setNodeDesc('');
+}
+
+async function runDistinct() {
+    setNodeDesc('Transform: select distinct');
+    setTfmNavigator('tfmDistinct');
+    await new Promise(r => setTimeout(r, delayAfterNodeDesc));
+    
+    await actionPullMsg('select', 'distinct');
+    await actionDownloadScript();
+    await actionReadChunkDataFromTable(false);
+
+    await actionDistinct();
+
+    await actionRunGopher();
+    await actionWriteTableChunkDataToTable(false, false);
+    await actionTargetTableBecomesSourceTableForTableChunk();
+
+    // Hide tables and db data
+    animateHide('db', durOpacity);
+    animateHide('source_table', durOpacity);
+    animateHide('target_table', durOpacity);
+    animateHide('chunk_data', durOpacity);
+
+    // Hide user data
+    animateHide('user_data', durOpacity);
+    animateHide('capillaries_script', durOpacity);
+
+    removeAnimatedScripts();
+    removeAnimatedBaseChunkData();
+
+    setNodeDesc('');
+}
+
+async function runLookup() {
+    setNodeDesc('Transform: lookup');
+    setTfmNavigator('tfmLookup');
+    await new Promise(r => setTimeout(r, delayAfterNodeDesc));
+    
+    await actionPullMsg('lookup', 'and join');
+    await actionDownloadScript();
+    await actionReadChunkDataFromTable(false);
+    await actionReadLookupDataFromTable();
+    
+    await actionRunGopher();
+    await actionWriteTableChunkDataToTable(false, true);
+    await actionTargetTableBecomesSourceTableForTableChunk();
+
+    // Hide tables and db data
+    animateHide('db', durOpacity);
+    animateHide('source_table', durOpacity);
+    animateHide('lookup_table', durOpacity);
+    animateHide('target_table', durOpacity);
+    animateHide('chunk_data', durOpacity);
+
+    // Hide user data
+    animateHide('user_data', durOpacity);
+    animateHide('capillaries_script', durOpacity);
+
+    removeAnimatedScripts();
+    removeAnimatedBaseChunkData();
+
+    setNodeDesc('');
+}
+
+async function runReadFromFile() {
+    setNodeDesc('Transform: read from data source');
+    setTfmNavigator('tfmReadFromFile');
+    await new Promise(r => setTimeout(r, delayAfterNodeDesc));
+    
+    await actionPullMsg('read from', 'files');
+    await actionDownloadScript();
+    await actionReadChunkDataFromFile();
+    await actionRunGopher();
+    await actionWriteFileChunkDataToTable();
+    await actionTargetTableBecomesSourceTableForFileChunk();
+
+    // Hide tables and db data
+    animateHide('db', durOpacity);
+    animateHide('source_table', durOpacity);
+    animateHide('target_table', durOpacity);
+    animateHide('chunk_data', durOpacity);
+
+    // Hide user data
+    animateHide('user_data', durOpacity);
+    animateHide('source_data', durOpacity);
+    animateHide('capillaries_script', durOpacity);
+
+    removeAnimatedScripts();
+    removeAnimatedBaseChunkData();
+
+    setNodeDesc('');
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+}
+
+async function runWriteToFile() {
+    setNodeDesc('Transform: write to target');
+    setTfmNavigator('tfmWriteToFile');
+    await new Promise(r => setTimeout(r, delayAfterNodeDesc));
+    
+    await actionPullMsg('write to', 'files');
+    await actionDownloadScript();
+    await actionReadChunkDataFromTable(false);
+    
+    await actionRunGopher();
+    await actionWriteTableChunkDataToFile();
+
+    // Hide tables and db data
+    animateHide('db', durOpacity);
+    animateHide('source_table', durOpacity);
+    animateHide('chunk_data', durOpacity);
+
+    // Hide user data
+    animateHide('user_data', durOpacity);
+    animateHide('result_data', durOpacity);
+    animateHide('capillaries_script', durOpacity);
+
+    removeAnimatedScripts();
+    removeAnimatedBaseChunkData();
+
+    setNodeDesc('');
+}
+
+async function runStart() {
+    setNodeDesc('Start Capillaries run');
+    setTfmNavigator('tfmStart');
+    await new Promise(r => setTimeout(r, delayAfterNodeDesc));
+
+    setActionDesc('Capillaries UI/API/Toolbelt reads Capillaries script to run');
+    animateShow('ui', durOpacity);
+    await new Promise(r => setTimeout(r, delayAfterShowUi));
+
+    createElement('capiscript', 's1', 'capillaries_script');
+    move("s1", 1045, 180);
+    animateShow('capillaries_script', durOpacity);
+    animateShow('user_data', durOpacity);
+    await new Promise(r => setTimeout(r, durOpacity));
+
+    animateMotion("s1", durGenericMove, "0;1;1", "0;0.6;1", "M0 0 L-570 80");
+    await new Promise(r => setTimeout(r, durGenericMove));
+
+    await new Promise(r => setTimeout(r, delayAfterGenericMove));
+
+    setActionDesc('');
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+
+    setActionDesc('Capillaries UI/API/Toolbelt starts a run by posting tasks to queue');
+    await new Promise(r => setTimeout(r, durOpacity));
+
+    document.getElementById('aniSendMove').beginElement()
+    document.getElementById('aniSendOpacity').beginElement()
+    await new Promise(r => setTimeout(r, durSendTasks));
+    document.getElementById('aniSendMove').endElement()
+    document.getElementById('aniSendOpacity').endElement()
+
+    await new Promise(r => setTimeout(r, delayAfterShow));
+
+    // Hide UI
+    animateHide('ui', durOpacity);
+
+    // Hide user data
+    animateHide('user_data', durOpacity);
+    animateHide('capillaries_script', durOpacity);
+
+    setActionDesc('');
+    setNodeDesc('');
+    await new Promise(r => setTimeout(r, delayInTheEndOfAction));
+}
+
+function setTfmNavigator(tfmId) {
+    Array.prototype.filter.call(
+        document.getElementsByClassName("stage"),
+        (r) => r.classList.remove('stage-active'));
+    if (tfmId) {
+        document.getElementById(tfmId).classList.add('stage-active');
+    }
+}
+
+async function run() {
+    setSpeed(1.0);
+    Array.prototype.filter.call(
+        document.getElementsByClassName("btn-speed"),
+        (btn) => {
+            btn.addEventListener('click', (e) => {
+                console.log(btn.id);
+                Array.prototype.filter.call(
+                    document.getElementsByClassName("btn-speed"),
+                    (b) => b.classList.remove('btn-speed-on'));
+                btn.classList.add('btn-speed-on');
+                if (btn.id === 'btnFast') {
+                    setSpeed(0.5)
+                } else if (btn.id === 'btnNormal') {
+                    setSpeed(1.0)
+                } else if (btn.id === 'btnSlower') {
+                    setSpeed(1.5)
+                } else if (btn.id === 'btnSlowest') {
+                    setSpeed(2.0)
+                } else {
+                    // dev error
+                }
+            });
+        });
+
+    while (true) {
+        animateShow('how_run', durOpacity);
+        await new Promise(r => setTimeout(r, delayBetweenRuns*2));
+        animateHide('how_run', durOpacity);
+
+        animateShow('header_capillaries', durOpacity);
+        animateShow('queue', durOpacity);
+        animateShow('tfmNavigator', durOpacity);
+        await runStart();
+        await new Promise(r => setTimeout(r, delayBetweenRuns));
+        animateShow('worker1', durOpacity);
+        animateShow('worker2', durOpacity);
+        await runReadFromFile();
+        await new Promise(r => setTimeout(r, delayBetweenRuns));
+        await runLookup();
+        await new Promise(r => setTimeout(r, delayBetweenRuns));
+        await runDenormalize();
+        await new Promise(r => setTimeout(r, delayBetweenRuns));
+        await runDistinct();
+        await new Promise(r => setTimeout(r, delayBetweenRuns));
+        await runPython();
+        await new Promise(r => setTimeout(r, delayBetweenRuns));
+        await runWriteToFile();
+        animateHide('worker1', durOpacity);
+        animateHide('worker2', durOpacity);
+        animateHide('header_capillaries', durOpacity);
+        animateHide('queue', durOpacity);
+        animateHide('tfmNavigator', durOpacity);
+        await new Promise(r => setTimeout(r, delayBetweenRuns*2));
+    }
+}
+
+	]]>
+	</script>
+	<style>
+		.btn-speed {
+			fill:transparent;
+			stroke:black;
+			stroke-width:2;
+			cursor: pointer;
+		}
+		.btn-speed-on {
+			fill:#D0D0D0;
+		}
+		.stage {
+			fill:transparent;
+			stroke-width:0;
+			stroke:black;
+
+		}
+		.stage-active {
+			stroke-width:0;
+			fill:#D0D0D0;
+		}
+	</style>
+	<defs>
+		<g id="gopher" transform="scale(0.2)">
+			<path d="M3.68560311,188.164981 C4.18365759,198.424903 14.4435798,193.64358 19.0256809,190.456031 C23.4085603,187.368093 24.7035019,189.957977 25.1019455,183.981323 C25.4007782,179.996887 25.7992218,176.112062 25.6,172.127626 C18.92607,171.529961 11.7540856,173.123735 6.27548638,177.108171 C3.38677043,179.100389 -1.79299611,185.674708 3.68560311,188.164981" fill="#F6D2A2">
+
+			</path>
+			<path d="M208.18677,314.272374 C216.056031,319.153307 230.499611,333.89572 218.645914,341.067704 C207.290272,351.427237 200.915175,329.612451 190.954086,326.624125 C195.237354,320.747082 200.616342,315.368093 208.18677,314.272374 L208.18677,314.272374 L208.18677,314.272374 Z" fill="#F6D2A2">
+
+			</path>
+			<path d="M67.336965,330.907393 C58.0731518,332.301946 52.8933852,340.669261 45.1237354,344.952529 C37.8521401,349.235798 35.063035,343.557977 34.4653696,342.362646 C33.3696498,341.864591 33.4692607,342.8607 31.6762646,341.067704 C24.9027237,330.409339 38.6490272,322.639689 45.8210117,317.360311 C55.7821012,315.368093 62.0575875,324.034241 67.336965,330.907393 L67.336965,330.907393 L67.336965,330.907393 Z" fill="#F6D2A2">
+
+			</path>
+			<path d="M251.915953,186.870039 C251.417899,197.129961 241.157977,192.348638 236.575875,189.161089 C232.192996,186.073152 230.898054,188.663035 230.499611,182.686381 C230.200778,178.701946 229.802335,174.817121 230.001556,170.832685 C236.675486,170.235019 243.847471,171.828794 249.32607,175.81323 C252.115175,177.805447 257.394553,184.379767 251.915953,186.870039" fill="#F6D2A2">
+
+			</path>
+			<path d="M224.722179,61.7587549 C260.283268,49.2077821 232.491829,0.498054475 201.51284,22.0140078 C181.192218,4.58210117 153.201556,1.39455253 123.816342,1.39455253 C95.0287938,3.68560311 67.6357977,8.96498054 48.5105058,25.6996109 C17.6311284,5.77743191 -10.8575875,53.5906615 25.4007782,65.6435798 C15.2404669,105.089494 26.7953307,145.332296 25.2015564,185.475486 C23.707393,221.53463 14.244358,269.845914 34.2661479,302.219455 C51.2996109,329.911284 87.9564202,339.772763 118.138521,340.868482 C156.687938,342.263035 203.405447,332.8 222.132296,295.445914 C240.062257,259.884825 235.081712,215.557977 232.790661,177.207782 C230.499611,138.459144 234.782879,99.1128405 224.722179,61.7587549 L224.722179,61.7587549 Z" fill="#69D7E2">
+
+			</path>
+			<path d="M254.605447,180.793774 C253.609339,178.701946 251.716732,176.311284 249.923735,175.016342 C245.341634,171.729183 239.464591,169.936187 233.388327,169.736965 C233.189105,163.561089 232.989883,156.787549 232.989883,148.221012 L232.989883,140.451362 C232.890272,115.947082 232.59144,105.189105 231.196887,91.7416342 C230.101167,81.1828794 228.407782,71.4210117 226.017121,62.2568093 C234.085603,59.1688716 239.364981,54.088716 241.456809,47.5143969 C243.449027,41.4381323 242.452918,34.5649805 239.066148,28.488716 C235.579767,22.5120623 230.001556,18.029572 223.526848,16.2365759 C216.554086,14.3439689 208.983658,15.7385214 201.712062,20.6194553 C195.237354,15.140856 187.766537,10.9571984 179.399222,7.76964981 C164.557198,2.29105058 147.324514,0.19922179 123.915953,0.19922179 L123.915953,1.19533074 L123.816342,0.19922179 C98.8140078,2.19143969 80.2863813,6.07626459 64.9463035,13.5470817 C58.770428,16.5354086 53.2918288,20.1214008 48.5105058,24.3050584 C41.1392996,19.7229572 33.4692607,18.6272374 26.3968872,20.818677 C19.8225681,22.8108949 14.1447471,27.492607 10.7579767,33.5688716 C7.37120623,39.6451362 6.57431907,46.6178988 8.86536965,52.5945525 C11.1564202,58.5712062 16.4357977,63.2529183 24.3050584,66.1416342 C21.814786,76.2023346 20.5198444,86.8607004 20.3206226,98.614786 C20.1214008,110.070039 20.6194553,119.234241 22.4124514,139.953307 C23.707393,155.392996 24.2054475,162.46537 24.4046693,171.031907 C17.6311284,170.733074 10.8575875,172.52607 5.77743191,176.211673 C3.9844358,177.506615 1.9922179,179.797665 1.09571984,181.989105 C-0.19922179,184.77821 0.298832685,187.268482 2.88871595,188.762646 C3.28715953,193.543969 5.9766537,195.735409 10.0607004,195.336965 C13.0490272,195.038132 16.6350195,193.444358 19.7229572,191.252918 C20.4202335,190.754864 21.1175097,190.35642 21.814786,190.057588 C22.1136187,189.957977 22.3128405,189.858366 22.6116732,189.758755 C22.6116732,189.758755 23.2093385,189.559533 23.4085603,189.459922 C23.707393,189.360311 24.0062257,189.2607 24.2054475,189.061479 C24.0062257,193.743191 23.6077821,198.624125 22.711284,209.780545 C21.7151751,222.331518 21.2171206,229.204669 21.0178988,236.874708 C20.1214008,265.363424 23.5081712,286.08249 33.6684825,302.518288 C36.8560311,307.698054 40.740856,312.280156 45.3229572,316.463813 C44.4264591,317.061479 40.6412451,319.850584 39.4459144,320.747082 C35.2622568,323.93463 32.3735409,326.624125 30.6801556,329.612451 C28.488716,333.497276 28.488716,337.382101 30.9789883,341.466148 L31.0785992,341.565759 L31.1782101,341.66537 C32.27393,342.761089 32.8715953,343.059922 33.6684825,343.059922 L33.7680934,343.059922 L33.9673152,343.059922 L33.9673152,343.059922 C34.0669261,343.259144 34.166537,343.358755 34.2661479,343.557977 C34.5649805,344.056031 34.8638132,344.454475 35.1626459,344.852918 C37.6529183,347.741634 41.1392996,348.438911 45.8210117,345.649805 C48.311284,344.354864 50.1042802,342.8607 53.8894942,339.673152 C53.9891051,339.573541 53.9891051,339.573541 54.088716,339.47393 C60.1649805,334.294163 63.1533074,332.401556 67.6357977,331.70428 L69.229572,331.405447 C69.8272374,331.70428 70.4249027,331.903502 71.122179,332.202335 C85.2669261,337.880156 101.702724,340.968093 118.337743,341.565759 C139.853696,342.362646 160.572763,339.673152 178.10428,333.298054 C182.785992,331.604669 187.168872,329.612451 191.352529,327.421012 C193.942412,328.417121 196.133852,330.508949 200.31751,335.389883 C200.516732,335.589105 200.516732,335.589105 200.616342,335.788327 C200.815564,335.987549 200.815564,336.08716 200.915175,336.18677 C201.114397,336.485603 201.41323,336.684825 201.612451,336.983658 C204.899611,340.868482 207.091051,342.761089 209.581323,343.856809 C212.868482,345.251362 216.056031,344.554086 219.343191,341.565759 C225.120623,337.979767 225.519066,332.401556 221.733852,326.026459 C219.044358,321.543969 214.362646,316.862257 209.979767,313.87393 C215.159533,308.793774 219.642023,302.71751 223.128405,295.844358 C232.691051,276.719066 236.376654,254.406226 236.177432,225.718288 C236.077821,215.557977 235.679377,206.692607 234.583658,189.758755 L234.583658,189.2607 C235.081712,189.459922 235.579767,189.758755 236.077821,190.157198 C239.165759,192.249027 242.751751,193.942412 245.740078,194.241245 C249.824125,194.639689 252.513619,192.448249 252.912062,187.666926 L252.912062,187.666926 C255.402335,186.073152 255.900389,183.582879 254.605447,180.793774 L254.605447,180.793774 Z M222.929183,18.3284047 C228.905837,19.922179 234.085603,24.1058366 237.273152,29.6840467 C240.4607,35.2622568 241.357198,41.5377432 239.564202,47.1159533 C237.671595,52.9929961 232.890272,57.6747082 225.419455,60.4638132 C223.925292,55.0848249 222.132296,49.8054475 220.140078,44.7252918 C223.028794,42.2350195 224.423346,39.1470817 222.132296,34.7642023 C219.841245,30.381323 215.856809,29.8832685 211.772763,31.1782101 C209.182879,27.7914397 206.294163,24.8031128 203.305837,22.0140078 C209.880156,17.8303502 216.653696,16.6350195 222.929183,18.3284047 L222.929183,18.3284047 Z M10.5587549,51.9968872 C8.46692607,46.6178988 9.16420233,40.2428016 12.351751,34.6645914 C15.5392996,29.0863813 20.7190661,24.7035019 26.8949416,22.9105058 C33.2700389,21.0178988 40.1431907,21.9143969 46.9167315,25.8988327 C43.0319066,29.385214 39.5455253,33.3696498 36.5571984,37.7525292 C31.3774319,35.063035 26.0980545,34.5649805 23.1097276,40.0435798 C20.0217899,45.9206226 23.6077821,49.6062257 28.6879377,52.3953307 C27.9906615,54.088716 27.2933852,55.8817121 26.6957198,57.6747082 C25.9984436,59.8661479 25.3011673,62.1571984 24.7035019,64.448249 C17.4319066,61.659144 12.6505837,57.3758755 10.5587549,51.9968872 L10.5587549,51.9968872 Z M22.6116732,187.766537 C22.5120623,187.766537 21.9143969,187.965759 21.9143969,188.06537 C21.6155642,188.164981 21.3167315,188.264591 21.0178988,188.463813 C20.2210117,188.762646 19.4241245,189.2607 18.6272374,189.858366 C15.8381323,191.850584 12.4513619,193.344747 9.8614786,193.543969 C6.87315175,193.842802 5.17976654,192.54786 4.88093385,188.961868 C6.97276265,188.264591 7.8692607,187.766537 8.66614786,186.571206 L7.07237354,185.375875 C6.47470817,186.172763 5.8770428,186.471595 4.08404669,187.069261 L4.08404669,187.069261 C3.9844358,187.069261 3.9844358,187.069261 3.8848249,187.168872 C2.29105058,186.272374 1.9922179,184.877821 2.88871595,182.885603 C3.68560311,181.092607 5.47859922,179.000778 6.97276265,177.905058 C11.7540856,174.418677 18.1291829,172.725292 24.5042802,173.123735 C24.5042802,175.614008 24.6038911,178.10428 24.5042802,180.494942 C24.5042802,180.793774 24.5042802,180.992996 24.4046693,181.291829 C24.3050584,182.686381 24.3050584,183.284047 24.2054475,183.981323 L24.2054475,183.981323 C23.9066148,186.870039 23.707393,187.268482 22.6116732,187.766537 L22.6116732,187.766537 Z M52.6941634,338.079377 C52.5945525,338.178988 52.5945525,338.178988 52.4949416,338.278599 C48.8093385,341.466148 47.0163424,342.761089 44.7252918,344.056031 C40.9400778,346.347082 38.3501946,345.849027 36.5571984,343.657588 C36.2583658,343.358755 36.059144,342.960311 35.8599222,342.661479 C35.7603113,342.561868 35.6607004,342.362646 35.5610895,342.263035 C35.5610895,342.263035 35.5610895,342.263035 35.5610895,342.163424 C35.7603113,340.370428 36.4575875,339.075486 38.2505837,336.286381 C38.3501946,336.18677 38.3501946,336.18677 38.3501946,336.08716 C39.4459144,334.493385 39.9439689,333.596887 40.4420233,332.501167 L38.6490272,331.70428 C38.2505837,332.600778 37.7525292,333.397665 36.7564202,334.99144 C36.6568093,335.091051 36.6568093,335.091051 36.6568093,335.190661 C34.8638132,337.780545 34.0669261,339.374319 33.6684825,341.167315 L33.5688716,341.167315 C33.5688716,341.167315 33.5688716,341.167315 33.4692607,341.167315 L33.2700389,341.167315 C33.0708171,341.067704 32.7719844,340.868482 32.3735409,340.470039 C28.488716,334.294163 31.5766537,329.014786 40.3424125,322.440467 C41.4381323,321.64358 45.1237354,319.053696 46.1198444,318.256809 C46.3190661,318.256809 46.5182879,318.157198 46.7175097,318.057588 C52.0964981,322.639689 58.3719844,326.624125 65.3447471,329.911284 L65.3447471,329.911284 C65.3447471,330.010895 65.444358,330.110506 65.5439689,330.210117 C61.4599222,331.206226 58.2723735,333.298054 52.6941634,338.079377 L52.6941634,338.079377 Z M219.940856,327.22179 C223.028794,332.401556 222.929183,336.585214 219.044358,339.47393 C218.745525,338.876265 218.546304,338.178988 218.14786,337.182879 C218.14786,337.083268 218.14786,337.083268 218.048249,336.983658 C216.653696,333.198444 215.757198,331.604669 214.063813,329.811673 L212.669261,331.206226 C214.163424,332.600778 214.8607,334.094942 216.255253,337.581323 C216.255253,337.680934 216.255253,337.680934 216.354864,337.780545 C216.852918,339.075486 217.151751,339.872374 217.450584,340.56965 C214.8607,342.761089 212.56965,343.159533 210.178988,342.063813 C208.08716,341.167315 206.094942,339.274708 202.907393,335.688716 C202.708171,335.489494 202.508949,335.190661 202.309728,334.891829 C202.210117,334.792218 202.110506,334.692607 202.010895,334.493385 C201.811673,334.294163 201.811673,334.294163 201.712062,334.094942 C198.026459,329.811673 195.835019,327.520623 193.444358,326.225681 C199.022568,323.038132 204.003113,319.45214 208.485603,315.268482 C212.669261,318.35642 217.350973,322.938521 219.940856,327.22179 L219.940856,327.22179 Z M221.335409,294.94786 C212.768872,312.180545 197.628016,324.333074 177.307393,331.70428 C159.975097,337.979767 139.455253,340.56965 118.238132,339.772763 C81.6809339,338.477821 50.0046693,325.727626 35.1626459,301.62179 C25.2015564,285.584436 21.9143969,265.164202 22.8108949,237.07393 C23.1097276,229.403891 23.5081712,222.530739 24.5042802,209.979767 C25.6,195.835019 25.8988327,191.750973 26.1976654,185.375875 C26.3968872,180.793774 26.3968872,176.112062 26.2972763,171.131518 C26.0980545,162.365759 25.6,155.392996 24.3050584,139.754086 C22.5120623,119.035019 22.0140078,109.970428 22.2132296,98.614786 C22.5120623,83.6731518 24.5042802,70.5245136 28.6879377,58.0731518 C35.4614786,37.8521401 47.9128405,24.2054475 65.8428016,15.3400778 C80.8840467,7.9688716 99.1128405,4.18365759 123.915953,2.19143969 C147.125292,2.19143969 164.059144,4.28326848 178.701946,9.66225681 C196.233463,16.136965 209.28249,27.492607 218.247471,44.9245136 C224.024903,59.0692607 227.411673,74.3097276 229.204669,91.8412451 C230.599222,105.189105 230.898054,115.947082 230.997665,140.351751 L230.997665,148.121401 C231.097276,160.174319 231.296498,168.641245 231.794553,177.108171 C231.993774,180.395331 232.093385,181.789883 232.59144,189.659144 C233.68716,206.592996 234.085603,215.358755 234.185214,225.519066 C234.384436,254.107393 230.798444,276.121401 221.335409,294.94786 L221.335409,294.94786 Z M251.816342,185.87393 L251.816342,185.87393 C251.716732,185.87393 251.617121,185.774319 251.51751,185.774319 C249.724514,185.176654 249.126848,184.77821 248.529183,184.080934 L246.935409,185.276265 C247.831907,186.471595 248.728405,186.96965 250.720623,187.666926 C250.322179,191.252918 248.628794,192.54786 245.740078,192.249027 C243.150195,192.049805 239.763424,190.456031 236.974319,188.563424 C236.177432,187.965759 235.380545,187.567315 234.583658,187.168872 C234.484047,187.168872 234.384436,187.069261 234.284825,187.069261 C233.886381,181.590661 233.886381,180.196109 233.68716,177.307393 C233.587549,175.514397 233.487938,173.721401 233.388327,171.928405 C238.966537,172.028016 244.445136,173.721401 248.628794,176.809339 C250.122957,177.905058 251.915953,179.996887 252.71284,181.789883 C253.708949,183.483268 253.509728,184.977432 251.816342,185.87393 L251.816342,185.87393 Z" fill="#000000">
+
+			</path>
+			<g transform="translate(108.934905, 96.951015)">
+				<path d="M29.9828794,7.17198444 C30.0824903,12.2521401 31.0785992,17.8303502 30.1821012,23.2093385 C28.7875486,25.7992218 26.1976654,26.0980545 23.9066148,27.0941634 C20.7190661,26.5961089 18.029572,24.5042802 16.7346304,21.5159533 C15.9377432,15.4396887 16.9338521,9.66225681 17.2326848,3.58599222 C17.2326848,3.38677043 21.0178988,3.68560311 24.4046693,4.68171206 C27.2933852,5.57821012 29.9828794,7.07237354 29.9828794,7.17198444 L29.9828794,7.17198444 Z" fill="#FFFFFF">
+
+				</path>
+				<path d="M1.79299611,7.57042802 C-0.996108949,18.1291829 5.47859922,35.3618677 16.136965,21.2171206 C15.3400778,15.2404669 16.2365759,9.46303502 16.5354086,3.58599222 C16.6350195,3.08793774 1.892607,6.87315175 1.79299611,7.57042802 L1.79299611,7.57042802 Z" fill="#FFFFFF">
+
+				</path>
+				<path d="M31.1782101,11.8536965 C30.9789883,8.86536965 30.8793774,7.67003891 30.8793774,6.17587549 L30.8793774,5.47859922 L30.1821012,5.27937743 L17.6311284,1.39455253 L17.6311284,0.697276265 L16.3361868,0.996108949 L16.2365759,0.996108949 L16.2365759,1.09571984 L2.09182879,4.68171206 L1.59377432,4.78132296 L1.39455253,5.27937743 C-0.79688716,10.5587549 -0.298832685,18.5276265 2.49027237,23.4085603 C5.67782101,28.9867704 10.8575875,29.0863813 16.136965,22.711284 C17.6311284,25.6 20.4202335,27.5922179 23.6077821,28.0902724 L23.9066148,28.0902724 L24.2054475,27.9906615 C24.6038911,27.7914397 25.0023346,27.6918288 25.6996109,27.3929961 C25.7992218,27.3929961 25.7992218,27.3929961 25.8988327,27.2933852 C28.7875486,26.2972763 29.9828794,25.5003891 30.9789883,23.6077821 L31.0785992,23.5081712 L31.0785992,23.3089494 C31.3774319,21.5159533 31.4770428,19.6233463 31.4770428,17.5315175 C31.4770428,16.0373541 31.3774319,14.6428016 31.1782101,11.8536965 L31.1782101,11.8536965 Z M15.2404669,8.16809339 C15.140856,9.96108949 15.0412451,10.6583658 14.9416342,11.6544747 C14.7424125,15.3400778 14.7424125,18.1291829 15.0412451,20.9182879 C10.3595331,26.8949416 6.67392996,26.8949416 4.18365759,22.4124514 C1.79299611,18.2287938 1.29494163,11.1564202 3.08793774,6.47470817 L15.6389105,3.28715953 C15.5392996,4.58210117 15.4396887,5.8770428 15.2404669,8.16809339 L15.2404669,8.16809339 Z M29.1859922,22.9105058 C28.488716,24.1058366 27.5922179,24.7035019 25.2015564,25.5003891 C25.1019455,25.5003891 25.1019455,25.5003891 25.0023346,25.6 C24.4046693,25.7992218 24.0062257,25.9984436 23.707393,26.0980545 C21.0178988,25.6 18.7268482,23.8070039 17.6311284,21.3167315 C17.3322957,18.6272374 17.3322957,15.8381323 17.5315175,12.1525292 C17.6311284,11.1564202 17.6311284,10.459144 17.8303502,8.66614786 C18.029572,6.37509728 18.1291829,4.98054475 18.1291829,3.68560311 L28.9867704,6.97276265 C28.9867704,8.26770428 29.0863813,9.46303502 29.2856031,12.0529183 C29.4848249,14.7424125 29.5844358,16.136965 29.5844358,17.7307393 C29.5844358,19.6233463 29.4848249,21.3167315 29.1859922,22.9105058 L29.1859922,22.9105058 Z" fill="#000000">
+
+				</path>
+			</g>
+			<g transform="translate(48.475508, 21.975564)">
+				<path d="M2.29105058,38.7486381 C11.4552529,74.4093385 68.5322957,65.2451362 66.340856,29.4848249 C63.7509728,-13.3478599 -6.47470817,-5.08015564 2.29105058,38.7486381" fill="#FFFFFF">
+
+				</path>
+				<path d="M67.336965,29.385214 C66.7392996,19.0256809 62.1571984,10.9571984 54.5867704,5.8770428 C47.8132296,1.29494163 38.848249,-0.498054475 29.9828794,0.59766537 C21.1175097,1.79299611 12.9494163,5.77743191 7.57042802,12.0529183 C1.59377432,19.0256809 -0.697276265,28.1898833 1.39455253,38.7486381 L2.29105058,38.5494163 L1.39455253,38.7486381 C10.7579767,75.4054475 69.5284047,66.5400778 67.336965,29.385214 L67.336965,29.385214 Z M3.18754864,38.5494163 C1.19533074,28.488716 3.38677043,19.922179 8.96498054,13.4474708 C14.0451362,7.57042802 21.7151751,3.68560311 30.1821012,2.58988327 C38.6490272,1.49416342 47.1159533,3.18754864 53.4910506,7.57042802 C60.5634241,12.351751 64.8466926,19.8225681 65.444358,29.6840467 C67.5361868,64.448249 12.0529183,72.8155642 3.18754864,38.5494163 L3.18754864,38.5494163 Z" fill="#000000">
+
+				</path>
+				<ellipse fill="#000000" cx="18.029572" cy="32.8715953" rx="9.66225681" ry="10.459144">
+
+				</ellipse>
+				<ellipse fill="#FFFFFF" cx="22.4124514" cy="35.2622568" rx="2.29105058" ry="2.68949416">
+
+				</ellipse>
+			</g>
+			<g transform="translate(129.617789, 18.097523)">
+				<path d="M1.19533074,35.9595331 C8.26770428,76.8996109 75.2062257,66.0420233 65.5439689,24.8031128 C56.877821,-12.2521401 -1.19533074,-1.9922179 1.19533074,35.9595331" fill="#FFFFFF">
+
+				</path>
+				<path d="M66.4404669,24.6038911 C57.5750973,-13.5470817 -2.19143969,-3.08793774 0.19922179,36.059144 L0.19922179,36.1587549 C3.48638132,55.4832685 20.7190661,65.3447471 39.7447471,62.1571984 C48.4108949,60.663035 56.1805447,56.4793774 61.2607004,50.3035019 C66.8389105,43.4303502 68.8311284,34.5649805 66.4404669,24.6038911 L66.4404669,24.6038911 Z M59.766537,49.1081712 C54.985214,54.8856031 47.7136187,58.8700389 39.4459144,60.2645914 C21.4163424,63.2529183 5.27937743,53.9891051 2.09182879,35.8599222 C-0.0996108949,-0.996108949 56.2801556,-10.8575875 64.6474708,25.0023346 C66.8389105,34.4653696 65.0459144,42.7330739 59.766537,49.1081712 L59.766537,49.1081712 Z" fill="#000000">
+
+				</path>
+				<ellipse fill="#000000" cx="17.6311284" cy="34.166537" rx="9.46303502" ry="10.459144">
+
+				</ellipse>
+				<ellipse fill="#FFFFFF" cx="22.0140078" cy="36.5571984" rx="2.19143969" ry="2.68949416">
+
+				</ellipse>
+			</g>
+			<g transform="translate(99.536375, 70.451072)">
+				<path d="M13.248249,12.5509728 C5.37898833,13.248249 -0.996108949,22.5120623 3.08793774,29.8832685 C8.46692607,39.6451362 20.5198444,28.9867704 27.9906615,29.9828794 C36.6568093,30.1821012 43.7291829,39.1470817 50.6023346,31.5766537 C58.2723735,23.2093385 47.3151751,15.0412451 38.6490272,11.4552529 L13.248249,12.5509728 L13.248249,12.5509728 Z" fill="#F6D2A2">
+
+				</path>
+				<path d="M51.5984436,19.2249027 C48.9089494,15.8381323 44.2272374,12.7501946 39.1470817,10.6583658 L38.9478599,10.5587549 L38.7486381,10.5587549 L13.248249,11.5548638 C4.38287938,12.351751 -1.9922179,22.6116732 2.29105058,30.381323 C3.9844358,33.3696498 6.27548638,34.8638132 9.36342412,35.063035 C11.6544747,35.1626459 14.0451362,34.6645914 17.7307393,33.3696498 C18.029572,33.2700389 18.4280156,33.170428 18.92607,32.9712062 C23.9066148,31.277821 25.8988327,30.7797665 27.8910506,31.0785992 L27.9906615,31.0785992 C30.381323,31.0785992 32.3735409,31.7758755 36.1587549,33.2700389 C40.3424125,34.9634241 41.6373541,35.4614786 43.7291829,35.6607004 C46.6178988,35.8599222 49.1081712,34.8638132 51.3992218,32.3735409 C55.2840467,28.0902724 55.0848249,23.5081712 51.5984436,19.2249027 L51.5984436,19.2249027 Z M49.9050584,30.9789883 C48.0124514,33.0708171 46.1198444,33.7680934 43.8287938,33.6684825 C42.0357977,33.5688716 40.8404669,33.0708171 36.8560311,31.4770428 C32.8715953,29.7836576 30.6801556,29.1859922 28.0902724,29.0863813 C25.6,28.7875486 23.5081712,29.2856031 18.2287938,31.0785992 C17.7307393,31.277821 17.3322957,31.3774319 17.033463,31.4770428 C9.7618677,33.9673152 6.27548638,33.7680934 3.8848249,29.385214 C0.298832685,22.9105058 5.77743191,14.1447471 13.248249,13.4474708 L38.4498054,12.4513619 C43.2311284,14.4435798 47.5143969,17.3322957 50.0046693,20.4202335 C52.9929961,24.0062257 53.092607,27.5922179 49.9050584,30.9789883 L49.9050584,30.9789883 Z" fill="#231F20">
+
+				</path>
+				<g transform="translate(11.953307, 0.000000)" fill="#000000">
+					<path d="M28.6879377,8.26770428 C25.6,-3.08793774 -0.298832685,-1.39455253 0.298832685,12.1525292 C1.59377432,22.2132296 31.6762646,19.5237354 28.6879377,8.26770428 L28.6879377,8.26770428 Z">
+
+					</path>
+				</g>
+			</g>
+		</g>
+		<g id="table" transform="scale(1)">
+			<path style="fill-rule:evenodd;clip-rule:evenodd;stroke:black;stroke-width:0" d="M5.42,0h112.04c2.98,0,5.42,2.44,5.42,5.42V97.1c0,2.98-2.44,5.42-5.42,5.42H5.42c-2.98,0-5.42-2.44-5.42-5.42 V5.42C0,2.44,2.44,0,5.42,0L5.42,0z M8.48,23.58H38.1c0.82,0,1.48,0.67,1.48,1.48v9.76c0,0.81-0.67,1.48-1.48,1.48H8.48 c-0.81,0-1.48-0.67-1.48-1.48v-9.76C6.99,24.25,7.66,23.58,8.48,23.58L8.48,23.58z M84.78,82.35h29.63c0.82,0,1.48,0.67,1.48,1.48 v9.76c0,0.81-0.67,1.48-1.48,1.48H84.78c-0.81,0-1.48-0.67-1.48-1.48v-9.76C83.29,83.02,83.96,82.35,84.78,82.35L84.78,82.35z M46.8,82.35h29.28c0.82,0,1.48,0.67,1.48,1.48v9.76c0,0.81-0.67,1.48-1.48,1.48H46.8c-0.81,0-1.48-0.67-1.48-1.48v-9.76 C45.31,83.02,45.98,82.35,46.8,82.35L46.8,82.35z M8.48,82.35H38.1c0.82,0,1.48,0.67,1.48,1.48v9.76c0,0.81-0.67,1.48-1.48,1.48 H8.48c-0.81,0-1.48-0.67-1.48-1.48v-9.76C6.99,83.02,7.66,82.35,8.48,82.35L8.48,82.35z M84.78,62.76h29.63 c0.82,0,1.48,0.67,1.48,1.48V74c0,0.81-0.67,1.48-1.48,1.48H84.78c-0.81,0-1.48-0.67-1.48-1.48v-9.76 C83.29,63.43,83.96,62.76,84.78,62.76L84.78,62.76z M46.8,62.76h29.28c0.82,0,1.48,0.67,1.48,1.48V74c0,0.81-0.67,1.48-1.48,1.48 H46.8c-0.81,0-1.48-0.67-1.48-1.48v-9.76C45.31,63.43,45.98,62.76,46.8,62.76L46.8,62.76z M8.48,62.76H38.1 c0.82,0,1.48,0.67,1.48,1.48V74c0,0.81-0.67,1.48-1.48,1.48H8.48c-0.81,0-1.48-0.67-1.48-1.48v-9.76 C6.99,63.43,7.66,62.76,8.48,62.76L8.48,62.76z M84.78,43.17h29.63c0.82,0,1.48,0.67,1.48,1.48v9.76c0,0.81-0.67,1.48-1.48,1.48 H84.78c-0.81,0-1.48-0.67-1.48-1.48v-9.76C83.29,43.84,83.96,43.17,84.78,43.17L84.78,43.17z M46.8,43.17h29.28 c0.82,0,1.48,0.67,1.48,1.48v9.76c0,0.81-0.67,1.48-1.48,1.48H46.8c-0.81,0-1.48-0.67-1.48-1.48v-9.76 C45.31,43.84,45.98,43.17,46.8,43.17L46.8,43.17z M8.48,43.17H38.1c0.82,0,1.48,0.67,1.48,1.48v9.76c0,0.81-0.67,1.48-1.48,1.48 H8.48c-0.81,0-1.48-0.67-1.48-1.48v-9.76C6.99,43.84,7.66,43.17,8.48,43.17L8.48,43.17z M84.78,23.58h29.63 c0.82,0,1.48,0.67,1.48,1.48v9.76c0,0.81-0.67,1.48-1.48,1.48H84.78c-0.81,0-1.48-0.67-1.48-1.48v-9.76 C83.29,24.25,83.96,23.58,84.78,23.58L84.78,23.58z M46.8,23.58h29.28c0.82,0,1.48,0.67,1.48,1.48v9.76c0,0.81-0.67,1.48-1.48,1.48 H46.8c-0.81,0-1.48-0.67-1.48-1.48v-9.76C45.31,24.25,45.98,23.58,46.8,23.58L46.8,23.58z"/>
+		</g>
+		<g id="row" transform="scale(1)">
+			<path style="fill-rule:evenodd;clip-rule:evenodd;stroke:black;fill:#c0c0c0;stroke-width:0" d="M8.48,23.58H38.1c0.82,0,1.48,0.67,1.48,1.48v9.76c0,0.81-0.67,1.48-1.48,1.48H8.48 c-0.81,0-1.48-0.67-1.48-1.48v-9.76C6.99,24.25,7.66,23.58,8.48,23.58L8.48,23.58z M84.78,23.58h29.63 c0.82,0,1.48,0.67,1.48,1.48v9.76c0,0.81-0.67,1.48-1.48,1.48H84.78c-0.81,0-1.48-0.67-1.48-1.48v-9.76 C83.29,24.25,83.96,23.58,84.78,23.58L84.78,23.58z M46.8,23.58h29.28c0.82,0,1.48,0.67,1.48,1.48v9.76c0,0.81-0.67,1.48-1.48,1.48 H46.8c-0.81,0-1.48-0.67-1.48-1.48v-9.76C45.31,24.25,45.98,23.58,46.8,23.58L46.8,23.58z"/>
+			<g style="font-family:courier;font-size:13;text-anchor:left;fill:black;">
+				<text class="calculated-number" x="8" y="25" dy="0.70em">0000</text>
+				<text class="calculated-number" x="46" y="25" dy="0.70em">0000</text>
+				<text class="calculated-number" x="84" y="25" dy="0.70em">0000</text>
+			</g>
+		</g>
+		<linearGradient id="a" gradientUnits="userSpaceOnUse" x1="-2031.312" y1="275.868" x2="-1922.296" y2="182.075" gradientTransform="matrix(.5625 0 0 -.568 1145.56 166.282)">
+			<stop offset="0" stop-color="#5a9fd4"/>
+			<stop offset="1" stop-color="#306998"/>
+		</linearGradient>
+		<linearGradient id="b" gradientUnits="userSpaceOnUse" x1="-1880.151" y1="125.305" x2="-1919.08" y2="180.384" gradientTransform="matrix(.5625 0 0 -.568 1145.56 166.282)">
+			<stop offset="0" stop-color="#ffd43b"/>
+			<stop offset="1" stop-color="#ffe873"/>
+		</linearGradient>
+		<radialGradient id="c" cx="-3393.238" cy="376.791" r="29.037" gradientTransform="matrix(0 -.2399 -1.0547 0 458.797 -680.1)" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#b8b8b8" stop-opacity=".498"/>
+			<stop offset="1" stop-color="#7f7f7f" stop-opacity="0"/>
+		</radialGradient>
+		<g id="python" transform="scale(0.6)">
+			<path d="M60.51 6.398c-4.584.021-8.961.412-12.812 1.094-11.346 2.005-13.406 6.2-13.406 13.938v10.219h26.812v3.406H24.229c-7.792 0-14.616 4.684-16.75 13.594-2.462 10.213-2.571 16.586 0 27.25 1.906 7.938 6.458 13.594 14.25 13.594h9.219v-12.25c0-8.85 7.657-16.656 16.75-16.656h26.781c7.455 0 13.406-6.138 13.406-13.625V21.429c0-7.266-6.13-12.725-13.406-13.938-4.607-.766-9.385-1.115-13.969-1.093zm-14.5 8.218c2.77 0 5.031 2.299 5.031 5.125 0 2.816-2.262 5.094-5.031 5.094-2.779 0-5.031-2.277-5.031-5.094 0-2.826 2.252-5.125 5.031-5.125z" fill="url(#a)"/>
+			<path d="M91.229 35.054V46.96c0 9.231-7.826 17-16.75 17H47.698c-7.336 0-13.406 6.278-13.406 13.625v25.531c0 7.267 6.318 11.541 13.406 13.625 8.487 2.496 16.626 2.947 26.781 0 6.75-1.954 13.406-5.888 13.406-13.625V92.898H61.104v-3.406h40.187c7.793 0 10.696-5.436 13.406-13.594 2.8-8.398 2.681-16.476 0-27.25-1.926-7.757-5.604-13.594-13.406-13.594H91.229zM76.166 99.71c2.779 0 5.031 2.277 5.031 5.094 0 2.826-2.252 5.125-5.031 5.125-2.77 0-5.031-2.299-5.031-5.125 0-2.816 2.262-5.094 5.031-5.094z" fill="url(#b)"/>
+		</g>
+		<g id="cloud_download" transform="scale(0.1)">
+			<path fill-rule="nonzero" d="M377.763 115.7c-9.421 2.733-18.532 6.86-27.592 12.155-9.256 5.41-18.373 12.03-27.649 19.628l-19.848-22.742c16.719-15.527 33.187-26.463 49.108-33.513-13.06-22.39-31.538-38.532-52.418-48.549-21.339-10.239-45.243-14.172-68.507-11.922-23.123 2.234-45.56 10.619-64.123 25.025-21.451 16.646-37.775 41.521-44.035 74.469l-1.957 10.309-10.271 1.801c-27.993 4.909-49.283 18.792-62.859 36.776-7.186 9.518-12.228 20.161-14.969 31.19-2.728 10.979-3.193 22.398-1.243 33.524 3.291 18.767 13.592 36.737 31.669 50.382 5.467 4.129 11.376 7.709 17.885 10.482 6.214 2.645 13.017 4.61 20.559 5.685h44.24v30.245h-44.809l-1.891-.178c-11.101-1.413-20.985-4.187-29.914-7.989-8.995-3.831-16.991-8.652-24.264-14.142-24.619-18.584-38.692-43.317-43.247-69.287-2.669-15.224-2.027-30.868 1.715-45.928 3.73-15.013 10.524-29.404 20.167-42.177 16.233-21.507 40.499-38.514 71.737-46.241 9.014-35.904 28.299-63.574 53.056-82.786C171.438 13.963 199.327 3.521 228.021.748c28.551-2.76 57.973 2.109 84.338 14.758 28.096 13.479 52.661 35.696 68.986 66.814 13.827-2.2 27.043-1.52 39.421 1.501 18.862 4.603 35.492 14.61 49.211 28.159 13.361 13.192 23.994 29.797 31.217 48.001 16.813 42.377 15.208 93.979-13.362 131.996-9.3 12.37-21.252 22.449-35.572 30.468-13.811 7.735-29.886 13.593-47.949 17.786l-3.368.414h-32.329V310.4h30.711c14.499-3.496 27.298-8.213 38.167-14.3 10.795-6.045 19.621-13.397 26.238-22.199 21.843-29.066 22.745-69.341 9.463-102.816-5.697-14.358-13.998-27.37-24.362-37.604-10.007-9.882-21.907-17.127-35.154-20.36-6.655-1.624-13.721-2.248-21.143-1.705l-14.771 4.284zM182.06 330.8c-5.288-6.392-4.394-15.861 1.997-21.148 6.391-5.288 15.86-4.394 21.148 1.997l33.15 40.027.202-146.582c0-8.273 6.707-14.98 14.98-14.98 8.274 0 14.981 6.707 14.981 14.98l-.202 146.627 34.287-41.255c5.288-6.359 14.731-7.227 21.09-1.939 6.358 5.288 7.226 14.73 1.938 21.089l-60.071 72.279a15.056 15.056 0 01-2.707 2.921c-6.391 5.288-15.86 4.394-21.148-1.997L182.06 330.8z"/>
+		</g>
+		<g id="cloud_upload" transform="scale(0.1)">
+			<path fill-rule="nonzero" d="M377.763 115.7c-9.42 2.733-18.532 6.86-27.591 12.155-9.256 5.41-18.373 12.031-27.649 19.629l-19.849-22.742c16.721-15.527 33.187-26.464 49.108-33.514-13.06-22.39-31.538-38.532-52.418-48.549-21.339-10.238-45.242-14.171-68.507-11.922-23.123 2.234-45.56 10.619-64.123 25.025-21.451 16.646-37.775 41.521-44.034 74.469l-1.959 10.309-10.27 1.801c-27.993 4.909-49.283 18.793-62.859 36.776-7.186 9.518-12.228 20.161-14.969 31.19-2.728 10.979-3.193 22.399-1.243 33.525 3.291 18.766 13.592 36.737 31.669 50.382 5.467 4.128 11.376 7.709 17.886 10.48 6.215 2.647 13.017 4.612 20.558 5.686h78.258v30.246h-78.827l-1.891-.178c-11.099-1.413-20.982-4.186-29.914-7.99-8.994-3.829-16.989-8.65-24.264-14.142C20.256 299.753 6.183 275.02 1.628 249.05c-2.669-15.225-2.027-30.868 1.715-45.929 3.73-15.012 10.524-29.404 20.167-42.177 16.233-21.507 40.501-38.514 71.737-46.241 9.014-35.904 28.299-63.573 53.057-82.786C171.438 13.963 199.327 3.521 228.021.748c28.551-2.76 57.975 2.11 84.339 14.758 28.095 13.479 52.661 35.696 68.986 66.815 13.827-2.201 27.042-1.521 39.42 1.5 18.862 4.603 35.493 14.611 49.212 28.159 13.36 13.193 23.994 29.797 31.216 48.001 16.814 42.377 15.209 93.978-13.361 131.996-9.299 12.37-21.252 22.45-35.572 30.468-13.811 7.735-29.884 13.593-47.949 17.787l-3.368.414h-66.346V310.4h64.727c14.501-3.496 27.297-8.212 38.168-14.299 10.794-6.045 19.62-13.396 26.238-22.2 21.842-29.066 22.745-69.34 9.463-102.815-5.698-14.359-13.999-27.371-24.363-37.605-10.007-9.882-21.906-17.126-35.154-20.36-6.654-1.625-13.721-2.248-21.145-1.705l-14.769 4.284zM205.205 265.348c-5.288 6.391-14.756 7.285-21.148 1.997-6.391-5.288-7.285-14.757-1.997-21.148l59.645-72.019c5.288-6.392 14.757-7.285 21.148-1.998a15.053 15.053 0 012.707 2.921l60.072 72.279c5.287 6.359 4.42 15.802-1.939 21.09-6.359 5.287-15.801 4.42-21.089-1.939l-34.288-41.256.202 146.628c0 8.273-6.707 14.98-14.98 14.98-8.274 0-14.981-6.707-14.981-14.98l-.202-146.582-33.15 40.027z"/>
+		</g>
+		<g id="file" transform="scale(0.35)">
+			<path fill-rule="nonzero" d="M26.18 0h221.14c3.1 0 5.85 1.51 7.56 3.84l122.88 145.08a9.27 9.27 0 0 1 2.21 6.05l.03 330.55c0 7.13-2.98 13.68-7.72 18.42l-.03.04c-4.75 4.74-11.29 7.72-18.43 7.72H26.18c-7.13 0-13.69-2.96-18.45-7.71l-.03-.04C2.97 499.22 0 492.69 0 485.52V26.18C0 19 2.95 12.46 7.68 7.72l.04-.04C12.46 2.95 19 0 26.18 0zm335.06 164.7c-134.78-5.58-134.35-17.38-129.82-134.02l.45-11.92H26.18c-2.05 0-3.91.83-5.26 2.16a7.482 7.482 0 0 0-2.16 5.26v459.34c0 2.02.84 3.88 2.18 5.23 1.36 1.35 3.22 2.19 5.24 2.19h327.64c2.01 0 3.86-.85 5.22-2.2 1.35-1.36 2.2-3.21 2.2-5.22V164.7zM250.25 27.32l-.15 4.01c-3.73 96.04-4.22 109.01 100.23 114.16L250.25 27.32z"/>
+		</g>
+		<g id="formula" transform="scale(0.4)">
+			<path d="M27.61,34.37l-4.07,4.6l0.4,1.74h10.48c-2.14,12.38-3.74,23.54-6.81,40.74c-3.67,21.94-5.78,27.33-7.03,29.3 c-1.1,1.95-2.68,2.96-4.82,2.96c-2.35,0-6.6-1.86-8.88-3.97c-0.82-0.56-1.79-0.42-2.82,0.26C2,111.74,0,114.42,0,116.82 c-0.12,3.24,4.21,6.06,8.34,6.06c3.64,0,9-2.28,14.64-7.64c7.71-7.31,13.48-17.34,18.3-39.02c3.1-13.84,4.56-22.84,6.74-35.5 l13.02-1.18l2.82-5.17H49.2C52.99,10.53,55.95,7,59.59,7c2.42,0,5.24,1.86,8.48,5.52c0.96,1.32,2.4,1.18,3.5,0.28 c1.85-1.1,4.13-3.92,4.28-6.48C75.96,3.5,72.6,0,66.82,0C61.58,0,53.55,3.5,46.8,10.38c-5.92,6.27-9.02,14.1-11.16,23.99H27.61 L27.61,34.37z M69.27,50.33c4.04-5.38,6.46-7.17,7.71-7.17c1.29,0,2.32,1.27,4.53,8.41l3.78,12.19 c-7.31,11.18-12.66,17.41-15.91,17.41c-1.08,0-2.17-0.34-2.94-1.1c-0.76-0.76-1.6-1.39-2.42-1.39c-2.68,0-6,3.25-6.06,7.28 c-0.06,4.11,2.82,7.05,6.6,7.05c6.49,0,11.98-6.37,22.58-23.26l3.1,10.45c2.66,8.98,5.78,12.81,9.68,12.81 c4.82,0,11.3-4.11,18.37-15.22l-2.96-3.38c-4.25,5.12-7.07,7.52-8.74,7.52c-1.86,0-3.49-2.84-5.64-9.82l-4.53-14.73 c2.68-3.95,5.32-7.27,7.64-9.92c2.76-3.15,4.89-4.49,6.34-4.49c1.22,0,2.28,0.52,2.94,1.25c0.87,0.96,1.39,1.41,2.42,1.41 c2.33,0,5.93-2.96,6.06-6.88c0.12-3.64-2.14-6.74-6.06-6.74c-5.92,0-11.14,5.1-21.19,20.04l-2.07-6.41 c-2.9-9-4.82-13.63-8.86-13.63c-4.7,0-11.16,5.78-17.48,14.94L69.27,50.33L69.27,50.33z"/>
+		</g>
+		<g id="capiscript" transform="scale(0.12)">
+			<path fill-rule="nonzero" d="M271.099 21.308C274.787 6.304 289.956-2.873 304.96.815c15.005 3.688 24.181 18.857 20.493 33.862l-68.491 275.632c-3.689 15.005-18.857 24.181-33.862 20.493-15.005-3.688-24.181-18.857-20.493-33.862l68.492-275.632zm-118.45 224.344c11.616 10.167 12.795 27.834 2.628 39.45-10.168 11.615-27.835 12.794-39.45 2.627L9.544 194.604C-2.071 184.437-3.25 166.77 6.918 155.155c.873-.997 1.8-1.912 2.767-2.75l106.142-93.001c11.615-10.168 29.282-8.989 39.45 2.626 10.167 11.616 8.988 29.283-2.628 39.45l-82.27 72.086 82.27 72.086zm243.524 42.077c-11.615 10.167-29.282 8.988-39.45-2.627-10.167-11.616-8.988-29.283 2.628-39.45l82.27-72.086-82.27-72.086c-11.616-10.167-12.795-27.834-2.628-39.45 10.168-11.615 27.835-12.794 39.45-2.626l106.142 93.001a28.366 28.366 0 012.767 2.75c10.168 11.615 8.989 29.282-2.626 39.449l-106.283 93.125z"/>
+		</g>
+		<g id="worker" transform="scale(2.3)">
+			<path style="fill-rule:evenodd;clip-rule:evenodd;" d="M8.32,0h106.24c4.58,0,8.32,3.74,8.32,8.32v74.62c0,4.57-3.74,8.32-8.32,8.32H8.32C3.74,91.26,0,87.51,0,82.94 V8.32C0,3.74,3.74,0,8.32,0L8.32,0z M117.97,23.29H5.29v60.46 c0,0.64,0.25,1.2,0.67,1.63c0.42,0.42,0.99,0.67,1.63,0.67h108.04c0.64,0,1.2-0.25,1.63-0.67c0.43-0.43,0.67-0.99,0.67-1.63V23.29 H117.97L117.97,23.29z M106.64,9.35c2.27,0,4.11,1.84,4.11,4.11c0,2.27-1.84,4.11-4.11,4.11c-2.27,0-4.11-1.84-4.11-4.11 C102.54,11.19,104.38,9.35,106.64,9.35L106.64,9.35z M78.8,9.35c2.27,0,4.11,1.84,4.11,4.11c0,2.27-1.84,4.11-4.11,4.11 c-2.27,0-4.11-1.84-4.11-4.11C74.69,11.19,76.53,9.35,78.8,9.35L78.8,9.35z M92.72,9.35c2.27,0,4.11,1.84,4.11,4.11 c0,2.27-1.84,4.11-4.11,4.11c-2.27,0-4.11-1.84-4.11-4.11C88.61,11.19,90.45,9.35,92.72,9.35L92.72,9.35"/>
+		</g>
+		<g id="rabbitmq" transform="scale(0.12)">
+			<path d="M245.44 108.308h-85.09a7.738 7.738 0 0 1-7.735-7.734v-88.68C152.615 5.327 147.29 0 140.726 0h-30.375c-6.568 0-11.89 5.327-11.89 11.894v88.143c0 4.573-3.697 8.29-8.27 8.31l-27.885.133c-4.612.025-8.359-3.717-8.35-8.325l.173-88.241C54.144 5.337 48.817 0 42.24 0H11.89C5.321 0 0 5.327 0 11.894V260.21c0 5.834 4.726 10.56 10.555 10.56H245.44c5.834 0 10.56-4.726 10.56-10.56V118.868c0-5.834-4.726-10.56-10.56-10.56zm-39.902 93.233c0 7.645-6.198 13.844-13.843 13.844H167.69c-7.646 0-13.844-6.199-13.844-13.844v-24.005c0-7.646 6.198-13.844 13.844-13.844h24.005c7.645 0 13.843 6.198 13.843 13.844v24.005z" fill="#F60"/>
+		</g>
+		<g id="envelopes" transform="scale(1.08)">
+			<path d="M6.09,0h93.94c1.67,0,3.2,0.69,4.3,1.79c1.1,1.1,1.79,2.63,1.79,4.3v64.56c0,1.26-0.39,2.44-1.05,3.41 c-0.12,0.31-0.31,0.61-0.57,0.86c-0.17,0.16-0.36,0.3-0.57,0.4c-1.06,0.88-2.42,1.42-3.89,1.42H6.09c-1.67,0-3.2-0.68-4.3-1.79 C0.69,73.84,0,72.32,0,70.64V6.09c0-1.68,0.68-3.2,1.79-4.3C2.89,0.68,4.41,0,6.09,0L6.09,0L6.09,0z M116.79,95.02H18.43 c-1.67,0-3.2-0.69-4.3-1.79c-1.1-1.1-1.79-2.63-1.79-4.3v-6.12h4.62v7.54h101.36V18.54h-6.16v-4.67h4.62c1.67,0,3.2,0.68,4.3,1.79 c1.1,1.1,1.79,2.62,1.79,4.3v68.98c0,1.68-0.68,3.2-1.79,4.3C119.99,94.34,118.47,95.02,116.79,95.02L116.79,95.02L116.79,95.02z M4.67,68.08l32.92-33L4.67,8.24V68.08L4.67,68.08L4.67,68.08z M41.22,38.03L7.27,72.06h91.28L66.12,38.04l-10.69,9.11l0,0 c-0.84,0.72-2.09,0.76-2.98,0.04L41.22,38.03L41.22,38.03L41.22,38.03z M69.67,35.02l31.78,33.33V7.94L69.67,35.02L69.67,35.02 L69.67,35.02z M7.66,4.67l46.22,37.68L98.11,4.67H7.66L7.66,4.67L7.66,4.67z"/>
+		</g>
+		<g id="closed_envelope" transform="scale(1.08)">
+			<rect  x="3" y="3" width="100" height="72" fill="white"/>
+			<path d="M6.09,0h93.94c1.67,0,3.2,0.69,4.3,1.79c1.1,1.1,1.79,2.63,1.79,4.3v64.56c0,1.26-0.39,2.44-1.05,3.41 c-0.12,0.31-0.31,0.61-0.57,0.86c-0.17,0.16-0.36,0.3-0.57,0.4c-1.06,0.88-2.42,1.42-3.89,1.42H6.09c-1.67,0-3.2-0.68-4.3-1.79 C0.69,73.84,0,72.32,0,70.64V6.09c0-1.68,0.68-3.2,1.79-4.3C2.89,0.68,4.41,0,6.09,0L6.09,0L6.09,0z M4.67,68.08l32.92-33L4.67,8.24V68.08L4.67,68.08L4.67,68.08z M41.22,38.03L7.27,72.06h91.28L66.12,38.04l-10.69,9.11l0,0 c-0.84,0.72-2.09,0.76-2.98,0.04L41.22,38.03L41.22,38.03L41.22,38.03z M69.67,35.02l31.78,33.33V7.94L69.67,35.02L69.67,35.02 L69.67,35.02z M7.66,4.67l46.22,37.68L98.11,4.67H7.66L7.66,4.67L7.66,4.67z"/>
+		</g>
+		<g id="open_envelope"  transform="scale(0.97) translate(0,-5)">
+		 	<path fill="black" d="M12.391,46.025l34.225,30.572c0.038,0.035,0.111,0.074,0.148,0.146L58.306,87.07l46.616-40.713V34.359L77.188,5.458H12.391 V46.025L12.391,46.025L12.391,46.025z M110.417,41.562c0.738-0.628,1.585-0.922,2.434-0.922c0.738,0,1.401,0.221,2.065,0.59 c0.479,0.294,0.886,0.663,1.255,1.07c0.958,1.105,1.696,2.838,1.696,4.278v70.66c0,1.551-0.628,2.951-1.66,3.984 c-1.033,1.031-2.435,1.658-3.981,1.658H5.642c-1.547,0-2.949-0.627-3.981-1.658C0.628,120.189,0,118.789,0,117.238v-70.66 c0-1.439,0.738-3.21,1.733-4.315c0.369-0.407,0.773-0.773,1.253-1.032c0.627-0.369,1.291-0.59,2.029-0.59 c0.663,0,1.326,0.184,1.954,0.553V2.728C6.97,1.216,8.188,0,9.7,0h69.222c0.85,0,1.623,0.367,2.103,0.995l28.654,29.613 c0.517,0.518,0.776,1.219,0.776,1.919v0.773c0,0.111,0.035,0.221,0.035,0.332s0,0.221-0.035,0.332V41.6L110.417,41.562 L110.417,41.562z M56.462,92.752L44.845,82.35L5.42,116.906v0.295c0,0.037,0,0.109,0.038,0.109 c0.038,0.039,0.073,0.039,0.111,0.039H112.15c0.037,0,0.11,0,0.11-0.039c0.037-0.035,0.037-0.072,0.037-0.109v-0.184L72.321,81.98 L60.004,92.713c-1.033,0.885-2.583,0.922-3.615-0.037L56.462,92.752L56.462,92.752z M40.716,78.701L5.385,47.13v62.51 L40.716,78.701L40.716,78.701z M112.336,109.789V47.13L76.525,78.404L112.336,109.789L112.336,109.789z"/>
+		</g>
+
+		<g id="cassandra" transform="scale(0.5)">
+			<path fill="#bae6fa" d="M63.797 38.701c-12.142.273-24.5 4.01-38.479 11.752-2.538 2.933-3.848 6.112-3.57 9.34.94 10.97 19.725 18.315 41.956 16.408 22.235-1.908 39.495-12.346 38.554-23.313-.177-2.058-.982-3.99-2.32-5.755-12.72-5.7-24.335-8.699-36.14-8.432Z"/><path fill="#fff" d="M65.369 38.684c-9.877-.018-19.85 2.232-30.689 7.062-.455 1.74-.7 3.55-.7 5.415 0 13.01 11.748 23.559 26.24 23.559 14.49 0 26.239-10.548 26.239-23.559 0-3.506-.862-6.83-2.393-9.82-6.32-1.722-12.49-2.645-18.697-2.657Z" opacity=".35"/><path fill="#fff" d="M60.22 37.763c-4.697-.287-12.79 2.163-19.537 4.607a20.031 20.031 0 0 0-1.594 7.846c0 11.4 10.335 20.642 21.268 20.642 10.86 0 20.47-9.258 21.268-20.64.26-3.709-1.017-7.2-2.787-10.214-6.997-1.23-14.42-1.984-18.619-2.24"/><path fill="#353333" d="M48.17 48.72c.576-1.276 1.448-1.9 2.293-2.969-.093-.253-.3-1.082-.3-1.37a2.322 2.322 0 0 1 3.178-2.155 16.913 16.913 0 0 1 13.986-3.07c.466.105.92.231 1.367.371-5.025-.697-10.688 1.083-14.54 4.192.117.277.443 1.07.443 1.391 0 1.282-.829 1.593-2.11 1.593-.293 0-.57-.056-.828-.153-.87 1.168-1.937 3.394-2.459 4.786 2.13 1.906 4.056 2.595 6.563 3.534-.005-.12.086-.23.086-.352 0-3.866 3.403-7.007 7.27-7.007a6.993 6.993 0 0 1 6.892 5.824c1.73-1.1 3.4-1.943 4.674-3.573-.296-.362-.618-1.39-.618-1.895 0-1.162.944-2.105 2.109-2.105.164 0 .322.023.477.06a18.418 18.418 0 0 0 1.445-4.192c-6.045-4.474-17.74-3.863-17.74-3.863s-9.308-.486-15.608 2.584c.42 3.038 1.632 5.925 3.42 8.37"/><path fill="#353333" d="M77.062 46.977c.429.384.662.723.844 1.052.567 1.016-.568 1.947-1.73 1.947a2.12 2.12 0 0 1-.347-.035c-1.311 2.047-3.606 4.674-5.646 5.996 3.128.513 6.077 1.764 8.424 3.7 1.708-3.063 3.02-7.483 3.02-11.237 0-2.86-1.264-4.955-3.167-6.492-.101 1.531-.92 3.674-1.398 5.07m-25.384 19.39c1.041-2.877 3.605-5.107 6.03-7.068-.356-.486-.887-1.688-1.108-2.258a16.965 16.965 0 0 1-7.605-4.812c-.013.065-.03.13-.048.194a15.34 15.34 0 0 0-.26 5.102 3.047 3.047 0 0 1 2.486 2.998c0 .885-.777 2.166-1.378 2.725.655 1.413 1.1 2.095 1.883 3.12"/><path fill="#353333" d="M51.495 68.785c-1.244-1.237-2.103-3.702-2.91-5.25a2.93 2.93 0 0 1-.463.04c-1.686 0-3.452-1.416-3.052-3.053.222-.906.846-1.498 1.865-1.992-.233-1.877-.296-4.575.14-6.525.125-.557.39-.82.566-1.35-1.86-2.723-3.063-6.296-3.063-9.839 0-.13.008-.257.01-.385-3.143 1.576-5.5 4.06-5.5 7.967 0 8.648 4.98 17.132 12.39 20.456.006-.023.01-.047.017-.07M69.717 56.83a6.997 6.997 0 0 1-6.599 4.68 6.95 6.95 0 0 1-4.318-1.5c-2.454 1.91-4.68 5.267-5.81 8.179.506.545.86.996 1.43 1.48 1.716.448 4.08 0 5.937 0 7.473 0 14.09-3.325 17.883-9.153-2.523-1.747-5.498-3.409-8.523-3.686"/><path fill="#1185b0" d="M47.978 49.73a16.908 16.908 0 0 1 2.143-3.524 2.323 2.323 0 0 1 2.174-3.135c.301 0 .59.06.855.165a16.922 16.922 0 0 1 15.353-2.698c-5.026-.696-10.217.843-14.07 3.952a2.322 2.322 0 0 1-2.966 3.07 15.664 15.664 0 0 0-2.103 3.852c1.83 1.971 4.074 3.53 6.582 4.468-.006-.12-.017-.237-.017-.36a6.997 6.997 0 0 1 6.997-6.999c3.466 0 6.335 2.52 6.895 5.824a18.132 18.132 0 0 0 4.537-4.142 2.086 2.086 0 0 1-.481-1.324c0-1.164.943-2.107 2.107-2.107.164 0 .322.024.477.06a18.403 18.403 0 0 0 1.445-4.19c-6.043-4.477-17.74-3.866-17.74-3.866s-9.308-.486-15.608 2.586c.421 3.037 1.632 5.926 3.42 8.368"/><path fill="#1185b0" d="M77.388 47.321c.429.384.703.937.703 1.558a2.108 2.108 0 0 1-2.107 2.107c-.118 0-.233-.017-.347-.036a17.043 17.043 0 0 1-5.087 5.118 17.025 17.025 0 0 1 8.198 3.684 21.158 21.158 0 0 0 2.687-10.342c0-2.86-1.263-4.954-3.167-6.49-.1 1.53-.4 3.006-.88 4.401M52 67.06a16.978 16.978 0 0 1 5.278-7.42 6.971 6.971 0 0 1-.87-1.586 16.965 16.965 0 0 1-7.603-4.812c-.015.065-.033.128-.048.192a15.295 15.295 0 0 0-.263 5.102A3.05 3.05 0 0 1 50 63.773a18.331 18.331 0 0 0 2 3.287"/><path fill="#1185b0" d="M51.486 68.749a16.96 16.96 0 0 1-3.09-4.202 3 3 0 0 1-.466.039 3.053 3.053 0 0 1-3.052-3.053c0-1.209.705-2.25 1.724-2.744a16.884 16.884 0 0 1 .283-5.773 17.13 17.13 0 0 1 .45-1.633 16.885 16.885 0 0 1-2.948-9.557c0-.129.007-.257.01-.386-3.144 1.576-5.5 4.061-5.5 7.97 0 8.647 5.164 16.085 12.574 19.41l.015-.071m18.039-10.91a6.997 6.997 0 0 1-6.599 4.68 6.96 6.96 0 0 1-4.318-1.498c-2.454 1.911-4.305 4.515-5.436 7.426a18.67 18.67 0 0 0 1.62 1.547 21.38 21.38 0 0 0 5.373.685c7.473 0 14.04-3.858 17.834-9.686-2.522-1.747-5.448-2.876-8.474-3.154"/><path fill="#fff" d="m60.95 49.56-3.663-6.55 1.982 6.953-5.942-4.32 4.655 5.848-7.377-2.713 5.821 4.307-7.464.23 7.632 1.97-7.64 1.653 7.541.545-6.36 4.073 6.55-2.374-4.545 5.756 5.741-4.632-2.066 7.722 4.432-6.284-.622 7.423 2.517-6.73 2.143 7.072.52-7.093 3.18 6.052-1.878-6.92 5.82 4.508-3.758-5.75 6.386 2.49-4.883-4.8 6.548.514-6.45-2.474 6.467-1.542-6.49-.332 5.28-4.037-5.992 2.148 4.073-5.645-5.626 3.74 1.967-6.608-3.864 5.447-.087-6.884-2.544 6.131-2.118-6.203zm0 0"/><path fill="#353333" d="M.93 68.41C20.982 48.354 37 42.164 51.535 39.337c1.925-.374 2.288-4.577 2.288-4.577s.268 3.096 1.615 3.5c1.345.403 3.096-4.847 3.096-4.847s-1.615 4.711 0 4.982c1.615.268 4.575-4.578 4.575-4.578s-1.21 4.173-.402 4.442c.807.27 4.844-6.057 4.844-6.057s-2.421 4.173-.134 4.577c2.29.405 5.628-2.848 5.628-2.848s-2.625 2.975-1.455 3.387c4.98 1.75 9.01-4.723 9.01-4.723s-.934 2.838-3.356 5.934c5.248 1.347 9.147-6.56 9.147-6.56l-3.9 7.907c2.02 1.076 10.096-8.21 10.096-8.21s-4.173 7.267-6.595 8.746c1.345 1.08 6.19-3.228 6.19-3.228s-3.902 4.843-2.421 5.113c2.153 1.75 10.093-9.018 10.093-9.018s-3.094 6.326-7.672 11.306c3.825 1.913 13.326-10.363 13.326-10.363s-.27 3.902-7.133 10.095c5.113-.673 11.71-10.364 11.71-10.364s-2.424 7.268-8.212 12.381c5.022-.52 13.055-12.92 13.055-12.92s-3.096 8.613-9.42 13.594c6.998 1.55 17.093-8.884 17.093-8.884s-3.971 7.404-9.152 10.433c5.788 2.22 13.728-6.932 13.728-6.932s-7.94 12.248-20.593 11.71c-4.15-.177-16.706-12.595-43.609-11.576C27.445 43.106 19.906 58.18.93 68.41" opacity=".35"/><path fill="#353333" d="M93.409 30.142s-8.075 9.287-10.095 8.21l3.899-7.908s-3.9 7.907-9.146 6.562c2.42-3.096 3.355-5.935 3.355-5.935s-4.03 6.474-9.01 4.723c-1.17-.41 1.455-3.385 1.455-3.385s-3.34 3.251-5.627 2.847c-2.288-.403.134-4.576.134-4.576s-4.037 6.327-4.847 6.057c-.806-.268.405-4.442.405-4.442s-2.96 4.846-4.575 4.577c-1.615-.27 0-4.98 0-4.98s-1.75 5.25-3.096 4.845c-1.347-.403-1.615-3.499-1.615-3.499s-.364 4.203-2.288 4.575c-14.536 2.828-30.553 9.02-50.608 29.073 18.977-10.23 26.514-25.304 62.047-26.649 26.903-1.02 39.458 11.397 43.609 11.574 12.653.54 20.594-11.71 20.594-11.71s-7.941 9.152-13.73 6.931c5.183-3.027 9.153-10.43 9.153-10.43s-10.095 10.43-17.092 8.882c6.324-4.979 9.419-13.59 9.419-13.59s-8.033 12.397-13.055 12.92c5.788-5.115 8.21-12.385 8.21-12.385s-6.595 9.692-11.71 10.366c6.866-6.192 7.136-10.095 7.136-10.095s-9.5 12.276-13.325 10.363c4.573-4.98 7.67-11.306 7.67-11.306s-7.94 10.768-10.094 9.018c-1.481-.27 2.424-5.115 2.424-5.115s-4.845 4.307-6.192 3.23c2.422-1.48 6.594-8.748 6.594-8.748zm12.916 22.638c-1.354-.092-2.548.414-3.158 2.075C96.907 66.767 83.785 73.43 68.44 75.65c-15.344 2.22-26.65-1.006-35.937-3.623C20.29 68.583 10.6 74.709 0 69.392c2.452 1.94 5.25 3.836 13.325 3.86 2.738.01 11.507-.43 13.122.983 1.615 1.414-5.45 8.076-5.45 8.076s11.955-10.108 13.122-6.662c.726 2.145-3.432 7.875-3.432 7.875s4.17-5.658 7.27-6.865c2.126-.83 3.92-.73 5.45 1.414 1.01 1.412-4.845 8.277-4.845 8.277s7.872-7.671 9.286-7.267c1.414.402 0 7.267 0 7.267s2.896-6.956 4.44-7.47c2.12-.706-4.845 16.15-4.845 16.15s8.507-15.595 10.095-15.946c2.726-.606 4.544 10.9 4.544 10.9s-1.328-10.052.1-10.7c9.04-4.09 3.838 17.363 3.838 17.363s5.912-14.558 2.28-17.787c9.588 6.358 8.42 17.787 8.42 17.787s2.52-5.442-4.552-18.823c3.838-.2 9.596 9.94 9.596 9.94s-6.257-11.104-2.017-11.305c8.424-.4 9.287 14.737 9.287 14.737s2.523-2.12-4.24-16.96c4.306-2.758 14.738 13.73 14.738 13.73s-9.623-16.084-8.075-17.161c1.546-1.077 7.202 5.116 7.202 5.116s-4.307-5.922-3.165-6.528c1.144-.607 12.586 11.777 12.586 11.777s-10.096-12.115-8.346-13.596c1.035-.877 4.035.745 6.325 2.216-3.21-2.296-7.821-5.889-6.325-6.666 3.096-1.607 11.913 3.844 11.913 3.844s-5.317-4.374-4.443-5.45c.875-1.078 11.305 6.864 11.305 6.864s-9.22-7.27-9.69-9.086c-.472-1.816 7.27.606 7.27.606s-8.548-3.97-8.682-5.114c-.136-1.146 5.652 1.278 5.652 1.278s-3.754-3.086-6.734-3.286zm-.266 17.01a109.786 109.786 0 0 0 2.827 1.956s-1.25-.942-2.827-1.956z"/><path fill="#353333" d="M.404 70.603c10.598 5.317 20.29-.807 32.504 2.634 9.286 2.617 20.592 5.846 35.935 3.623 15.345-2.218 28.467-8.882 34.728-20.794 1.95-5.317 9.892 1.21 9.892 1.21s-5.788-2.42-5.654-1.277c.136 1.144 8.68 5.113 8.68 5.113s-7.737-2.42-7.266-.605c.472 1.818 9.689 9.086 9.689 9.086s-10.428-7.942-11.304-6.866c-.875 1.077 4.44 5.454 4.44 5.454s-8.814-5.454-11.91-3.845c-2.226 1.155 9.152 8.623 9.152 8.623s-7.403-5.653-9.152-4.172c-1.75 1.48 8.346 13.593 8.346 13.593S97.04 69.997 95.898 70.603c-1.146.605 3.163 6.527 3.163 6.527s-5.654-6.19-7.2-5.113c-1.548 1.077 8.076 17.159 8.076 17.159s-10.432-16.487-14.74-13.728c6.765 14.838 4.24 16.96 4.24 16.96s-.862-15.14-9.286-14.74c-4.24.202 2.018 11.307 2.018 11.307s-5.76-10.142-9.596-9.94c7.07 13.38 4.55 18.82 4.55 18.82S78.29 86.432 68.7 80.072c3.634 3.23-2.28 17.787-2.28 17.787s5.204-21.453-3.836-17.363c-1.429.646-.1 10.7-.1 10.7s-1.819-11.51-4.542-10.901c-1.59.352-10.095 15.948-10.095 15.948s6.965-16.858 4.845-16.15c-1.544.515-4.44 7.47-4.44 7.47s1.411-6.864 0-7.268c-1.415-.405-9.289 7.268-9.289 7.268s5.857-6.864 4.845-8.278c-1.53-2.142-3.323-2.243-5.45-1.414-3.097 1.207-7.268 6.865-7.268 6.865s4.158-5.73 3.432-7.875C33.356 73.415 21.4 83.525 21.4 83.525s7.065-6.664 5.45-8.076c-1.615-1.414-10.385-.976-13.122-.983C5.653 74.44 2.855 72.545.403 70.604" opacity=".35"/>
+		</g>
+		<g id="vert_curve">
+		<path d="M 0,-10 Q 50,250 0,500 T 0,1010" style="stroke-width:60;"/>
+		</g>
+		<g id="short_diag">
+		<path d="M 26,250 Q 10,375 125,500 T 225,750" style="stroke-width:55;"/>
+		</g>
+		<g id="capillaries"  transform="scale(0.03)">
+		<rect x="0" y="0" width="1000" height="1000" stroke-width="0" fill="white"/>
+		<g style="fill: none; stroke:black" transform="scale(1.5,1) translate(-166,0)">
+			<use x="250" y="0" xlink:href="#vert_curve"/>
+			<use x="500" y="0" xlink:href="#vert_curve"/>
+			<use x="750" y="0" xlink:href="#vert_curve"/>
+			<use x="500" y="0" xlink:href="#short_diag"/>
+			<use x="250" y="0" xlink:href="#short_diag"/>
+		</g>
+		</g>
+	</defs>
+	<rect fill="white" width="1200" height="700" x="0" y="0"/>
+
+	<g id="db" opacity="0">
+		<use x="40" y="-7" href="#cassandra"/>
+		<text x="110" y="10" style="font-size:36" dy="0.70em">DB</text>
+	</g>
+	<g id="header_capillaries" opacity="0">
+		<use x="500" y="5" href="#capillaries"/>
+		<text x="540" y="10" style="font-size:36" dy="0.70em">Capillaries</text>
+	</g>
+	<text x="980" y="10" style="font-size:36" dy="0.70em" id="user_data" opacity="0">User data</text>
+
+	<g id="source_table" opacity="0">
+		<text x="30" y="60" dy="0.70em">Source table</text>
+		<use x="40" y="90" href="#table"/>
+	</g>
+
+	<g id="chunk_data" opacity="0">
+	</g>
+
+	<g id="lookup_table" opacity="0">
+		<text x="30" y="220" dy="0.70em">Lookup table</text>
+		<use x="40" y="250" href="#table"/>
+	</g>
+	<g id="lookup_data" opacity="0">
+	</g>
+
+	<g id="target_table" opacity="0">
+		<text x="30" y="380" dy="0.70em">Target table</text>
+		<use x="40" y="410" href="#table"/>
+	</g>
+
+	<g id="worker1" opacity="0">
+		<use x="330" y="60" href="#worker"/>
+		<text x="350" y="80" dy="0.70em" fill="white">Worker 1</text>
+	</g>
+
+	<g id="worker2" opacity="0">
+		<use x="630" y="60" href="#worker"/>
+		<text x="650" y="80" dy="0.70em" fill="white">Worker 2</text>
+	</g>
+
+	<g id="queue" opacity="0">
+		<use x="460" y="355" href="#rabbitmq"/>
+		<text x="500" y="360" style="font-size:36" dy="0.70em">Message queue</text>
+		<use x="570" y="410" href="#envelopes"/>
+
+		<g id="open_envelope_1" style="font-size:18" opacity="0">
+			<use x="350" y="127" href="#open_envelope"/>
+			<text x="480" y="130"  dy="0.70em">Script: &lt;/&gt;</text>
+			<text x="480" y="170"  dy="0.70em">Transform:</text>
+			<text id="msg_11" x="480" y="190"  dy="0.70em">Read</text>
+			<text id="msg_12" x="480" y="210"  dy="0.70em">from file</text>
+		</g>
+		
+		<g id="open_envelope_2" style="font-size:18" opacity="0">
+			<use x="650" y="127" href="#open_envelope"/>
+			<text x="780" y="130"  dy="0.70em">Script: &lt;/&gt;</text>
+			<text x="780" y="170"  dy="0.70em">Transform:</text>
+			<text id="msg_21" x="780" y="190"  dy="0.70em">Python</text>
+			<text id="msg_22" x="780" y="210"  dy="0.70em">calculations</text>
+		</g>
+	</g>
+
+	<g opacity="0">
+		<use x="520" y="180" id="gopher_calc_1" href="#gopher"/>
+		<use x="820" y="180" id="gopher_calc_2" href="#gopher"/>
+		<animate id="gopherCalcAnimation" begin="indefinite" attributeName="opacity" values="0;1;1;0" keyTimes="0;0.2;0.8;1" dur="1s" fill="freeze"/>
+	</g>
+
+	<g opacity="0">
+		<use x="500" y="175" id="python_calc_1" href="#python"/>
+		<use x="800" y="175" id="python_calc_2" href="#python"/>
+		<animate id="pythonCalcAnimation" begin="indefinite" attributeName="opacity" values="0;1;1;0" keyTimes="0;0.2;0.8;1" dur="1s" fill="freeze"/>
+	</g>
+
+	<g id="capillaries_script" opacity="0">
+		<text x="980" y="60" dy="0.70em">Capillaries script</text>
+		<use x="1010" y="90" href="#file"/>
+		<use x="1020" y="100" href="#cloud_download"/>
+		<use x="1045" y="180" href="#capiscript"/>
+	</g>
+
+	<g id="python_formulas" opacity="0">
+		<text x="980" y="300" dy="0.70em">Python formulas</text>
+		<use x="1010" y="330" href="#file"/>
+		<use x="1020" y="340" href="#cloud_download"/>
+		<use x="1050" y="410" href="#formula"/>
+	</g>
+
+	<g id="source_data" opacity="0">
+		<text x="1000" y="300" dy="0.70em">Source data</text>
+		<use x="1010" y="330" href="#file"/>
+		<use x="1020" y="340" href="#cloud_download"/>
+
+	</g>
+
+	<g id="result_data" opacity="0">
+		<text x="1000" y="300" dy="0.70em">Result data</text>
+		<use x="1010" y="330" href="#file"/>
+		<use x="1020" y="340" href="#cloud_upload"/>
+	</g>
+
+	<g id="how_run" opacity="0">
+		<text x="100" y="200" style="font-size:72" dy="0.70em" id="how_run" opacity="1">Distributed data processing</text>
+		<text x="350" y="300" style="font-size:72" dy="0.70em"  opacity="1">with Capillaries</text>
+	</g>
+
+	<g id="ui" opacity="0">
+		<use x="400" y="65" href="#worker" transform="scale(1.3) translate(-60, -20)"/>
+		<text x="460" y="90" dy="0.70em" fill="white">UI/API/Toolbelt</text>
+		<text x="465" y="150"  dy="0.70em">User:</text>
+		<text x="465" y="180"  dy="0.70em">Run that Capillaries script!</text>
+		<use x="570" y="180" href="#closed_envelope" opacity="0">
+			<animateMotion id="aniSendMove" begin="indefinite" keyPoints="0;1" keyTimes="0;1"  path="M0 0 L0 230" dur="0.5s" repeatCount="indefinite"/>
+			<animate id="aniSendOpacity" begin="indefinite" attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="0.5s" repeatCount="indefinite"/>
+		</use>
+	</g>
+
+    <text x="10" y="618" dy="0.70em" id="node_desc" ></text>
+	<text x="10" y="665" dy="0.70em" id="action_desc"></text>
+
+	<g style="font-size:18" id="tfmNavigator" transform="translate(470,610)" opacity="0">
+		<rect x="0" y="0"   id="tfmStart"  class="stage stage-active" width="65" height="30"/>
+		<rect x="65" y="0"  id="tfmReadFromFile" class="stage stage-active" width="158" height="30"/>
+		<rect x="223" y="0" id="tfmLookup" class="stage stage-active" width="73" height="30"/>
+		<rect x="296" y="0" id="tfmDenormalize" class="stage stage-active" width="117" height="30"/>
+		<rect x="413" y="0" id="tfmDistinct" class="stage stage-active" width="85" height="30"/>
+		<rect x="498" y="0" id="tfmPython" class="stage" width="72" height="30"/>
+		<rect x="570" y="0" id="tfmWriteToFile" class="stage stage-active" width="150" height="30"/>
+
+		<rect x="0" y="0" stroke="black" stroke-width="1" rx="2" ry="2" fill="transparent" width="720" height="30"/>
+		<text x="5" y="12" dy="0.70em" style="font-size:13;">&gt; START &gt; READ FROM SOURCE &gt; LOOKUP &gt; DENORMALIZE &gt; DISTINCT &gt; PYTHON &gt; WRITE TO TARGET</text>
+	</g>
+
+	<g style="font-size:18" transform="translate(800,650)">
+		<rect id="btnFast" x="0" y="0" class="btn-speed" width="90" height="40" rx="10" ry="10"/>
+		<text x="27" y="15" dy="0.70em" pointer-events="none">Fast</text>
+		<rect id="btnNormal" x="100" y="0" class="btn-speed btn-speed-on" width="90" height="40" rx="10" ry="10"/>
+		<text x="113" y="15" dy="0.70em" pointer-events="none">Normal</text>
+		<rect id="btnSlower" x="200" y="0" class="btn-speed" width="90" height="40" rx="10" ry="10"/>
+		<text x="214" y="15" dy="0.70em" pointer-events="none">Slower</text>
+		<rect id="btnSlowest" x="300" y="0" class="btn-speed" width="90" height="40" rx="10" ry="10"/>
+		<text x="310" y="15" dy="0.70em" pointer-events="none">Slowest</text>
+	</g>
+</svg>
