@@ -755,7 +755,7 @@ async function runLookup() {
 }
 
 async function runReadFromFile() {
-    setNodeDesc('Transform: read from data source');
+    setNodeDesc('Transform: read user data');
     setTfmNavigator('tfmReadFromFile');
     await new Promise(r => setTimeout(r, delayAfterNodeDesc));
     
@@ -785,7 +785,7 @@ async function runReadFromFile() {
 }
 
 async function runWriteToFile() {
-    setNodeDesc('Transform: write to target');
+    setNodeDesc('Transform: write result');
     setTfmNavigator('tfmWriteToFile');
     await new Promise(r => setTimeout(r, delayAfterNodeDesc));
     
@@ -1109,10 +1109,12 @@ async function run() {
 		<use x="500" y="5" href="#capillaries"/>
 		<text x="540" y="10" style="font-size:36" dy="0.70em">Capillaries</text>
 	</g>
-	<text x="980" y="10" style="font-size:36" dy="0.70em" id="user_data" opacity="0">User data</text>
+    <text x="1070" y="10" style="font-size:36;text-anchor:middle;" dy="0.70em" id="user_data" opacity="0">User data</text>
+    
+    
 
 	<g id="source_table" opacity="0">
-		<text x="30" y="60" dy="0.70em">Source table</text>
+        <text x="105" y="60" dy="0.70em" style="text-anchor:middle;">Source table</text>
 		<use x="40" y="90" href="#table"/>
 	</g>
 
@@ -1120,14 +1122,14 @@ async function run() {
 	</g>
 
 	<g id="lookup_table" opacity="0">
-		<text x="30" y="220" dy="0.70em">Lookup table</text>
+		<text x="105" y="220" dy="0.70em" style="text-anchor:middle;">Lookup table</text>
 		<use x="40" y="250" href="#table"/>
 	</g>
 	<g id="lookup_data" opacity="0">
 	</g>
 
 	<g id="target_table" opacity="0">
-		<text x="30" y="380" dy="0.70em">Target table</text>
+		<text x="105" y="380" dy="0.70em" style="text-anchor:middle;">Target table</text>
 		<use x="40" y="410" href="#table"/>
 	</g>
 
@@ -1176,35 +1178,35 @@ async function run() {
 	</g>
 
 	<g id="capillaries_script" opacity="0">
-		<text x="980" y="60" dy="0.70em">Capillaries script</text>
+		<text x="1075" y="60" dy="0.70em" style="text-anchor:middle;">Capillaries script</text>
 		<use x="1010" y="90" href="#file"/>
 		<use x="1020" y="100" href="#cloud_download"/>
 		<use x="1045" y="180" href="#capiscript"/>
 	</g>
 
 	<g id="python_formulas" opacity="0">
-		<text x="980" y="300" dy="0.70em">Python formulas</text>
+		<text x="1075" y="300" dy="0.70em" style="text-anchor:middle;">Python formulas</text>
 		<use x="1010" y="330" href="#file"/>
 		<use x="1020" y="340" href="#cloud_download"/>
 		<use x="1050" y="410" href="#formula"/>
 	</g>
 
 	<g id="source_data" opacity="0">
-		<text x="1000" y="300" dy="0.70em">Source data</text>
+		<text x="1075" y="300" dy="0.70em" style="text-anchor:middle;">Source data</text>
 		<use x="1010" y="330" href="#file"/>
 		<use x="1020" y="340" href="#cloud_download"/>
 
 	</g>
 
 	<g id="result_data" opacity="0">
-		<text x="1000" y="300" dy="0.70em">Result data</text>
+		<text x="1075" y="300" dy="0.70em" style="text-anchor:middle;">Result data</text>
 		<use x="1010" y="330" href="#file"/>
 		<use x="1020" y="340" href="#cloud_upload"/>
 	</g>
 
 	<g id="how_run" opacity="0">
-		<text x="100" y="200" style="font-size:72" dy="0.70em" id="how_run" opacity="1">Distributed data processing</text>
-		<text x="350" y="300" style="font-size:72" dy="0.70em"  opacity="1">with Capillaries</text>
+		<text x="600" y="200" style="font-size:72;text-anchor:middle;" dy="0.70em" id="how_run" opacity="1">Distributed data processing</text>
+		<text x="620" y="300" style="font-size:72;text-anchor:middle;" dy="0.70em"  opacity="1">with Capillaries</text>
 	</g>
 
 	<g id="ui" opacity="0">
@@ -1221,27 +1223,44 @@ async function run() {
     <text x="10" y="618" dy="0.70em" id="node_desc" ></text>
 	<text x="10" y="665" dy="0.70em" id="action_desc"></text>
 
-	<g style="font-size:18" id="tfmNavigator" transform="translate(470,610)" opacity="0">
-		<rect x="0" y="0"   id="tfmStart"  class="stage stage-active" width="65" height="30"/>
-		<rect x="65" y="0"  id="tfmReadFromFile" class="stage stage-active" width="158" height="30"/>
-		<rect x="223" y="0" id="tfmLookup" class="stage stage-active" width="73" height="30"/>
-		<rect x="296" y="0" id="tfmDenormalize" class="stage stage-active" width="117" height="30"/>
-		<rect x="413" y="0" id="tfmDistinct" class="stage stage-active" width="85" height="30"/>
-		<rect x="498" y="0" id="tfmPython" class="stage" width="72" height="30"/>
-		<rect x="570" y="0" id="tfmWriteToFile" class="stage stage-active" width="150" height="30"/>
+	<g style="font-size:18" id="tfmNavigator" transform="translate(480,610)" opacity="0">
+        <title>Transform sequence is not liner, it's actually a DAG</title>
 
-		<rect x="0" y="0" stroke="black" stroke-width="1" rx="2" ry="2" fill="transparent" width="720" height="30"/>
-		<text x="5" y="12" dy="0.70em" style="font-size:13;">&gt; START &gt; READ FROM SOURCE &gt; LOOKUP &gt; DENORMALIZE &gt; DISTINCT &gt; PYTHON &gt; WRITE TO TARGET</text>
+		<rect x="0" y="0"   id="tfmStart" class="stage" width="70" height="30"/>
+        <text x="10" y="11" dy="0.70em" style="font-size:13;">&gt; START</text>
+
+		<rect x="70" y="0"  id="tfmReadFromFile" class="stage" width="140" height="30"/>
+        <text x="75" y="11" dy="0.70em" style="font-size:13;">&gt; READ USER DATA</text>
+
+		<rect x="210" y="0" id="tfmLookup" class="stage" width="80" height="30"/>
+        <text x="215" y="11" dy="0.70em" style="font-size:13;">&gt; LOOKUP</text>
+
+		<rect x="290" y="0" id="tfmDenormalize" class="stage" width="125" height="30"/>
+        <text x="295" y="11" dy="0.70em" style="font-size:13;">&gt; DENORMALIZE</text>
+
+		<rect x="415" y="0" id="tfmDistinct" class="stage" width="90" height="30"/>
+        <text x="420" y="11" dy="0.70em" style="font-size:13;">&gt; DISTINCT</text>
+
+		<rect x="505" y="0" id="tfmPython" class="stage" width="80" height="30"/>
+        <text x="510" y="11" dy="0.70em" style="font-size:13;">&gt; PYTHON</text>
+
+		<rect x="585" y="0" id="tfmWriteToFile" class="stage" width="125" height="30"/>
+        <text x="590" y="11" dy="0.70em" style="font-size:13;">&gt; WRITE RESULT</text>
+
+		<rect x="0" y="0" stroke="black" stroke-width="2" rx="2" ry="2" fill="transparent" width="710" height="30"/>
 	</g>
 
 	<g style="font-size:18" transform="translate(800,650)">
 		<rect id="btnFast" x="0" y="0" class="btn-speed" width="90" height="40" rx="10" ry="10"/>
-		<text x="27" y="15" dy="0.70em" pointer-events="none">Fast</text>
+		<text x="45" y="15" dy="0.70em" pointer-events="none" style="text-anchor:middle;">Fast</text>
+
 		<rect id="btnNormal" x="100" y="0" class="btn-speed btn-speed-on" width="90" height="40" rx="10" ry="10"/>
-		<text x="113" y="15" dy="0.70em" pointer-events="none">Normal</text>
+		<text x="145" y="15" dy="0.70em" pointer-events="none" style="text-anchor:middle;">Normal</text>
+
 		<rect id="btnSlower" x="200" y="0" class="btn-speed" width="90" height="40" rx="10" ry="10"/>
-		<text x="214" y="15" dy="0.70em" pointer-events="none">Slower</text>
+		<text x="245" y="15" dy="0.70em" pointer-events="none" style="text-anchor:middle;">Slower</text>
+
 		<rect id="btnSlowest" x="300" y="0" class="btn-speed" width="90" height="40" rx="10" ry="10"/>
-		<text x="310" y="15" dy="0.70em" pointer-events="none">Slowest</text>
+		<text x="345" y="15" dy="0.70em" pointer-events="none" style="text-anchor:middle;">Slowest</text>
 	</g>
 </svg>
