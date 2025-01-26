@@ -1224,7 +1224,7 @@ async function run() {
 	<text x="10" y="665" dy="0.70em" id="action_desc"></text>
 
 	<g style="font-size:18" id="tfmNavigator" transform="translate(480,610)" opacity="0">
-        <title>Transform sequence is not liner, it's actually a DAG</title>
+        <title>Transform sequence is not linear. It's actually a DAG</title>
 
 		<rect x="0" y="0"   id="tfmStart" class="stage" width="70" height="30"/>
         <text x="10" y="11" dy="0.70em" style="font-size:13;">&gt; START</text>
