@@ -69,25 +69,6 @@ async function crunchData(dur) {
     clearInterval(calcInterval);
 }
 
-function showLkpTable() {
-    document.getElementById("showLkpTableAnimation").beginElement();
-}
-function hideLkpTable() {
-    document.getElementById("hideLkpTableAnimation").beginElement();
-}
-function showLkpData() {
-    document.getElementById("showLkpDataAnimation").beginElement();
-}
-function hideLkpData() {
-    document.getElementById("hideLkpDataAnimation").beginElement();
-}
-function showChunkData() {
-    document.getElementById("showChunkDataAnimation").beginElement();
-}
-function hideChunkData() {
-    document.getElementById("hideChunkDataAnimation").beginElement();
-}
-
 function animateHide(elId, dur) {
     const el = document.getElementById(elId);
     if (!el) {
@@ -132,6 +113,25 @@ function animateShow(elId, dur) {
     a.beginElement();
 }
 
+function animateTranslate(elId, dur, values) {
+    const a = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
+    a.setAttribute("attributeType", "XML");
+    a.setAttribute("attributeName", "transform");
+    a.setAttribute("type", "translate");
+    a.setAttribute("begin", "indefinite");
+    a.setAttribute("repeatCount", "indefinite");
+    a.setAttribute("dur", (dur/1000).toString()+'s');
+    a.setAttribute("values", values);
+    aId = elId + "_animateTranslate";
+    a.setAttribute("id", aId);
+    el = document.getElementById(elId);
+    previous_a = document.getElementById(aId);
+    if (previous_a) {
+        el.removeChild(previous_a);
+    }
+    el.appendChild(a)
+    a.beginElement();
+}
 function animateMotion(elId, dur, keyPoints, keyTimes, path) {
     const a = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
     a.setAttribute("attributeType", "XML");
@@ -336,8 +336,8 @@ async function actionDownloadScript(){
     animateShow('user_data', durOpacity);
     await new Promise(r => setTimeout(r, delayAfterShow));
 
-    animateMotion("s1", durGenericMove, "0;1;1", "0;0.6;1", "M0 0 L-695 30");
-    animateMotion("s2", durGenericMove, "0;0;1;1", "0;0.3;0.9;1", "M0 0 L-395 30");
+    animateMotion("s1", durGenericMove, "0;1;1", "0;0.6;1", "M0 0 L-695 30"); // 350, 150
+    animateMotion("s2", durGenericMove, "0;0;1;1", "0;0.3;0.9;1", "M0 0 L-395 30"); // 650, 150
     await new Promise(r => setTimeout(r, durGenericMove));
 
     await new Promise(r => setTimeout(r, delayAfterGenericMove));
@@ -419,8 +419,8 @@ async function actionDownloadFormulas(){
     animateShow('python_formulas', durOpacity);
     await new Promise(r => setTimeout(r, delayAfterShow));
 
-    animateMotion("f1", durGenericMove, "0;1;1", "0;0.6;1", "M0 0 L-515 -290"); // 535,120
-    animateMotion("f2", durGenericMove, "0;0;1;1", "0;0.3;0.9;1", "M0 0 L-210 -290"); // 835,120		
+    animateMotion("f1", durGenericMove, "0;1;1", "0;0.6;1", "M0 0 L-585 -220"); // 465,195  535,120
+    animateMotion("f2", durGenericMove, "0;0;1;1", "0;0.3;0.9;1", "M0 0 L-280 -220"); // 765,195 835,120		
     await new Promise(r => setTimeout(r, durGenericMove));
 
     await new Promise(r => setTimeout(r, delayAfterGenericMove));
@@ -441,8 +441,12 @@ async function actionRunPython(){
 
     animateShow('p1', durOpacity);
     animateShow('p2', durOpacity);
+    animateTranslate("f1", 200, "0 0; 0 -3; 0 0; 0 3; 0 0");
+    animateTranslate("f2", 200, "0 0; 0 -3; 0 0; 0 3; 0 0");
     await crunchData(durCrunchData);
 
+    document.getElementById('f1_animateTranslate').endElement();
+    document.getElementById('f2_animateTranslate').endElement();
     await new Promise(r => setTimeout(r, delayAfterShow));
 
     animateHide('f1', durOpacity);
@@ -460,7 +464,7 @@ async function actionRunPython(){
 }
 
 async function actionRunGopher(){
-    setActionDesc('Worker executes Go one-liner data processing expressions');
+    setActionDesc('Worker executes Go data processing expressions from script');
 
     createElement('gopher', 'g1', undefined)
     document.getElementById('g1').setAttribute('opacity', '0');
@@ -469,12 +473,34 @@ async function actionRunGopher(){
     document.getElementById('g2').setAttribute('opacity', '0');
     move("g2", 830, 175);
 
-    animateShow('g1', durOpacity);
-    animateShow('g2', durOpacity);
-    await crunchData(durCrunchData);
+    createElement('calculator', 'gocalc1', undefined)
+    document.getElementById('gocalc1').setAttribute('opacity', '0');
+    move("gocalc1", 360, 210);
+    createElement('calculator', 'gocalc2', undefined)
+    document.getElementById('gocalc2').setAttribute('opacity', '0');
+    move("gocalc2", 660, 210);
+
+    // Move Go calculator from script to gopher
+    animateShow('gocalc1', durOpacity);
+    animateShow('gocalc2', durOpacity);
+    animateMotion("gocalc1", durGenericMove, "0;1", "0;1", "M0 0 L105 -10"); // 465,200
+    animateMotion("gocalc2", durGenericMove, "0;1", "0;1", "M0 0 L105 -10"); // 765,200
+    await new Promise(r => setTimeout(r, durGenericMove));
 
     await new Promise(r => setTimeout(r, delayAfterShow));
 
+    animateShow('g1', durOpacity);
+    animateShow('g2', durOpacity);
+    animateTranslate("gocalc1", 200, "0 0; 0 -3; 0 0; 0 3; 0 0");
+    animateTranslate("gocalc2", 200, "0 0; 0 -3; 0 0; 0 3; 0 0");
+    await crunchData(durCrunchData);
+
+    document.getElementById('gocalc1_animateTranslate').endElement();
+    document.getElementById('gocalc2_animateTranslate').endElement();
+    await new Promise(r => setTimeout(r, delayAfterShow));
+
+    animateHide('gocalc1', durOpacity);
+    animateHide('gocalc2', durOpacity);
     animateHide('g1', durOpacity);
     animateHide('g2', durOpacity);
     setActionDesc('');
@@ -900,8 +926,10 @@ async function run() {
         animateShow('header_capillaries', durOpacity);
         animateShow('queue', durOpacity);
         animateShow('tfmNavigator', durOpacity);
+
         await runStart();
         await new Promise(r => setTimeout(r, delayBetweenRuns));
+
         animateShow('worker1', durOpacity);
         animateShow('worker2', durOpacity);
         await runReadFromFile();
@@ -915,6 +943,7 @@ async function run() {
         await runPython();
         await new Promise(r => setTimeout(r, delayBetweenRuns));
         await runWriteToFile();
+
         animateHide('worker1', durOpacity);
         animateHide('worker2', durOpacity);
         animateHide('header_capillaries', durOpacity);
@@ -1088,16 +1117,19 @@ async function run() {
 		<g id="short_diag">
 		<path d="M 26,250 Q 10,375 125,500 T 225,750" style="stroke-width:55;"/>
 		</g>
-		<g id="capillaries"  transform="scale(0.03)">
-		<rect x="0" y="0" width="1000" height="1000" stroke-width="0" fill="white"/>
-		<g style="fill: none; stroke:black" transform="scale(1.5,1) translate(-166,0)">
-			<use x="250" y="0" xlink:href="#vert_curve"/>
-			<use x="500" y="0" xlink:href="#vert_curve"/>
-			<use x="750" y="0" xlink:href="#vert_curve"/>
-			<use x="500" y="0" xlink:href="#short_diag"/>
-			<use x="250" y="0" xlink:href="#short_diag"/>
+		<g id="capillaries" transform="scale(0.03)">
+            <rect x="0" y="0" width="1000" height="1000" stroke-width="0" fill="white"/>
+            <g style="fill: none; stroke:black" transform="scale(1.5,1) translate(-166,0)">
+                <use x="250" y="0" xlink:href="#vert_curve"/>
+                <use x="500" y="0" xlink:href="#vert_curve"/>
+                <use x="750" y="0" xlink:href="#vert_curve"/>
+                <use x="500" y="0" xlink:href="#short_diag"/>
+                <use x="250" y="0" xlink:href="#short_diag"/>
+            </g>
 		</g>
-		</g>
+        <g id="calculator" transform="scale(0.35)">
+            <path d="M105.43,92.42c0.85,0,1.61,0.34,2.17,0.9l0.04,0.05c0.53,0.55,0.85,1.3,0.85,2.12c0,0.85-0.34,1.61-0.9,2.17 c-0.55,0.55-1.32,0.9-2.17,0.9H77.28c-0.85,0-1.61-0.34-2.17-0.9c-0.55-0.55-0.9-1.32-0.9-2.17c0-0.84,0.34-1.61,0.9-2.16 c0.55-0.56,1.32-0.9,2.16-0.9H105.43L105.43,92.42z M20.77,80.74l-0.04-0.05c-0.57-0.59-0.85-1.35-0.85-2.12 c0-0.78,0.3-1.56,0.9-2.16v0c0.6-0.6,1.38-0.9,2.17-0.9s1.57,0.3,2.17,0.9l7.79,7.79l7.79-7.79c0.6-0.6,1.38-0.9,2.17-0.9 c0.78,0,1.57,0.3,2.17,0.9c0.6,0.6,0.9,1.38,0.9,2.17c0,0.78-0.3,1.57-0.9,2.17l-7.79,7.79L45,96.31c0.6,0.6,0.9,1.38,0.9,2.17 s-0.3,1.57-0.9,2.17c-0.6,0.6-1.38,0.9-2.17,0.9c-0.78,0-1.57-0.3-2.17-0.9l-7.79-7.79l-7.79,7.79c-0.6,0.6-1.38,0.9-2.17,0.9 s-1.57-0.3-2.17-0.9l-0.04-0.05c-0.57-0.59-0.85-1.35-0.85-2.12c0-0.78,0.3-1.56,0.9-2.16l7.79-7.79L20.77,80.74L20.77,80.74z M122.88,60.53v49.3c0,1.51-0.3,2.96-0.85,4.29c-0.57,1.38-1.41,2.61-2.44,3.65l-0.04,0.04c-1.03,1.02-2.25,1.84-3.6,2.4 c-1.32,0.55-2.77,0.85-4.29,0.85H11.23c-1.51,0-2.96-0.3-4.29-0.85c-1.37-0.57-2.61-1.41-3.65-2.44c-1.04-1.03-1.87-2.27-2.44-3.65 C0.3,112.78,0,111.33,0,109.82V11.23c0-1.51,0.3-2.96,0.85-4.29C1.43,5.57,2.26,4.33,3.3,3.3l0.04-0.04 c1.03-1.02,2.25-1.84,3.6-2.4C8.27,0.3,9.72,0,11.23,0h100.42c1.51,0,2.96,0.3,4.29,0.85c1.37,0.57,2.61,1.41,3.65,2.44 c1.04,1.03,1.87,2.27,2.44,3.65c0.55,1.32,0.85,2.77,0.85,4.29V60.53L122.88,60.53z M116.75,109.82V63.59H64.5v51.34h47.15 c0.69,0,1.35-0.14,1.94-0.39c0.62-0.26,1.19-0.64,1.66-1.12C116.18,112.5,116.75,111.22,116.75,109.82L116.75,109.82z M116.75,57.46V11.23c0-0.69-0.14-1.35-0.39-1.94c-0.26-0.62-0.64-1.19-1.12-1.66c-0.47-0.47-1.04-0.86-1.66-1.12 c-0.6-0.25-1.25-0.39-1.94-0.39H64.5v51.34H116.75L116.75,57.46z M6.13,11.23v46.23h52.25V6.13H11.23c-0.69,0-1.35,0.14-1.94,0.39 C8.67,6.77,8.1,7.15,7.63,7.63C6.7,8.55,6.13,9.83,6.13,11.23L6.13,11.23z M6.13,63.59v46.23c0,0.69,0.14,1.35,0.39,1.94 c0.26,0.62,0.64,1.19,1.12,1.66c0.47,0.47,1.04,0.86,1.66,1.12c0.6,0.25,1.25,0.39,1.94,0.39h47.15V63.59H6.13L6.13,63.59z M29.82,16.92c0-0.85,0.34-1.61,0.9-2.17c0.55-0.55,1.32-0.9,2.17-0.9c0.85,0,1.61,0.34,2.17,0.9c0.55,0.55,0.9,1.32,0.9,2.17 v11.01h11.01c0.85,0,1.61,0.34,2.17,0.9c0.55,0.55,0.9,1.32,0.9,2.17c0,0.85-0.34,1.61-0.9,2.17c-0.55,0.55-1.32,0.9-2.17,0.9 H35.95v11.01c0,0.85-0.34,1.61-0.9,2.17c-0.55,0.55-1.32,0.9-2.17,0.9c-0.85,0-1.61-0.34-2.17-0.9c-0.55-0.55-0.9-1.32-0.9-2.17 V34.06H18.81c-0.85,0-1.61-0.34-2.17-0.9c-0.55-0.55-0.9-1.32-0.9-2.17c0-0.85,0.34-1.61,0.9-2.17s1.32-0.9,2.17-0.9h11.01V16.92 L29.82,16.92z M105.43,27.93c0.85,0,1.61,0.34,2.17,0.9c0.55,0.55,0.9,1.32,0.9,2.17c0,0.85-0.34,1.61-0.9,2.17 c-0.55,0.55-1.32,0.9-2.17,0.9H77.28c-0.85,0-1.61-0.34-2.17-0.9c-0.55-0.55-0.9-1.32-0.9-2.17c0-0.85,0.34-1.61,0.9-2.17 c0.55-0.55,1.32-0.9,2.17-0.9H105.43L105.43,27.93z M105.43,79.02c0.85,0,1.61,0.34,2.17,0.9l0.04,0.05 c0.53,0.55,0.85,1.3,0.85,2.12c0,0.85-0.34,1.61-0.9,2.17c-0.55,0.55-1.32,0.9-2.17,0.9H77.28c-0.85,0-1.61-0.34-2.17-0.9 c-0.55-0.55-0.9-1.32-0.9-2.17c0-0.84,0.34-1.61,0.9-2.16c0.55-0.56,1.32-0.9,2.16-0.9H105.43L105.43,79.02z"/>
+        </g>
 	</defs>
 	<rect fill="white" width="1200" height="700" x="0" y="0"/>
 
@@ -1165,17 +1197,29 @@ async function run() {
 		</g>
 	</g>
 
-	<g opacity="0">
-		<use x="520" y="180" id="gopher_calc_1" href="#gopher"/>
-		<use x="820" y="180" id="gopher_calc_2" href="#gopher"/>
+<!--
+   <use x="465" y="195" id="f1" href="#formula"/>
+   
+   <use x="465" y="200" id="gopher_calc_1" href="#calculator"/>
+   <use x="360" y="210" id="gopher_calc_1" href="#calculator"/>
+   <use x="350" y="210" id="s1" href="#capiscript"/>
+
+   <use x="765" y="195" id="f2" href="#formula"/>
+   <use x="765" y="200" id="gopher_calc_2" href="#calculator"/>
+   <use x="650" y="210" id="s2" href="#capiscript"/>
+
+	<g opacity="1">
+		<use x="530" y="180" id="gopher_calc_1" href="#gopher"/>
+		<use x="830" y="180" id="gopher_calc_2" href="#gopher"/>
 		<animate id="gopherCalcAnimation" begin="indefinite" attributeName="opacity" values="0;1;1;0" keyTimes="0;0.2;0.8;1" dur="1s" fill="freeze"/>
 	</g>
 
-	<g opacity="0">
-		<use x="500" y="175" id="python_calc_1" href="#python"/>
-		<use x="800" y="175" id="python_calc_2" href="#python"/>
+	<g opacity="1">
+		<use x="520" y="175" id="python_calc_1" href="#python"/>
+		<use x="820" y="175" id="python_calc_2" href="#python"/>
 		<animate id="pythonCalcAnimation" begin="indefinite" attributeName="opacity" values="0;1;1;0" keyTimes="0;0.2;0.8;1" dur="1s" fill="freeze"/>
 	</g>
+-->
 
 	<g id="capillaries_script" opacity="0">
 		<text x="1075" y="60" dy="0.70em" style="text-anchor:middle;">Capillaries script</text>
@@ -1224,7 +1268,7 @@ async function run() {
 	<text x="10" y="665" dy="0.70em" id="action_desc"></text>
 
 	<g style="font-size:18" id="tfmNavigator" transform="translate(480,610)" opacity="0">
-        <title>Transform sequence is not linear. It's actually a DAG</title>
+        <title>Transform sequence is not necessarily linear. It's a DAG.</title>
 
 		<rect x="0" y="0"   id="tfmStart" class="stage" width="70" height="30"/>
         <text x="10" y="11" dy="0.70em" style="font-size:13;">&gt; START</text>
