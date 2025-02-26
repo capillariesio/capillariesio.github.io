@@ -1,0 +1,301 @@
+<html>
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HQ9863ZP35"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-HQ9863ZP35');
+  </script>
+  <title>Capillaries: dissecting $66b allocated by Global Affairs Canada for 1996-2047</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+  <link rel="stylesheet" href="../../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../css/overrides.css">
+  <style>
+    .color8 {
+      color: #13A829;
+    }
+
+    .color16 {
+      color: #E08826;
+    }
+
+    .color32 {
+      color: #CC0C12;
+    }
+
+    .color64 {
+      color: #000000;
+    }
+
+    .colorGray {
+      color: #A0A0A0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="row" style="margin-top: 10px; margin-bottom: 20px;">
+      <div class="col-lg-6">
+        <img src="../../i/logo.svg" alt="Capillaries logo" class="pull-left logo" style="width:40px">
+        <h1>Capillaries: notes</h1>
+      </div>
+
+      <div class="col-lg-3">
+        <ul class="nav nav-pills pull-right" style="margin-top: 20px">
+          <li><a href="../index.html">Blog home</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3">
+        <ul class="nav nav-pills pull-right" style="margin-top: 20px">
+          <li><a href="https://github.com/capillariesio/capillaries">Source code and documentation</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h3>2024-02-25</h3>
+        <h2>Capillaries: dissecting $66b allocated by Global Affairs Canada for 1996-2047</h2>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-lg-8">
+        <h3>International assistance "projects" funded by Global Affairs Canada</h3>
+        <p>
+          <a href="https://w05.international.gc.ca/projectbrowser-banqueprojets/filter-filtre">Global Affairs Canada
+            website</a> gives access to some information about "projects" it funds with taxpayers' money.
+          As of February 2025, the site offers information about 7769 "projects", including:
+        <ul>
+          <li>start and end date</li>
+          <li>total amount allocated</li>
+          <li>distribution by country/region</li>
+          <li>distribution by sector</li>
+        </ul>
+        The funds allocated for each project are funneled through a "partner" organization. As of February 2025, the
+        website offers information about 1258 "partners". Some "partners" participate in the allocation of funds for
+        multiple "projects".
+        </p>
+        <p>
+          An integration test "global_affairs" was recently added to Capillaries. The test denormalizes the data
+          obtained from the website and prepares it for further investigation with data analysis tools like Tableau.
+          All data files can be <a href="./d/global-affairs-data.zip">downloaded here (6mb)</a>.
+        </p>
+      </div>
+      <div class="col-lg-4">
+        <img src="./i/global-affairs-beaver.jpg" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h3>What does it do, exactly?</h3>
+        <p>
+          For each "project", global_affairs integration test transforms JSON data holding country/region funds
+          distribution and sector funds distribution into denormalized table that can be used for data analysis. For
+          example, to analyze funds allocation data by country, the following funds distribution JSON:
+        </p>
+        <table class="table table-striped text-right" style="font-size:smaller">
+          <thead>
+            <th class="text-right">project_id</th>
+            <th class="text-right">partner_id</th>
+            <th class="text-right">amount</th>
+            <th class="text-right">start_date</th>
+            <th class="text-right">end_date</th>
+            <th class="text-right">country_amt_json</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p010807001</td>
+              <td>29578</td>
+              <td>$1,000,000,000</td>
+              <td>20220331</td>
+              <td>20470331</td>
+              <td>{"IN": 210000000.0, "PH": 210000000.0, "ID": 210000000.0, "ZA": 210000000.0, "DO": 80000000.0, "MK":
+                80000000.0}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>is transformed into this set of rows:</p>
+
+        <table class="table table-striped text-right" style="font-size:smaller">
+          <thead>
+            <th class="text-right">project_id</th>
+            <th class="text-right">country_code</th>
+            <th class="text-right">quarter</th>
+            <th class="text-right">amount</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p010807001</td>
+              <td>DO</td>
+              <td>2022-Q1</td>
+              <td>8760.40</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>ID</td>
+              <td>2022-Q1</td>
+              <td>22996.06</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>IN</td>
+              <td>2022-Q1</td>
+              <td>22996.06</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>MK</td>
+              <td>2022-Q1</td>
+              <td>8760.40</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>PH</td>
+              <td>2022-Q1</td>
+              <td>22996.06</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>ZA</td>
+              <td>2022-Q1</td>
+              <td>22996.06</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>DO</td>
+              <td>2022-Q2</td>
+              <td>797196.67</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>ID</td>
+              <td>2022-Q2</td>
+              <td>2092641.26</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>IN</td>
+              <td>2022-Q2</td>
+              <td>2092641.26</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>MK</td>
+              <td>2022-Q2</td>
+              <td>797196.67</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>PH</td>
+              <td>2022-Q2</td>
+              <td>2092641.26</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>ZA</td>
+              <td>2022-Q2</td>
+              <td>2092641.26</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>DO</td>
+              <td>2047-Q1</td>
+              <td>788436.27</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>ID</td>
+              <td>2047-Q1</td>
+              <td>2069645.20</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>IN</td>
+              <td>2047-Q1</td>
+              <td>2069645.20</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>MK</td>
+              <td>2047-Q1</td>
+              <td>788436.27</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>PH</td>
+              <td>2047-Q1</td>
+              <td>2069645.20</td>
+            </tr>
+            <tr>
+              <td>p010807001</td>
+              <td>ZA</td>
+              <td>2047-Q1</td>
+              <td>2069645.20</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Quarterly budget by sector and by partner are calculated in a similar way.
+          The full transcript of what the result of each script node looks like in Cassandra is <a
+            href="./transcript_global_affairs.html">here</a>.
+          The full DAG of the transforms implemented in the <a
+            href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/global_affairs_quicktest/script.json">global_affairs
+            test script</a> looks as follows (Capillaries got a new diagram-drawing engine in 1.1.23):
+        </p>
+        <img src="./i/viz-globalaffairs.svg" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h3>Is it "big" data?</h3>
+        <p>
+          By 2025 standards, it hardly is. For more impressive numbers, feel free to chack out <a href="../2023-11-15-portfolio-scale/index.html">another Capillaries project</a>.
+          global_affairs script can be executed on an average devbox using dockerized environment provided with Capillaries source code, and it takes a few minutes.
+          Denormalized dataset for countries is about 800k rows, partner and sector datasets are within 400k rows.
+          Again, all files can be <a href="./d/global-affairs-data.zip">downloaded here (6mb)</a>.
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h3>What can I do with this denormalized data?</h3>
+        <p>
+          Use your favorite tool and imagination. For example, this is what a Tableau enthusiast came up with:
+        </p>
+        <img src="./i/global-affairs-tableau.png" />
+        <p>Interactive Tableau Public visualization is available <a href="https://public.tableau.com/app/profile/john.dow5372/viz/66billionofinternationalassistancefundedbyGlobalAffairsCanada/Dashboard1">here</a>.</p>
+      </div>
+    </div>
+
+
+    <div class=" footer">
+      <p>&copy;
+        <script type="text/javascript">document.write("2022-" + new Date().getFullYear());</script>
+        Capillaries.io
+      </p>
+    </div>
+
+  </div>
+</body>
+
+</html>
