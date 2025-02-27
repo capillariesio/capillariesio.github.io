@@ -10,7 +10,7 @@
 
     gtag('config', 'G-HQ9863ZP35');
   </script>
-  <title>Capillaries: dissecting $66b allocated by Global Affairs Canada for 1996-2047</title>
+  <title>Capillaries: analyzing $66B allocated by Global Affairs Canada (1996–2047)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
@@ -63,7 +63,7 @@
     <div class="row">
       <div class="col-lg-12">
         <h3>2024-02-25</h3>
-        <h2>Capillaries: dissecting $66b allocated by Global Affairs Canada for 1996-2047</h2>
+        <h2>Capillaries: Analyzing $66B Allocated by Global Affairs Canada (1996–2047)</h2>
       </div>
     </div>
 
@@ -72,22 +72,24 @@
       <div class="col-lg-8">
         <h3>International assistance "projects" funded by Global Affairs Canada</h3>
         <p>
-          <a href="https://w05.international.gc.ca/projectbrowser-banqueprojets/filter-filtre">Global Affairs Canada
-            website</a> gives access to some information about "projects" it funds with taxpayers' money.
-          As of February 2025, the site offers information about 7769 "projects", including:
+          The <a href="https://w05.international.gc.ca/projectbrowser-banqueprojets/filter-filtre">Global Affairs Canada
+            website</a> provides access to some information about the "projects" it funds with taxpayers' money.
+          As of February 2025, the site lists details about 7769 "projects", including:
+        </p>
         <ul>
           <li>start and end date</li>
           <li>total amount allocated</li>
           <li>distribution by country/region</li>
           <li>distribution by sector</li>
         </ul>
-        The funds allocated for each project are funneled through a "partner" organization. As of February 2025, the
-        website offers information about 1258 "partners". Some "partners" participate in the allocation of funds for
-        multiple "projects".
+        <p>
+          The funds allocated for each "project" are channeled through a "partner" organization. As of February 2025,
+          the website provides information on 1,258 "partners." Some "partners" are involved in the allocation of funds
+          for multiple "projects."
         </p>
         <p>
-          An integration test "global_affairs" was recently added to Capillaries. The test denormalizes the data
-          obtained from the website and prepares it for further investigation with data analysis tools like Tableau.
+          An integration test, "global_affairs," was recently added to Capillaries.
+          This test processes data obtained from the website, preparing it for further analysis using tools like Tableau.
           All data files can be <a href="./d/global-affairs-data.zip">downloaded here (6mb)</a>.
         </p>
       </div>
@@ -100,9 +102,8 @@
       <div class="col-lg-12">
         <h3>What does it do, exactly?</h3>
         <p>
-          For each "project", global_affairs integration test transforms JSON data holding country/region funds
-          distribution and sector funds distribution into denormalized table that can be used for data analysis. For
-          example, to analyze funds allocation data by country, the following funds distribution JSON:
+          For each "project," the global_affairs integration test transforms JSON data containing country/region fund distribution and sector fund distribution
+          into a quarterly time series suitable for data analysis. For example, to analyze fund allocation by country, the following "project" record:
         </p>
         <table class="table table-striped text-right" style="font-size:smaller">
           <thead>
@@ -253,30 +254,33 @@
           </tbody>
         </table>
         <p>
-          Quarterly budget by sector and by partner are calculated in a similar way.
-          The full transcript of what the result of each script node looks like in Cassandra is <a
+          Quarterly budgets by sector and by partner are calculated in a similar way.
+          The full transcript of what each script node produces in Cassandra can be found <a
             href="./transcript_global_affairs.html">here</a>.
-          The full DAG of the transforms implemented in the <a
-            href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/global_affairs_quicktest/script.json">global_affairs
-            test script</a> looks as follows (Capillaries got a new diagram-drawing engine in 1.1.23):
+          Additionally, the full DAG of transformations implemented in the <a
+          href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/global_affairs_quicktest/script.json">global_affairs
+          test script</a> is shown below
+          (Capillaries introduced a new diagram-drawing engine in version 1.1.23):
         </p>
         <img src="./i/viz-globalaffairs.svg" />
         <p>
-          The amount of data involved is not big by 2025 standards.
-          Denormalized dataset for countries is about 800k rows, partner and sector datasets are within 400k rows.
-          Again, all data files can be <a href="./d/global-affairs-data.zip">downloaded here (6mb)</a>.
+          The dataset size is relatively small by 2025 standards:
+          the quarterly time series dataset for countries contains about 800K rows, partner and sector datasets each contain approximately 400K rows.
+          Once again, all data files can be <a href="./d/global-affairs-data.zip">downloaded here (6mb)</a>.
         </p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12">
-        <h3>What can I do with this denormalized data?</h3>
+        <h3>What can I do with these time series datasets?</h3>
         <p>
-          Use your favorite tool and imagination. A Tableau enthusiast used <a href="./d/global-affairs-data.zip">denormalized data</a> to build this:
+          Use your favorite tool - and your imagination. A Tableau enthusiast used the global_affairs test results to create this visualization:
         </p>
         <img src="./i/global-affairs-tableau.png" />
-        <p>Interactive Tableau Public visualization is available <a href="https://public.tableau.com/app/profile/john.dow5372/viz/66billionofinternationalassistancefundedbyGlobalAffairsCanada/Dashboard1">here</a>.</p>
+        <p>The interactive Tableau Public visualization is available <a
+            href="https://public.tableau.com/app/profile/john.dow5372/viz/66billionofinternationalassistancefundedbyGlobalAffairsCanada/Dashboard1">here</a>.
+        </p>
       </div>
     </div>
 
