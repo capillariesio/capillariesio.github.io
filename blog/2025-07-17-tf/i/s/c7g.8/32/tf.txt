@@ -1,0 +1,10 @@
+output_cassandra_cpus                       = "8 cpus ($0.362900/hr)"
+output_cassandra_hosts                      = 32
+output_cassandra_total_cpus                 = 256
+output_daemon_cpus                          = "2 cpus ($0.072500/hr)"
+output_daemon_instances                     = 32
+output_daemon_thread_pool_size              = 6
+output_daemon_total_cpus                    = 64
+output_daemon_writer_workers                = 12
+output_daemon_writers_per_cassandra_cpu     = 9
+output_total_ec2_hourly_cost                = "$14.005300/hr"

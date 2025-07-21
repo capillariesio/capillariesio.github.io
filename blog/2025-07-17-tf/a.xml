@@ -1,0 +1,1003 @@
+<div class="accordion" id="accordionTests">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading-8-4">
+      <button class="accordion-button color8 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-4" aria-expanded="false" aria-controls="collapse-8-4">
+        <div class="col-2">aws.arm64.c7g.8</div>
+        <div class="col-3">Cassandra cores 8</div>
+        <div class="col-3">Cassandra nodes 4</div>
+        <div class="col-2">976 seconds</div>
+        <div class="col-1">$0.49</div>
+      </button>
+    </h2>
+    <div id="collapse-8-4" class="accordion-collapse collapse" aria-labelledby="heading-8-4">
+      <div class="accordion-body">
+        <div class="accordion" id="accordionTests-8-4">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-4-cfg">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-4-cfg" aria-expanded="false" aria-controls="collapse-8-4-cfg">
+                Terraform config
+              </button>
+            </h2>
+            <div id="collapse-8-4-cfg" class="accordion-collapse collapse" aria-labelledby="heading-8-4-cfg">
+              <div class="accordion-body">
+      <pre>
+output_cassandra_cpus = "8 cpus ($0.362900/hr)"
+output_cassandra_hosts = 4
+output_cassandra_total_cpus = 32
+output_daemon_cpus = "2 cpus ($0.072500/hr)"
+output_daemon_instances = 4
+output_daemon_thread_pool_size = 6
+output_daemon_total_cpus = 8
+output_daemon_writer_workers = 12
+output_daemon_writers_per_cassandra_cpu = 9
+output_total_ec2_hourly_cost = "$1.814100/hr"
+      </pre>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-4-runs">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-4-runs" aria-expanded="false" aria-controls="collapse-8-4-runs">
+                Test runs
+              </button>
+            </h2>
+            <div id="collapse-8-4-runs" class="accordion-collapse collapse" aria-labelledby="heading-8-4-runs">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/4/00-runs.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-4-cpu">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-4-cpu" aria-expanded="false" aria-controls="collapse-8-4-cpu">
+                CPU usage
+              </button>
+            </h2>
+            <div id="collapse-8-4-cpu" class="accordion-collapse collapse" aria-labelledby="heading-8-4-cpu">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/4/01-cpu.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-4-mem">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-4-mem" aria-expanded="false" aria-controls="collapse-8-4-mem">
+                Memory usage
+              </button>
+            </h2>
+            <div id="collapse-8-4-mem" class="accordion-collapse collapse" aria-labelledby="heading-8-4-mem">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/4/02-mem.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-4-reads">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-4-reads" aria-expanded="false" aria-controls="collapse-8-4-reads">
+                Cassandra reads
+              </button>
+            </h2>
+            <div id="collapse-8-4-reads" class="accordion-collapse collapse" aria-labelledby="heading-8-4-reads">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/4/03-reads.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-4-writes">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-4-writes" aria-expanded="false" aria-controls="collapse-8-4-writes">
+                Cassandra writes
+              </button>
+            </h2>
+            <div id="collapse-8-4-writes" class="accordion-collapse collapse" aria-labelledby="heading-8-4-writes">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/4/04-writes.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading-8-8">
+      <button class="accordion-button color8 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-8" aria-expanded="false" aria-controls="collapse-8-8">
+        <div class="col-2">aws.arm64.c7g.8</div>
+        <div class="col-3">Cassandra cores 8</div>
+        <div class="col-3">Cassandra nodes 8</div>
+        <div class="col-2">578 seconds</div>
+        <div class="col-1">$0.57</div>
+      </button>
+    </h2>
+    <div id="collapse-8-8" class="accordion-collapse collapse" aria-labelledby="heading-8-8">
+      <div class="accordion-body">
+        <div class="accordion" id="accordionTests-8-8">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-8-cfg">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-8-cfg" aria-expanded="false" aria-controls="collapse-8-8-cfg">
+                Terraform config
+              </button>
+            </h2>
+            <div id="collapse-8-8-cfg" class="accordion-collapse collapse" aria-labelledby="heading-8-8-cfg">
+              <div class="accordion-body">
+      <pre>
+output_cassandra_cpus = "8 cpus ($0.362900/hr)"
+output_cassandra_hosts = 8
+output_cassandra_total_cpus = 64
+output_daemon_cpus = "2 cpus ($0.072500/hr)"
+output_daemon_instances = 8
+output_daemon_thread_pool_size = 6
+output_daemon_total_cpus = 16
+output_daemon_writer_workers = 12
+output_daemon_writers_per_cassandra_cpu = 9
+output_total_ec2_hourly_cost = "$3.555700/hr"
+      </pre>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-8-runs">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-8-runs" aria-expanded="false" aria-controls="collapse-8-8-runs">
+                Test runs
+              </button>
+            </h2>
+            <div id="collapse-8-8-runs" class="accordion-collapse collapse" aria-labelledby="heading-8-8-runs">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/8/00-runs.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-8-cpu">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-8-cpu" aria-expanded="false" aria-controls="collapse-8-8-cpu">
+                CPU usage
+              </button>
+            </h2>
+            <div id="collapse-8-8-cpu" class="accordion-collapse collapse" aria-labelledby="heading-8-8-cpu">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/8/01-cpu.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-8-mem">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-8-mem" aria-expanded="false" aria-controls="collapse-8-8-mem">
+                Memory usage
+              </button>
+            </h2>
+            <div id="collapse-8-8-mem" class="accordion-collapse collapse" aria-labelledby="heading-8-8-mem">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/8/02-mem.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-8-reads">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-8-reads" aria-expanded="false" aria-controls="collapse-8-8-reads">
+                Cassandra reads
+              </button>
+            </h2>
+            <div id="collapse-8-8-reads" class="accordion-collapse collapse" aria-labelledby="heading-8-8-reads">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/8/03-reads.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-8-writes">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-8-writes" aria-expanded="false" aria-controls="collapse-8-8-writes">
+                Cassandra writes
+              </button>
+            </h2>
+            <div id="collapse-8-8-writes" class="accordion-collapse collapse" aria-labelledby="heading-8-8-writes">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/8/04-writes.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading-8-16">
+      <button class="accordion-button color8 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-16" aria-expanded="false" aria-controls="collapse-8-16">
+        <div class="col-2">aws.arm64.c7g.8</div>
+        <div class="col-3">Cassandra cores 8</div>
+        <div class="col-3">Cassandra nodes 16</div>
+        <div class="col-2">296 seconds</div>
+        <div class="col-1">$0.58</div>
+      </button>
+    </h2>
+    <div id="collapse-8-16" class="accordion-collapse collapse" aria-labelledby="heading-8-16">
+      <div class="accordion-body">
+        <div class="accordion" id="accordionTests-8-16">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-16-cfg">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-16-cfg" aria-expanded="false" aria-controls="collapse-8-16-cfg">
+                Terraform config
+              </button>
+            </h2>
+            <div id="collapse-8-16-cfg" class="accordion-collapse collapse" aria-labelledby="heading-8-16-cfg">
+              <div class="accordion-body">
+      <pre>
+output_cassandra_cpus = "8 cpus ($0.362900/hr)"
+output_cassandra_hosts = 16
+output_cassandra_total_cpus = 128
+output_daemon_cpus = "2 cpus ($0.072500/hr)"
+output_daemon_instances = 16
+output_daemon_thread_pool_size = 6
+output_daemon_total_cpus = 32
+output_daemon_writer_workers = 12
+output_daemon_writers_per_cassandra_cpu = 9
+output_total_ec2_hourly_cost = "$7.038900/hr"
+      </pre>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-16-runs">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-16-runs" aria-expanded="false" aria-controls="collapse-8-16-runs">
+                Test runs
+              </button>
+            </h2>
+            <div id="collapse-8-16-runs" class="accordion-collapse collapse" aria-labelledby="heading-8-16-runs">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/16/00-runs.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-16-cpu">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-16-cpu" aria-expanded="false" aria-controls="collapse-8-16-cpu">
+                CPU usage
+              </button>
+            </h2>
+            <div id="collapse-8-16-cpu" class="accordion-collapse collapse" aria-labelledby="heading-8-16-cpu">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/16/01-cpu.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-16-mem">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-16-mem" aria-expanded="false" aria-controls="collapse-8-16-mem">
+                Memory usage
+              </button>
+            </h2>
+            <div id="collapse-8-16-mem" class="accordion-collapse collapse" aria-labelledby="heading-8-16-mem">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/16/02-mem.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-16-reads">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-16-reads" aria-expanded="false" aria-controls="collapse-8-16-reads">
+                Cassandra reads
+              </button>
+            </h2>
+            <div id="collapse-8-16-reads" class="accordion-collapse collapse" aria-labelledby="heading-8-16-reads">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/16/03-reads.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-16-writes">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-16-writes" aria-expanded="false" aria-controls="collapse-8-16-writes">
+                Cassandra writes
+              </button>
+            </h2>
+            <div id="collapse-8-16-writes" class="accordion-collapse collapse" aria-labelledby="heading-8-16-writes">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/16/04-writes.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading-8-32">
+      <button class="accordion-button color8 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-32" aria-expanded="false" aria-controls="collapse-8-32">
+        <div class="col-2">aws.arm64.c7g.8</div>
+        <div class="col-3">Cassandra cores 8</div>
+        <div class="col-3">Cassandra nodes 32</div>
+        <div class="col-2">198 seconds</div>
+        <div class="col-1">$0.77</div>
+      </button>
+    </h2>
+    <div id="collapse-8-32" class="accordion-collapse collapse" aria-labelledby="heading-8-32">
+      <div class="accordion-body">
+        <div class="accordion" id="accordionTests-8-32">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-32-cfg">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-32-cfg" aria-expanded="false" aria-controls="collapse-8-32-cfg">
+                Terraform config
+              </button>
+            </h2>
+            <div id="collapse-8-32-cfg" class="accordion-collapse collapse" aria-labelledby="heading-8-32-cfg">
+              <div class="accordion-body">
+      <pre>
+output_cassandra_cpus                       = "8 cpus ($0.362900/hr)"
+output_cassandra_hosts                      = 32
+output_cassandra_total_cpus                 = 256
+output_daemon_cpus                          = "2 cpus ($0.072500/hr)"
+output_daemon_instances                     = 32
+output_daemon_thread_pool_size              = 6
+output_daemon_total_cpus                    = 64
+output_daemon_writer_workers                = 12
+output_daemon_writers_per_cassandra_cpu     = 9
+output_total_ec2_hourly_cost                = "$14.005300/hr"
+
+      </pre>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-32-runs">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-32-runs" aria-expanded="false" aria-controls="collapse-8-32-runs">
+                Test runs
+              </button>
+            </h2>
+            <div id="collapse-8-32-runs" class="accordion-collapse collapse" aria-labelledby="heading-8-32-runs">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/32/00-runs.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-32-cpu">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-32-cpu" aria-expanded="false" aria-controls="collapse-8-32-cpu">
+                CPU usage
+              </button>
+            </h2>
+            <div id="collapse-8-32-cpu" class="accordion-collapse collapse" aria-labelledby="heading-8-32-cpu">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/32/01-cpu.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-32-mem">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-32-mem" aria-expanded="false" aria-controls="collapse-8-32-mem">
+                Memory usage
+              </button>
+            </h2>
+            <div id="collapse-8-32-mem" class="accordion-collapse collapse" aria-labelledby="heading-8-32-mem">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/32/02-mem.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-32-reads">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-32-reads" aria-expanded="false" aria-controls="collapse-8-32-reads">
+                Cassandra reads
+              </button>
+            </h2>
+            <div id="collapse-8-32-reads" class="accordion-collapse collapse" aria-labelledby="heading-8-32-reads">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/32/03-reads.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-8-32-writes">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8-32-writes" aria-expanded="false" aria-controls="collapse-8-32-writes">
+                Cassandra writes
+              </button>
+            </h2>
+            <div id="collapse-8-32-writes" class="accordion-collapse collapse" aria-labelledby="heading-8-32-writes">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.8/32/04-writes.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading-16-4">
+      <button class="accordion-button color16 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-4" aria-expanded="false" aria-controls="collapse-16-4">
+        <div class="col-2">aws.arm64.c7g.16</div>
+        <div class="col-3">Cassandra cores 16</div>
+        <div class="col-3">Cassandra nodes 4</div>
+        <div class="col-2">503 seconds</div>
+        <div class="col-1">$0.50</div>
+      </button>
+    </h2>
+    <div id="collapse-16-4" class="accordion-collapse collapse" aria-labelledby="heading-16-4">
+      <div class="accordion-body">
+        <div class="accordion" id="accordionTests-16-4">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-4-cfg">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-4-cfg" aria-expanded="false" aria-controls="collapse-16-4-cfg">
+                Terraform config
+              </button>
+            </h2>
+            <div id="collapse-16-4-cfg" class="accordion-collapse collapse" aria-labelledby="heading-16-4-cfg">
+              <div class="accordion-body">
+      <pre>
+output_cassandra_cpus                       = "16 cpus ($0.725800/hr)"
+output_cassandra_hosts                      = 4
+output_cassandra_total_cpus                 = 64
+output_daemon_cpus                          = "4 cpus ($0.145000/hr)"
+output_daemon_instances                     = 4
+output_daemon_thread_pool_size              = 12
+output_daemon_total_cpus                    = 16
+output_daemon_writer_workers                = 12
+output_daemon_writers_per_cassandra_cpu     = 9
+output_total_ec2_hourly_cost                = "$3.555700/hr"
+      </pre>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-4-runs">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-4-runs" aria-expanded="false" aria-controls="collapse-16-4-runs">
+                Test runs
+              </button>
+            </h2>
+            <div id="collapse-16-4-runs" class="accordion-collapse collapse" aria-labelledby="heading-16-4-runs">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.16/4/00-runs.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-4-cpu">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-4-cpu" aria-expanded="false" aria-controls="collapse-16-4-cpu">
+                CPU usage
+              </button>
+            </h2>
+            <div id="collapse-16-4-cpu" class="accordion-collapse collapse" aria-labelledby="heading-16-4-cpu">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.16/4/01-cpu.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-4-mem">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-4-mem" aria-expanded="false" aria-controls="collapse-16-4-mem">
+                Memory usage
+              </button>
+            </h2>
+            <div id="collapse-16-4-mem" class="accordion-collapse collapse" aria-labelledby="heading-16-4-mem">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.16/4/02-mem.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-4-reads">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-4-reads" aria-expanded="false" aria-controls="collapse-16-4-reads">
+                Cassandra reads
+              </button>
+            </h2>
+            <div id="collapse-16-4-reads" class="accordion-collapse collapse" aria-labelledby="heading-16-4-reads">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.16/4/03-reads.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-4-writes">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-4-writes" aria-expanded="false" aria-controls="collapse-16-4-writes">
+                Cassandra writes
+              </button>
+            </h2>
+            <div id="collapse-16-4-writes" class="accordion-collapse collapse" aria-labelledby="heading-16-4-writes">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.16/4/04-writes.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading-16-8">
+      <button class="accordion-button color16 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-8" aria-expanded="false" aria-controls="collapse-16-8">
+        <div class="col-2">aws.arm64.c7g.16</div>
+        <div class="col-3">Cassandra cores 16</div>
+        <div class="col-3">Cassandra nodes 8</div>
+        <div class="col-2">275 seconds</div>
+        <div class="col-1">$0.54</div>
+      </button>
+    </h2>
+    <div id="collapse-16-8" class="accordion-collapse collapse" aria-labelledby="heading-16-8">
+      <div class="accordion-body">
+        <div class="accordion" id="accordionTests-16-8">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-8-cfg">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-8-cfg" aria-expanded="false" aria-controls="collapse-16-8-cfg">
+                Terraform config
+              </button>
+            </h2>
+            <div id="collapse-16-8-cfg" class="accordion-collapse collapse" aria-labelledby="heading-16-8-cfg">
+              <div class="accordion-body">
+      <pre>
+output_cassandra_cpus                       = "16 cpus ($0.725800/hr)"
+output_cassandra_hosts                      = 8
+output_cassandra_total_cpus                 = 128
+output_daemon_cpus                          = "4 cpus ($0.145000/hr)"
+output_daemon_instances                     = 8
+output_daemon_thread_pool_size              = 12
+output_daemon_total_cpus                    = 32
+output_daemon_writer_workers                = 12
+output_daemon_writers_per_cassandra_cpu     = 9
+output_total_ec2_hourly_cost                = "$7.038900/hr"
+      </pre>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-8-runs">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-8-runs" aria-expanded="false" aria-controls="collapse-16-8-runs">
+                Test runs
+              </button>
+            </h2>
+            <div id="collapse-16-8-runs" class="accordion-collapse collapse" aria-labelledby="heading-16-8-runs">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.16/8/00-runs.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-8-cpu">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-8-cpu" aria-expanded="false" aria-controls="collapse-16-8-cpu">
+                CPU usage
+              </button>
+            </h2>
+            <div id="collapse-16-8-cpu" class="accordion-collapse collapse" aria-labelledby="heading-16-8-cpu">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.16/8/01-cpu.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-8-mem">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-8-mem" aria-expanded="false" aria-controls="collapse-16-8-mem">
+                Memory usage
+              </button>
+            </h2>
+            <div id="collapse-16-8-mem" class="accordion-collapse collapse" aria-labelledby="heading-16-8-mem">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.16/8/02-mem.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-8-reads">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-8-reads" aria-expanded="false" aria-controls="collapse-16-8-reads">
+                Cassandra reads
+              </button>
+            </h2>
+            <div id="collapse-16-8-reads" class="accordion-collapse collapse" aria-labelledby="heading-16-8-reads">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.16/8/03-reads.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-8-writes">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-8-writes" aria-expanded="false" aria-controls="collapse-16-8-writes">
+                Cassandra writes
+              </button>
+            </h2>
+            <div id="collapse-16-8-writes" class="accordion-collapse collapse" aria-labelledby="heading-16-8-writes">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.16/8/04-writes.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading-16-16">
+      <button class="accordion-button color16 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-16" aria-expanded="false" aria-controls="collapse-16-16">
+        <div class="col-2">aws.arm64.c7g.16</div>
+        <div class="col-3">Cassandra cores 16</div>
+        <div class="col-3">Cassandra nodes 16</div>
+        <div class="col-2">176 seconds</div>
+        <div class="col-1">$0.68</div>
+      </button>
+    </h2>
+    <div id="collapse-16-16" class="accordion-collapse collapse" aria-labelledby="heading-16-16">
+      <div class="accordion-body">
+        <div class="accordion" id="accordionTests-16-16">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-16-cfg">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-16-cfg" aria-expanded="false" aria-controls="collapse-16-16-cfg">
+                Terraform config
+              </button>
+            </h2>
+            <div id="collapse-16-16-cfg" class="accordion-collapse collapse" aria-labelledby="heading-16-16-cfg">
+              <div class="accordion-body">
+      <pre>
+output_cassandra_cpus                       = "16 cpus ($0.725800/hr)"
+output_cassandra_hosts                      = 16
+output_cassandra_total_cpus                 = 256
+output_daemon_cpus                          = "4 cpus ($0.145000/hr)"
+output_daemon_instances                     = 16
+output_daemon_thread_pool_size              = 12
+output_daemon_total_cpus                    = 64
+output_daemon_writer_workers                = 12
+output_daemon_writers_per_cassandra_cpu     = 9
+output_total_ec2_hourly_cost                = "$14.005300/hr"
+      </pre>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-16-runs">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-16-runs" aria-expanded="false" aria-controls="collapse-16-16-runs">
+                Test runs
+              </button>
+            </h2>
+            <div id="collapse-16-16-runs" class="accordion-collapse collapse" aria-labelledby="heading-16-16-runs">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.16/16/00-runs.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-16-cpu">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-16-cpu" aria-expanded="false" aria-controls="collapse-16-16-cpu">
+                CPU usage
+              </button>
+            </h2>
+            <div id="collapse-16-16-cpu" class="accordion-collapse collapse" aria-labelledby="heading-16-16-cpu">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.16/16/01-cpu.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-16-mem">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-16-mem" aria-expanded="false" aria-controls="collapse-16-16-mem">
+                Memory usage
+              </button>
+            </h2>
+            <div id="collapse-16-16-mem" class="accordion-collapse collapse" aria-labelledby="heading-16-16-mem">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.16/16/02-mem.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-16-reads">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-16-reads" aria-expanded="false" aria-controls="collapse-16-16-reads">
+                Cassandra reads
+              </button>
+            </h2>
+            <div id="collapse-16-16-reads" class="accordion-collapse collapse" aria-labelledby="heading-16-16-reads">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.16/16/03-reads.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-16-16-writes">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-16-16-writes" aria-expanded="false" aria-controls="collapse-16-16-writes">
+                Cassandra writes
+              </button>
+            </h2>
+            <div id="collapse-16-16-writes" class="accordion-collapse collapse" aria-labelledby="heading-16-16-writes">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.16/16/04-writes.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading-32-4">
+      <button class="accordion-button color32 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-32-4" aria-expanded="false" aria-controls="collapse-32-4">
+        <div class="col-2">aws.arm64.c7g.32</div>
+        <div class="col-3">Cassandra cores 32</div>
+        <div class="col-3">Cassandra nodes 4</div>
+        <div class="col-2">270 seconds</div>
+        <div class="col-1">$0.53</div>
+      </button>
+    </h2>
+    <div id="collapse-32-4" class="accordion-collapse collapse" aria-labelledby="heading-32-4">
+      <div class="accordion-body">
+        <div class="accordion" id="accordionTests-32-4">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-32-4-cfg">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-32-4-cfg" aria-expanded="false" aria-controls="collapse-32-4-cfg">
+                Terraform config
+              </button>
+            </h2>
+            <div id="collapse-32-4-cfg" class="accordion-collapse collapse" aria-labelledby="heading-32-4-cfg">
+              <div class="accordion-body">
+      <pre>
+output_cassandra_cpus                       = "32 cpus ($1.451500/hr)"
+output_cassandra_hosts                      = 4
+output_cassandra_total_cpus                 = 128
+output_daemon_cpus                          = "8 cpus ($0.290000/hr)"
+output_daemon_instances                     = 4
+output_daemon_thread_pool_size              = 24
+output_daemon_total_cpus                    = 32
+output_daemon_writer_workers                = 12
+output_daemon_writers_per_cassandra_cpu     = 9
+output_total_ec2_hourly_cost                = "$7.038500/hr"
+      </pre>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-32-4-runs">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-32-4-runs" aria-expanded="false" aria-controls="collapse-32-4-runs">
+                Test runs
+              </button>
+            </h2>
+            <div id="collapse-32-4-runs" class="accordion-collapse collapse" aria-labelledby="heading-32-4-runs">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.32/4/00-runs.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-32-4-cpu">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-32-4-cpu" aria-expanded="false" aria-controls="collapse-32-4-cpu">
+                CPU usage
+              </button>
+            </h2>
+            <div id="collapse-32-4-cpu" class="accordion-collapse collapse" aria-labelledby="heading-32-4-cpu">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.32/4/01-cpu.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-32-4-mem">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-32-4-mem" aria-expanded="false" aria-controls="collapse-32-4-mem">
+                Memory usage
+              </button>
+            </h2>
+            <div id="collapse-32-4-mem" class="accordion-collapse collapse" aria-labelledby="heading-32-4-mem">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.32/4/02-mem.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-32-4-reads">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-32-4-reads" aria-expanded="false" aria-controls="collapse-32-4-reads">
+                Cassandra reads
+              </button>
+            </h2>
+            <div id="collapse-32-4-reads" class="accordion-collapse collapse" aria-labelledby="heading-32-4-reads">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.32/4/03-reads.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-32-4-writes">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-32-4-writes" aria-expanded="false" aria-controls="collapse-32-4-writes">
+                Cassandra writes
+              </button>
+            </h2>
+            <div id="collapse-32-4-writes" class="accordion-collapse collapse" aria-labelledby="heading-32-4-writes">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.32/4/04-writes.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading-32-8">
+      <button class="accordion-button color32 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-32-8" aria-expanded="false" aria-controls="collapse-32-8">
+        <div class="col-2">aws.arm64.c7g.32</div>
+        <div class="col-3">Cassandra cores 32</div>
+        <div class="col-3">Cassandra nodes 8</div>
+        <div class="col-2">176 seconds</div>
+        <div class="col-1">$0.68</div>
+      </button>
+    </h2>
+    <div id="collapse-32-8" class="accordion-collapse collapse" aria-labelledby="heading-32-8">
+      <div class="accordion-body">
+        <div class="accordion" id="accordionTests-32-8">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-32-8-cfg">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-32-8-cfg" aria-expanded="false" aria-controls="collapse-32-8-cfg">
+                Terraform config
+              </button>
+            </h2>
+            <div id="collapse-32-8-cfg" class="accordion-collapse collapse" aria-labelledby="heading-32-8-cfg">
+              <div class="accordion-body">
+      <pre>
+output_cassandra_cpus                       = "32 cpus ($1.451500/hr)"
+output_cassandra_hosts                      = 8
+output_cassandra_total_cpus                 = 256
+output_daemon_cpus                          = "8 cpus ($0.290000/hr)"
+output_daemon_instances                     = 8
+output_daemon_thread_pool_size              = 24
+output_daemon_total_cpus                    = 64
+output_daemon_writer_workers                = 12
+output_daemon_writers_per_cassandra_cpu     = 9
+output_total_ec2_hourly_cost                = "$14.004500/hr"
+      </pre>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-32-8-runs">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-32-8-runs" aria-expanded="false" aria-controls="collapse-32-8-runs">
+                Test runs
+              </button>
+            </h2>
+            <div id="collapse-32-8-runs" class="accordion-collapse collapse" aria-labelledby="heading-32-8-runs">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.32/8/00-runs.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-32-8-cpu">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-32-8-cpu" aria-expanded="false" aria-controls="collapse-32-8-cpu">
+                CPU usage
+              </button>
+            </h2>
+            <div id="collapse-32-8-cpu" class="accordion-collapse collapse" aria-labelledby="heading-32-8-cpu">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.32/8/01-cpu.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-32-8-mem">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-32-8-mem" aria-expanded="false" aria-controls="collapse-32-8-mem">
+                Memory usage
+              </button>
+            </h2>
+            <div id="collapse-32-8-mem" class="accordion-collapse collapse" aria-labelledby="heading-32-8-mem">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.32/8/02-mem.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-32-8-reads">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-32-8-reads" aria-expanded="false" aria-controls="collapse-32-8-reads">
+                Cassandra reads
+              </button>
+            </h2>
+            <div id="collapse-32-8-reads" class="accordion-collapse collapse" aria-labelledby="heading-32-8-reads">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.32/8/03-reads.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-32-8-writes">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-32-8-writes" aria-expanded="false" aria-controls="collapse-32-8-writes">
+                Cassandra writes
+              </button>
+            </h2>
+            <div id="collapse-32-8-writes" class="accordion-collapse collapse" aria-labelledby="heading-32-8-writes">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.32/8/04-writes.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading-64-4">
+      <button class="accordion-button color64 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-64-4" aria-expanded="false" aria-controls="collapse-64-4">
+        <div class="col-2">aws.arm64.c7g.64</div>
+        <div class="col-3">Cassandra cores 64</div>
+        <div class="col-3">Cassandra nodes 4</div>
+        <div class="col-2">209 seconds</div>
+        <div class="col-1">$0.81</div>
+      </button>
+    </h2>
+    <div id="collapse-64-4" class="accordion-collapse collapse" aria-labelledby="heading-64-4">
+      <div class="accordion-body">
+        <div class="accordion" id="accordionTests-64-4">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-64-4-cfg">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-64-4-cfg" aria-expanded="false" aria-controls="collapse-64-4-cfg">
+                Terraform config
+              </button>
+            </h2>
+            <div id="collapse-64-4-cfg" class="accordion-collapse collapse" aria-labelledby="heading-64-4-cfg">
+              <div class="accordion-body">
+      <pre>
+output_cassandra_cpus                       = "64 cpus ($2.903000/hr)"
+output_cassandra_hosts                      = 4
+output_cassandra_total_cpus                 = 256
+output_daemon_cpus                          = "16 cpus ($0.580000/hr)"
+output_daemon_instances                     = 4
+output_daemon_thread_pool_size              = 48
+output_daemon_total_cpus                    = 64
+output_daemon_writer_workers                = 12
+output_daemon_writers_per_cassandra_cpu     = 9
+output_total_ec2_hourly_cost                = "$14.004500/hr"
+      </pre>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-64-4-runs">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-64-4-runs" aria-expanded="false" aria-controls="collapse-64-4-runs">
+                Test runs
+              </button>
+            </h2>
+            <div id="collapse-64-4-runs" class="accordion-collapse collapse" aria-labelledby="heading-64-4-runs">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.64/4/00-runs.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-64-4-cpu">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-64-4-cpu" aria-expanded="false" aria-controls="collapse-64-4-cpu">
+                CPU usage
+              </button>
+            </h2>
+            <div id="collapse-64-4-cpu" class="accordion-collapse collapse" aria-labelledby="heading-64-4-cpu">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.64/4/01-cpu.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-64-4-mem">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-64-4-mem" aria-expanded="false" aria-controls="collapse-64-4-mem">
+                Memory usage
+              </button>
+            </h2>
+            <div id="collapse-64-4-mem" class="accordion-collapse collapse" aria-labelledby="heading-64-4-mem">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.64/4/02-mem.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-64-4-reads">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-64-4-reads" aria-expanded="false" aria-controls="collapse-64-4-reads">
+                Cassandra reads
+              </button>
+            </h2>
+            <div id="collapse-64-4-reads" class="accordion-collapse collapse" aria-labelledby="heading-64-4-reads">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.64/4/03-reads.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-64-4-writes">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-64-4-writes" aria-expanded="false" aria-controls="collapse-64-4-writes">
+                Cassandra writes
+              </button>
+            </h2>
+            <div id="collapse-64-4-writes" class="accordion-collapse collapse" aria-labelledby="heading-64-4-writes">
+              <div class="accordion-body">
+          <img src="./i/s/c7g.64/4/04-writes.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

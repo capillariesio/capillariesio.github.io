@@ -14,46 +14,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
-  <link rel="stylesheet" href="../../css/bootstrap.min.css">
-  <link rel="stylesheet" href="../../css/overrides.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
 <body>
   <div class="container">
-
-    <div class="row" style="margin-top: 10px; margin-bottom: 20px;">
-      <div class="col-lg-6">
-        <img src="../../i/logo.svg" alt="Capillaries logo" class="pull-left logo" style="width:40px">
-        <h1>Capillaries: notes</h1>
+    <div class="row mt-3 mb-3">
+      <div class="col-6">
+        <h1><img src="../../i/logo.svg" alt="Capillaries logo" style="width:40px;margin-right:10px;">Capillaries: notes</h1>
       </div>
-
-      <div class="col-lg-3">
-        <ul class="nav nav-pills pull-right" style="margin-top: 20px">
-          <li><a href="../index.html">Blog home</a></li>
-        </ul>
+      <div class="col-3">
+          <a href="../index.html" class="btn btn-primary float-end">Blog home</a>
       </div>
-      <div class="col-lg-3">
-        <ul class="nav nav-pills pull-right" style="margin-top: 20px">
-          <li><a href="https://github.com/capillariesio/capillaries">Source code and documentation</a></li>
-        </ul>
+      <div class="col-3">
+          <a href="https://github.com/capillariesio/capillaries" class="btn btn-primary float-end">Source code and documentation</a>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-lg-12">
+
+    <div class="row mt-4 mb-4">
+      <div class="col-12">
         <h4>2023-02-20</h4>
         <h2>First look at Capillaries UI</h2>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h3>UI snapshots</h3>
         <p>Below are two scraped snapshots of Capillaries UI that give the idea about the state of the test environment.
           <strong>Click any of the screenshots below and navigate through status screens</strong> - all blue elements are clickable, buttons
           are disabled (button tooltips are working though).</p>
           <p>
-        Second snapshot also contains status information about other integration test runs: lookup quicktest (smaller
+        Second snapshot also contains status information about other integration test runs: lookup_quicktest (smaller
         number of orders and order items), py_calc_quicktest (performs Python formula calculations) and
         tag_and_denormalize_quicktest (tags data records using regular expressions and calculates tag totals).</p>
         <p>For both snapshots, the navigation starts at the very top "Keyspaces" level.</p>
@@ -61,46 +54,42 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-6">
         <p>lookup_bigtest run in progress:</p>
         <a href="./scrape-lookup-bigtest-in-progress/-hash-.html"><img src="./i/2023-02-20-in-progress.png" /></a>
       </div>
-      <div class="col-lg-6">
+      <div class="col-6">
         <p>lookup_bigtest (and all other test runs) complete:</p>
-        <a href="./scrape-all-complete/-hash-.html"><img src="./i/2023-02-20-complete.png"  style="width:78%;" /></a>
+        <a href="./scrape-all-complete/-hash-.html"><img src="./i/2023-02-20-complete.png"  /></a>
       </div>
     </div>
     
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h3>What does lookup_bigtest do, anyways?</h3>
-        <p>lookup_bigtest is an integration test for Capillaries Deploy tool, it creates test data (~50K orders with
-          ~100K order items) deploys it to an Openstack public cloud and runs Capillaries script that:</p>
+        <p>lookup_bigtest is an integration test, it creates test data (~50K orders with
+          ~100K order items) and runs Capillaries script that:</p>
         <ul>
           <li>reads orders from 10 files and order items from 100 files in parallel</li>
           <li>performs four types of joins in parallel</li>
-          <li>saves sorted results as CSV files (one file - one worker)</li>
+          <li>saves sorted results as parquet files</li>
         </ul>
-        <p>UPDATE 2024:
-          <ul>
-            <li>lookup/bigtest_cloud is now maintained in the Capillaries repository</li>
-            <li>Capillaries Deploy tool is now maintained at https://github.com/capillariesio/capillaries-deploy</li>
-            <li>Capillaries Deploy tool now does not support Openstack, and is oriented towards AWS/Azure/GCP; reason - it's nearly impossible to find a public Openstack provider that could run Capillaries at scale</li>
-          </ul>
-        </p>
         <p>This diagram shows the workflow executed by lookup_bigtest:</p>
         <img src="./i/dot-lookup.svg" width="100%" />
-        <p>The diagram was generated by this Capillaries command that takes Capillaries script/paramaters and generates a graph in DOT graph description language.</p>
-        <pre>cd pkg/exe/toolbelt<br/>go run capitoolbelt.go validate_script -script_file=../../../test/data/cfg/lookup_bigtest/script.json -params_file=../../../test/data/cfg/lookup_bigtest/script_params_one_run.json -idx_dag=true
+        <p>The diagram was generated by this Capillaries command:</p>
+        <pre>
+          cd pkg/exe/toolbelt
+          go run capitoolbelt.go validate_script \
+            -script_file=../../../test/data/cfg/lookup/script_big.json \
+            -params_file=../../../test/data/cfg/lookup/script_params_big_fs_one.json
         </pre>
-        <p>DOT graphs can be visualized by any online Graphviz DOT viewer and saved as vector or raster image file. Open this diagram in a separate tab/window to see it in detail (tooltips are working).</p>
       </div>
     </div>
 
     <div class=" footer">
         <p>&copy;
           <script type="text/javascript">document.write("2022-" + new Date().getFullYear());</script>
-          Capillaries.io
+          capillaries.io
         </p>
       </div>
 

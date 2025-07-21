@@ -14,69 +14,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
-  <link rel="stylesheet" href="../../css/bootstrap.min.css">
-  <link rel="stylesheet" href="../../css/overrides.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
 <body>
   <div class="container">
-
-    <div class="row" style="margin-top: 10px; margin-bottom: 20px;">
-      <div class="col-lg-6">
-        <img src="../../i/logo.svg" alt="Capillaries logo" class="pull-left logo" style="width:40px">
-        <h1>Capillaries: notes</h1>
+    <div class="row mt-3 mb-3">
+      <div class="col-6">
+        <h1><img src="../../i/logo.svg" alt="Capillaries logo" style="width:40px;margin-right:10px;">Capillaries: notes</h1>
       </div>
-
-      <div class="col-lg-3">
-        <ul class="nav nav-pills pull-right" style="margin-top: 20px">
-          <li><a href="../index.html">Blog home</a></li>
-        </ul>
+      <div class="col-3">
+          <a href="../index.html" class="btn btn-primary float-end">Blog home</a>
       </div>
-      <div class="col-lg-3">
-        <ul class="nav nav-pills pull-right" style="margin-top: 20px">
-          <li><a href="https://github.com/capillariesio/capillaries">Source code and documentation</a></li>
-        </ul>
+      <div class="col-3">
+          <a href="https://github.com/capillariesio/capillaries" class="btn btn-primary float-end">Source code and documentation</a>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-lg-12">
+    <div class="row mt-4 mb-4">
+      <div class="col-12">
         <h4>2023-04-08</h4>
         <h2>Use Capillaries to calculate ARK portfolio performance</h2>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-9">
+      <div class="col-9">
         <h3>What is this?</h3>
         <p>Recently, a new Capillaries integration test was added: <a href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md">Portfolio performance calculation</a>. It mimics the process performed by an investment bank at the end of each quarter or year: for each individual portfolio, combined return rate is calculated for a specific period. This test uses data for six portfolios maintained by <a href="https://ark-funds.com/">ARK</a>, and calculates yearly performance for the whole portfolio and for each sector using <a href="https://en.wikipedia.org/wiki/Time-weighted_return">time-weighted annualized return (TWR)</a> formula.</p>
         <h3>What's so cool about it?</h3>
         <p>The test performs calculations for six portfolios only, but the process can be easily scaled out to tens or hundreds of thousands of portfolios. And this is exactly the challenge that investment bank IT departments are facing on a regular basis: provide each client (there may be hundreds of thousands of them) with a personalized rate of return, and do that, say, overnight.</p>
       </div>
-      <div class="col-lg-3">
+      <div class="col-3">
         <img src="./i/ark.jpg" style="width:260px;height:260px;"/>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h3>Why ARK?</h3>
         <p>Because ARK made their trades info publicly available, so we can claim that this Capillaries test is as close to the real production environment as possible and compare results delivered by Capillaries to the official ARK performance numbers.</p>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h3>What does it do, exactly?</h3>
         <hr/>
         <h4>1. Input</h4>
         <hr/>
-        <p>This test uses holdings and transaction history for each account, in <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/in/portfolio_quicktest">CSV files</a>:</p>
+        <p>This test uses holdings and transaction history for each account, in <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/in/portfolio">CSV files</a>:</p>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-4">
+      <div class="col-4">
         <h5>Accounts</h5>
         <hr/>
         <table class="table table-striped text-right" style="font-size:smaller">
@@ -95,7 +87,7 @@
         </table>
       </div>
 
-      <div class="col-lg-4">
+      <div class="col-4">
         <h5>End-of-month holdings history</h5>
         <hr/>
         <table class="table table-striped text-right" style="font-size:smaller">
@@ -115,7 +107,7 @@
         </table>
       </div>
 
-      <div class="col-lg-4">
+      <div class="col-4">
         <h5>Transaction history</h5>
         <hr/>
         <table class="table table-striped text-right" style="font-size:smaller">
@@ -135,18 +127,18 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <hr/>
         <h4>2. Processing</h4>
         <hr/>
-        <p>The full DAG of the transforms implemented in the  <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/portfolio_quicktest/script.json">portfolio test script</a> looks as follows:</p>
-        <img src="./i/dot-portfolio.svg"/>
-        <p>The test applies <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/portfolio_quicktest/py/portfolio_calc.py">Python formulas</a> that calculate time-weighted return (twr) and compound annual growth rate (cagr) using a simulated third-party end-of-day price and company info providers:</p>
+        <p>The full DAG of the transforms implemented in the  <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/portfolio/script_quick.json">portfolio test script</a> looks as follows:</p>
+        <img src="./i/dot-portfolio.svg"  class="img-fluid"/>
+        <p>The test applies <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/portfolio/py/portfolio_calc.py">Python formulas</a> that calculate time-weighted return (twr) and compound annual growth rate (cagr) using a simulated third-party end-of-day price and company info providers:</p>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-7">
+      <div class="col-7">
 
 <pre class="python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;"># Build ticker-level cf history, build sector cf history,</span>
 <span style="color: #808080; font-style: italic;"># calculate twr/cagr for each sector</span>
@@ -171,7 +163,7 @@
 
       </div>
 
-      <div class="col-lg-5">
+      <div class="col-5">
 <pre class="python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;"># Get EOD price for a specific ticker for a specific date</span>
 <span style="color: #ff7700;font-weight:bold;">class</span> PortfolioTestEodPriceProvider:
   <span style="color: #ff7700;font-weight:bold;">def</span> get_price<span style="color: black;">&#40;</span>d<span style="color: #66cc66;">,</span>ticker<span style="color: black;">&#41;</span>:
@@ -190,13 +182,13 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         The full transcript of what the result of each script node looks like in Cassandra is <a href="./transcript_portfolio.html">here</a>.
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <hr/>
         <h4>3. Output</h4>
         <hr/>
@@ -204,8 +196,8 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-8">
-        <p>As a result, the test produces a <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/out/portfolio_quicktest/account_period_sector_perf_baseline.csv">CSV file with period returns</a> for each account, per sector:</p>
+      <div class="col-8">
+        <p>As a result, the test produces a <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/out/portfolio/account_period_sector_perf_baseline.csv">CSV file with period returns</a> for each account, per sector:</p>
         <table class="table table-striped text-right"  style="font-size:smaller">
           <thead>
             <th class="text-right">ARK fund</th><th class="text-right">Period</th><th class="text-right">Sector</th><th class="text-right">Time-weighted annualized return %</th>
@@ -230,7 +222,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h3>How accurate is this calculation?</h3>
         <p>Quick answer: not very accurate, mostly because of the lack of reliable source data
           (see <a href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md#how-accurate-are-these-numbers">Portfolio performance calculation integration test</a> details).
@@ -258,7 +250,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h3>UI snapshot</h3>
         <p>Below is a scraped snapshot of Capillaries UI after running full portfolio performance calculation.
           Click on the screenshot and navigate through status screens - all blue elements are clickable, buttons
@@ -268,7 +260,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <a href="./scrape-all-complete/-hash-.html"><img src="./i/2023-04-08-complete.png" style="margin-bottom:20px;" /></a>
       </div>
     </div>
@@ -277,7 +269,7 @@
     <div class=" footer">
         <p>&copy;
           <script type="text/javascript">document.write("2022-" + new Date().getFullYear());</script>
-          Capillaries.io
+          capillaries.io
         </p>
       </div>
 

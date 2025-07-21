@@ -14,40 +14,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
-  <link rel="stylesheet" href="../../css/bootstrap.min.css">
-  <link rel="stylesheet" href="../../css/overrides.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
 <body>
   <div class="container">
-
-    <div class="row" style="margin-top: 10px; margin-bottom: 20px;">
-      <div class="col-lg-6">
-        <img src="../../i/logo.svg" alt="Capillaries logo" class="pull-left logo" style="width:40px">
-        <h1>Capillaries: notes</h1>
+    <div class="row mt-3 mb-3">
+      <div class="col-6">
+        <h1><img src="../../i/logo.svg" alt="Capillaries logo" style="width:40px;margin-right:10px;">Capillaries: notes</h1>
       </div>
-
-      <div class="col-lg-3">
-        <ul class="nav nav-pills pull-right" style="margin-top: 20px">
-          <li><a href="../index.html">Blog home</a></li>
-        </ul>
+      <div class="col-3">
+          <a href="../index.html" class="btn btn-primary float-end">Blog home</a>
       </div>
-      <div class="col-lg-3">
-        <ul class="nav nav-pills pull-right" style="margin-top: 20px">
-          <li><a href="https://github.com/capillariesio/capillaries">Source code and documentation</a></li>
-        </ul>
+      <div class="col-3">
+          <a href="https://github.com/capillariesio/capillaries" class="btn btn-primary float-end">Source code and documentation</a>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-lg-12">
+    <div class="row mt-4 mb-4">
+      <div class="col-12">
         <h4>2023-11-15</h4>
         <h2>Capillaries: ARK portfolio performance calculation at (slightly bigger) scale</h2>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-8">
+      <div class="col-8">
         <h3>The rationale</h3>
         <p>At the end of the day, using any piece of technology is about saving money.
           This document attempts to estimate the potential costs of implementing a Capillaries-based solution for <a href="../2023-04-08-portfolio/index.html">portfolio performance calculation</a>.
@@ -60,19 +52,19 @@
           takes zero time and resources (the involved stock quotes for 2020-2021 are hardcoded in the Python script that calculates portfolio performance).
         </p>
           <p>
-            All AWS provisioning tasks were performed using the Capillaries <a href="https://github.com/capillariesio/capillaries-deploy">cloud deployment toolkit</a>. The code for preparing test data is in test/code/porfolio/bigtest, and configuration data is in test/data/cfg/portfolio_bigtest.
+            All AWS provisioning tasks were performed using the Capillaries <a href="https://github.com/capillariesio/capillaries-deploy">cloud deployment toolkit</a>. The code for preparing test data is in test/code/porfolio, and configuration data is in test/data/cfg/portfolio.
           </p>
       </div>
-      <div class="col-lg-4">
+      <div class="col-4">
         <img src="./i/ark-scale.jpg" style="width:360px"/>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h3>Numbers and charts</h3>
         <p>
-          The following tables and charts tell the story of three AWS-based test environments running the same <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/portfolio_bigtest/script.json">portfolio_bigtest script</a> against the same raw dataset:
+          The following tables and charts tell the story of three AWS-based test environments running the same <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/portfolio/script_big.json">portfolio script</a> against the same raw dataset:
         </p>
         <ul>
           <li>996 accounts stored in one 4KB Parquet file</li>
@@ -90,14 +82,14 @@
 
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h4>4 x c6a.8xlarge Cassandra cluster (128 cores)</h4>
         <hr />
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-7">
+      <div class="col-7">
         <div class="row no-gutters">
           <table class="table table-striped text-right" style="font-size:smaller">
             <thead>
@@ -204,21 +196,21 @@
           </table>
         </div>
       </div>
-      <div class="col-lg-5">
-        <img src="i/04.png" alt="">
+      <div class="col-5">
+        <img src="i/04.png" alt="" class="img-fluid">
       </div>
     </div>
 
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h4>8 x c6a.8xlarge Cassandra cluster (256 cores)</h4>
         <hr />
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-7">
+      <div class="col-7">
         <div class="row no-gutters">
           <table class="table table-striped text-right" style="font-size:smaller">
             <thead>
@@ -325,21 +317,21 @@
           </table>
         </div>
       </div>
-      <div class="col-lg-5">
-        <img src="i/08.png" alt="">
+      <div class="col-5">
+        <img src="i/08.png" alt=""  class="img-fluid">
       </div>
     </div>
 
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h4>16 x c6a.8xlarge Cassandra cluster (512 cores)</h4>
         <hr />
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-7">
+      <div class="col-7">
         <div class="row no-gutters">
           <table class="table table-striped text-right" style="font-size:smaller">
             <thead>
@@ -446,8 +438,8 @@
           </table>
         </div>
       </div>
-      <div class="col-lg-5">
-        <img src="i/16.png" alt="">
+      <div class="col-5">
+        <img src="i/16.png" alt=""  class="img-fluid">
       </div>
     </div>
 
@@ -457,13 +449,13 @@
 
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <p>There are a few distinct areas on each scenario graph.</p>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h4>ETL: load transactions</h4>
         <p>This is the plateau at the beginning.
           Daemons with 64, 128, or 256 total cores load 500 Parquet files with 14 million transactions.
@@ -489,14 +481,14 @@
 
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h3>Cassandra tokens and CPU usage patterns</h3>
         <p></p>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h4>Why can't we have 100% CPU usage when we do joins?</h4>
         <p>
           All three runs of the 8-node scenario were web-scraped and saved <a href="./scrape-8/-hash-.html">here</a>.
@@ -533,7 +525,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-8">
+      <div class="col-8">
         <h5>1. A few "heavy" batches</h5>
         <p>
           Each of those 51*3 + 10*4 + 6*5 = 223 "heavy" batches with 3, 4, and 5 items (accounts) is processed
@@ -545,7 +537,7 @@
           But in our scenario, they just do nothing, driving our overall CPU usage down.
         </p>
       </div>
-      <div class="col-lg-4">
+      <div class="col-4">
         <h5>2. A lot of empty batches</h5>
         <p>
           About a third of the batches end up with no accounts in them.
@@ -556,7 +548,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <p>
           Let's generalize our findings. The test works with <strong>996</strong> accounts, and the
           number of batches specified for <strong>2_account_txns_outer</strong> by the script is
@@ -580,7 +572,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <p>
           The output is below. As you can see, our findings for the 1000-bucket item distribution match the
           theoretical numbers produced by this Python program pretty closely - those "heavy" buckets/batches are <mark>highlighted</mark>:
@@ -589,7 +581,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-4" style="padding-left:1px;padding-right:1px;">
+      <div class="col-4" style="padding-left:1px;padding-right:1px;">
         <pre style="font-family:monospace;color: green;">
 100 buckets, 996 items (Poisson λ=9.96)
 
@@ -615,7 +607,7 @@
 19-item buckets: 0.349, P=0.0034865, 0.34865%
             </pre>
       </div>
-      <div class="col-lg-4" style="padding-left:1px;padding-right:1px;">
+      <div class="col-4" style="padding-left:1px;padding-right:1px;">
         <pre style="font-family:monospace;color: red">
 1000 buckets, 996 items (Poisson λ=0.996)
 
@@ -641,7 +633,7 @@
 19-item buckets: 0.000, P=0.0000000, 0.00000%
             </pre>
       </div>
-      <div class="col-lg-4" style="padding-left:1px;padding-right:1px;">
+      <div class="col-4" style="padding-left:1px;padding-right:1px;">
         <pre style="font-family:monospace;color: blue">
 10000 buckets, 996 items (Poisson λ=0.0996)
 
@@ -670,7 +662,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <p>
           If we want to minimize the probability of getting batches with 3 or more items, we have to substantially increase the number of batches. And we have to pay for that with CPU, network, queue, and database resources spent on empty batches (for example, ~90% of the batches are empty if 996 items are spread among 10,000 batches). And remember: it's just a probability, so there is no guarantee that those "heavy" batches do not occur once in a while.
         </p>
@@ -694,7 +686,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h4>Bonus chapter: Poisson distribution</h4>
         <p>
           The challenge we are facing here is very well-known among hash table implementers: when a bucket in a
@@ -714,13 +706,13 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <img src="i/poisson.png" alt="" />
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <p>
           From the graph: a larger number of buckets (smaller <strong>&lambda;</strong> in Poisson distribution) leads to
           more empty buckets and fewer buckets with item count > 1. Otherwise, setups with a smaller number of buckets get us very
@@ -746,7 +738,7 @@
     <div class=" footer">
       <p>&copy;
         <script type="text/javascript">document.write("2022-" + new Date().getFullYear());</script>
-        Capillaries.io
+        capillaries.io
       </p>
     </div>
 

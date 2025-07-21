@@ -16,83 +16,71 @@
     <meta name="keywords" content="distributed, data, processing">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <meta property="og:title" content="capillaries">
     <meta property="og:type" content="website">
     <meta property="og:url" content="http://capillaries.io/">
     <meta property="og:image" content="http://capillaries.io/i/logo.svg">
     <meta property="og:description" content="Capillaries - distributed, supervised data processing">
-    <style>
-        body {
-            border-top: 4px solid #666;
-        }
-
-        h1 {
-            font-weight: bold;
-            float: left;
-        }
-
-        h2 {
-            border-bottom: 1px solid #ccc;
-            padding-bottom: .2em;
-            margin-top:60px;
-        }
-
-        div.footer {
-            border-top: 1px solid #ccc;
-            padding: 1em 0 .5em;
-            margin-top: 3em;
-        }
-
-        img.logo {
-            margin-right: 1em;
-            margin-top: 20px;
-        }
-    </style>
 </head>
 
 <body>
     <div class="container">
+    <div class="row mt-3 mb-3">
+      <div class="col-6">
+        <h1><img src="./i/logo.svg" alt="Capillaries logo" style="width:40px;margin-right:10px;">Capillaries</h1>
+      </div>
+      <div class="col-3">
+          <a href="./blog/index.html" class="btn btn-primary float-end">Blog</a>
+      </div>
+      <div class="col-3">
+          <a href="https://github.com/capillariesio/capillaries" class="btn btn-primary float-end">Source code and documentation</a>
+      </div>
+    </div>
 
-        <div class="row" style="margin-top: 10px; margin-bottom: 20px;">
-            <div class="col-lg-6">
+        <!-- <div class="row" style="margin-top: 10px; margin-bottom: 20px;">
+            <div class="col-6">
                 <img src="i/logo.svg" alt="Capillaries logo" class="pull-left logo" style="width:40px">
                 <h1>Capillaries</h1>
             </div>
-            <div class="col-lg-3">
+            <div class="col-3">
                 <ul class="nav nav-pills pull-right" style="margin-top: 20px">
                     <li><a href="./blog/index.html"><img src="i/web-content-icon.svg"
                                 style="width: 20px;margin-bottom: 2px;margin-right: 6px;" alt="blog">Blog</a></li>
                 </ul>
             </div>
-            <div class="col-lg-3">
+            <div class="col-3">
                 <ul class="nav nav-pills pull-right" style="margin-top: 20px">
                     <li><a href="https://github.com/capillariesio/Capillaries"><img src="i/github-mark.svg"
                                 style="width: 20px;margin-bottom: 3px;margin-right: 6px;" alt="github">Source code and
                             docs</a></li>
                 </ul>
             </div>
-        </div>
+        </div> -->
 
-        <h3>Distributed data processing platform<br/>focused on delivering enriched, customer-ready, production-quality data
-            within SLA time limits</h3>
+        <h3>
+            Distributed data processing platform focused on <br/>
+            delivering enriched, customer-ready, production-quality data <br/>
+            within SLA time limits
+        </h3>
 
 
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-12">
 		<object data="i/capi-animation.svg" style="width:100%;margin-top:100px;margin-bottom:100px;"></object>
             </div>
         </div>
 
 
-
-        <h2>What are the use cases where Capillaries excels?</h2>
+        <div class="row mt-5 mb-3">
+            <h2>What are the use cases where Capillaries excels?</h2>
+        </div>
 
         <div class="row">
-            <div class="col-lg-1">
+            <div class="col-1">
                 <img src="i/speed-test-icon.svg" alt="predict" style="width:60px;margin-top:20px;">
             </div>
-            <div class="col-lg-11">
+            <div class="col-11">
                 <h3>Predictable performance</h3>
                 Capillaries prioritizes predictable performance, which is crucial for SLA management.
                 Ideally, after a few test runs, data engineers should be able to give reasonably accurate
@@ -107,23 +95,23 @@
 
 
         <div class="row">
-            <div class="col-lg-1">
+            <div class="col-1">
                 <img src="i/configuration-icon.svg" alt="predict" style="width:60px;margin-top:20px;">
             </div>
-            <div class="col-lg-11">
+            <div class="col-11">
                 <h3>Configuration management consistency</h3>
                 1. The data processing DAG and relational algebra operations are part of the <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#script">Capillaries script</a> and are specified declaratively as JSON configuration.<br/>
                 2. <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#go-expressions">Go expressions</a> used in field transformations are just one-liners, leaving little room for error.<br/>
-                3. While row-level <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#py_calc-processor">Python formulas</a> can be very complex, they can easily be covered with <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/portfolio_quicktest/py/portfolio_calc_test.py">unit tests</a>.<br/>
+                3. While row-level <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#py_calc-processor">Python formulas</a> can be very complex, they can easily be covered with <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/portfolio/py/portfolio_calc_test.py">unit tests</a>.<br/>
             </div>
         </div>
 
 
         <div class="row">
-            <div class="col-lg-1">
+            <div class="col-1">
                 <img src="i/piggy-bank-icon.svg" alt="predict" style="width:60px;margin-top:20px;">
             </div>
-            <div class="col-lg-11">
+            <div class="col-11">
                 <h3>Conservative cloud resource use</h3>
                 Capillaries shines when data processing is very calculation-heavy, data-heavy, and must be
                 performed periodically (daily, weekly, quarterly).
@@ -134,41 +122,44 @@
 
 
         <div class="row">
-            <div class="col-lg-1">
+            <div class="col-1">
                 <img src="i/pass-icon.svg" alt="predict" style="width:60px;margin-top:20px;">
             </div>
-            <div class="col-lg-11">
+            <div class="col-11">
                 <h3>Operator interaction</h3>
                 Capillaries allows operators to validate data at selected processing steps and decide whether to
                 proceed or not.
             </div>
         </div>
 
-        <h2>Technical highlights</h2>
+        <div class="row mt-5 mb-3">
+            <h2>Technical highlights</h2>
+        </div>
 
         <div class="row">
-            <div class="col-lg-5">
-                
+            <div class="col-5">
                 <h3><img src="i/slideshow-line-icon.svg" alt="predict" style="width:30px;margin-right:20px;">Parallel processing</h3>
                 1. Executes multiple data processing tasks (<a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#script-node">DAG nodes</a>) simultaneously.<br/>
                 2. Splits large data volumes into smaller batches for parallel processing.
             </div>
-            <div class="col-lg-3">
+            <div class="col-3">
                 <h3><img src="i/shield-checkmark-line-icon.svg" alt="predict" style="width:23px;margin-right:20px;">Fault tolerance</h3>
                 Designed to withstand temporary database connectivity issues and <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#daemon">worker</a> node failures.
                 
             </div>
-            <div class="col-lg-4">
+            <div class="col-4">
                 <h3><img src="i/reload-sync-icon.svg" alt="predict" style="width:23px;margin-right:20px;">Incremental computing</h3>
                 Allows splitting the entire data pipeline into separate <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#run">runs</a> that can be initiated
                     independently and re-run if needed.
             </div>
         </div>
 
-        <h2>Q & A</h2>
+        <div class="row mt-5 mb-3">
+            <h2>Q & A</h2>
+        </div>
 
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-12">
                 <h3>Is Capillaries ETL or ELT?</h3>
                 <p>
                     Capillaries is much more about the "T" than the "E" or "L":
@@ -234,8 +225,8 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-12">
+        <div class="row mt-5">
+            <div class="col-12">
                 <a href="https://github.com/capillariesio/Capillaries">
                     <h3><img src="i/github-mark.svg" style="width: 30px;margin-bottom: 6px;margin-right: 8px;"
                             alt="github">Source code and docs</h3>
@@ -243,7 +234,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-12">
                 <a href="./blog/index.html">
                     <h3><img src="i/web-content-icon.svg" style="width: 30px;margin-bottom: 4px;margin-right: 8px;"
                             alt="blog">Blog</h3>
@@ -255,7 +246,7 @@
         <div class="footer">
             <p>&copy;
                 <script type="text/javascript">document.write("2022-" + new Date().getFullYear());</script>
-                Capillaries.io
+                capillaries.io
             </p>
         </div>
 

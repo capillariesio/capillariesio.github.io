@@ -14,54 +14,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
-  <link rel="stylesheet" href="../../css/bootstrap.min.css">
-  <link rel="stylesheet" href="../../css/overrides.css">
-  <style>
-    .color8 {
-      color: #13A829;
-    }
-
-    .color16 {
-      color: #E08826;
-    }
-
-    .color32 {
-      color: #CC0C12;
-    }
-
-    .color64 {
-      color: #000000;
-    }
-
-    .colorGray {
-      color: #A0A0A0;
-    }
-  </style>
+  <link href="../../css/color.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
 <body>
   <div class="container">
-
-    <div class="row" style="margin-top: 10px; margin-bottom: 20px;">
-      <div class="col-lg-6">
-        <img src="../../i/logo.svg" alt="Capillaries logo" class="pull-left logo" style="width:40px">
-        <h1>Capillaries: notes</h1>
+    <div class="row mt-3 mb-3">
+      <div class="col-6">
+        <h1><img src="../../i/logo.svg" alt="Capillaries logo" style="width:40px;margin-right:10px;">Capillaries: notes</h1>
       </div>
-
-      <div class="col-lg-3">
-        <ul class="nav nav-pills pull-right" style="margin-top: 20px">
-          <li><a href="../index.html">Blog home</a></li>
-        </ul>
+      <div class="col-3">
+          <a href="../index.html" class="btn btn-primary float-end">Blog home</a>
       </div>
-      <div class="col-lg-3">
-        <ul class="nav nav-pills pull-right" style="margin-top: 20px">
-          <li><a href="https://github.com/capillariesio/capillaries">Source code and documentation</a></li>
-        </ul>
+      <div class="col-3">
+          <a href="https://github.com/capillariesio/capillaries" class="btn btn-primary float-end">Source code and documentation</a>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-lg-12">
+    <div class="row mt-4 mb-4">
+      <div class="col-12">
         <h3>2024-08-10</h3>
         <h2>Capillaries: scale up vs scale out</h2>
       </div>
@@ -69,7 +41,7 @@
 
 
     <div class="row">
-      <div class="col-lg-8">
+      <div class="col-8">
         <h3>It's all about cost and scalability</h3>
         <p>
           This blog post continues the scalability discussion <a href="../2023-11-15-portfolio-scale/index.html">started earlier</a>. There are a couple of technical changes this time:
@@ -94,20 +66,20 @@
         The pricing table for all used deployments is below. All AWS instance prices are for us-east-1 as of 2024. All instances were running Ubuntu 24.04. <strong>Scaling up is about the number of cores, color-coded. Scaling out is about the number of nodes.</strong>
         </p>
       </div>
-      <div class="col-lg-4">
-        <img src="./i/670x670-scaleup-scaleout.png" />
+      <div class="col-4">
+        <img src="./i/670x670-scaleup-scaleout.png"  class="img-fluid"/>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <p>
         </p>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <div class="row no-gutters">
           <table class="table table-striped text-right" style="font-size:smaller">
             <thead>
@@ -204,7 +176,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h3>portfolio_bigtest runs</h3>
         <p>
           These are the timings for the full run of the portfolio_bigtest in different test deployments.
@@ -214,7 +186,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-6">
         <div class="row no-gutters">
           <table class="table text-right" style="font-size:smaller">
             <thead>
@@ -312,7 +284,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <p>
           Below is the CPU usage diagram for the 16-node aws.arm64.c7g.64	run.
           <a href="../2023-11-15-portfolio-scale/index.html">The previous blog post</a> discusses the CPU usage patterns of portfolio_bigtest in detail.
@@ -325,14 +297,14 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h3>Run times</h3>
         <p>After creating a pivot table from the raw timing series, we get this summary. "Theoretical" measurements are the values that we would expect for an perfectly scalable (up and out) setup, using the "4 nodes" x "8 cores" 1408 seconds measurement as a starting point.</p>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-10">
+      <div class="col-10">
         <div class="row no-gutters">
           <table class="table table-striped text-right" style="font-size:smaller">
             <thead>
@@ -402,12 +374,12 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-6">
         <div class="row no-gutters">
           <img src="./i/800x500-run-time.png">
         </div>
       </div>
-      <div class="col-lg-6">
+      <div class="col-6">
         <div class="row no-gutters">
           <img src="./i/800x500-run-time-log.png">
         </div>
@@ -415,14 +387,14 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h3>Cost of run</h3>
         <p>The pivot table for the cost of each run:</p>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-10">
+      <div class="col-10">
         <div class="row no-gutters">
           <table class="table table-striped text-right" style="font-size:smaller">
             <thead>
@@ -492,7 +464,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-10">
+      <div class="col-10">
         <div class="row no-gutters">
           <img src="./i/800x500-cost-of-run.png" />
         </div>
@@ -500,7 +472,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <h3>Findings</h3>
         <p><strong>Scale-up</strong> attempts yield decent results for the 4-node setup (surprisingly good for the 8->16->32 core upgrade, but not as good for 64 cores) and for the 8-node setup (surprisingly good for the 8->16 core upgrade, but not as good for 32 and 64 cores). Starting from 8-node setups, using more powerful 32 and 64-core boxes becomes an expensive venture.
         <p><strong>Scaling out</strong> works reasonably well for 8-core setups: see the green curve. For 16, 32, and 64-core setups, adding more Cassandra nodes makes runs visibly more expensive.</p>
@@ -511,7 +483,7 @@
     <div class=" footer">
       <p>&copy;
         <script type="text/javascript">document.write("2022-" + new Date().getFullYear());</script>
-        Capillaries.io
+        capillaries.io
       </p>
     </div>
 
