@@ -1,11 +1,12 @@
 <html><head><style>
 html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}body{margin:0}h1{margin:.67em 0;font-size:2em}pre{font-family:monospace,serif;font-size:1em}pre{white-space:pre-wrap}table{border-collapse:collapse;border-spacing:0}@media print{*{color:#000!important;text-shadow:none!important;background:transparent!important;box-shadow:none!important}pre{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr{page-break-inside:avoid}@page{margin:2cm .5cm}p,h2,h3{orphans:3;widows:3}h2,h3{page-break-after:avoid}.table td,.table th{background-color:#fff!important}.table{border-collapse:collapse!important}}*,*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}html{font-size:62.5%;-webkit-tap-highlight-color:rgba(0,0,0,0)}body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.428571429;color:#333;background-color:#fff}p{margin:0 0 10px}.text-right{text-align:right}h1,h2,h3{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:500;line-height:1.1}h1,h2,h3{margin-top:20px;margin-bottom:10px}h1{font-size:36px}h2{font-size:30px}h3{font-size:24px}pre{font-family:Monaco,Menlo,Consolas,"Courier New",monospace}pre{display:block;padding:9.5px;margin:0 0 10px;font-size:13px;line-height:1.428571429;color:#333;word-break:break-all;word-wrap:break-word;background-color:#f5f5f5;border:1px solid #ccc;border-radius:4px}.container{padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}.container:before,.container:after{display:table;content:" "}.container:after{clear:both}.container:before,.container:after{display:table;content:" "}.container:after{clear:both}.row{margin-right:-15px;margin-left:-15px}.row:before,.row:after{display:table;content:" "}.row:after{clear:both}.row:before,.row:after{display:table;content:" "}.row:after{clear:both}@media(min-width:768px){.container{max-width:750px}}@media(min-width:992px){.container{max-width:970px}}@media(min-width:1200px){.container{max-width:1170px}}table{max-width:100%;background-color:transparent}th{text-align:left}.table{width:100%;margin-bottom:20px}.table thead>tr>th,.table tbody>tr>td{padding:8px;line-height:1.428571429;vertical-align:top;border-top:1px solid #ddd}.table thead>tr>th{vertical-align:bottom;border-bottom:2px solid #ddd}.table thead:first-child tr:first-child th{border-top:0}.table-striped>tbody>tr:nth-child(odd)>td{background-color:#f9f9f9}@-ms-viewport{width:device-width}@media screen and (max-width:400px){@-ms-viewport{width:320px}}</style></head><body>
 <div class="container">
-<div class=row><h1>portfolio_quicktest script and data</h1></div>
+<div class=row><h1>portfolio_quicktest_local_fs_one script and data</h1></div>
 <div class="row">
 <h2>Input files</h2>
 <h3>Accounts</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">account_id</th><th class="text-right">earliest_period_start</th></thead><tbody>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">account_id</th><th class="text-right">earliest_period_start</th></thead><tbody>
 <tr><td>ARKK</td><td>2020-12-31</td></tr>
 <tr><td>ARKW</td><td>2020-12-31</td></tr>
 <tr><td>ARKF</td><td>2020-12-31</td></tr>
@@ -15,7 +16,8 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
 </tbody></table>
 <p>Total 6 rows</p>
 <h3>Transactions</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">ts</th><th class="text-right">account_id</th><th class="text-right">ticker</th><th class="text-right">qty</th><th class="text-right">price</th></thead><tbody>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">ts</th><th class="text-right">account_id</th><th class="text-right">ticker</th><th class="text-right">qty</th><th class="text-right">price</th></thead><tbody>
 <tr><td>2020-10-16</td><td>ARKK</td><td>TSLA</td><td>2466031</td><td>439.67</td></tr>
 <tr><td>2020-10-20</td><td>ARKK</td><td>TSLA</td><td>18992</td><td>421.94</td></tr>
 <tr><td>2020-10-21</td><td>ARKK</td><td>TSLA</td><td>2374</td><td>422.64</td></tr>
@@ -29,7 +31,8 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
 </tbody></table>
 <p>Total 88459 rows</p>
 <h3>Holdings</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">account_id</th><th class="text-right">d</th><th class="text-right">ticker</th><th class="text-right">qty</th></thead><tbody>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">account_id</th><th class="text-right">d</th><th class="text-right">ticker</th><th class="text-right">qty</th></thead><tbody>
 <tr><td>ARKK</td><td>2020-09-30</td><td>TSLA</td><td>0</td></tr>
 <tr><td>ARKK</td><td>2020-12-31</td><td>TSLA</td><td>2660439</td></tr>
 <tr><td>ARKK</td><td>2021-03-31</td><td>TSLA</td><td>3757949</td></tr>
@@ -50,7 +53,6 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   "1_read_txns": {
     "type": "file_table",
     "desc": "Load txns from csv",
-    "explicit_run_only": true,
     "r": {
       "urls": [
         "{dir_in}/txns.csv"
@@ -107,7 +109,7 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
           "type": "string"
         },
         "txn_json": {
-          "expression": "strings.ReplaceAll(fmt.Sprintf(`{'ts':'%s','t':'%s','q':%d,'p':%s}`, r.col_ts, r.col_ticker, r.col_qty, decimal2(r.col_price)), `'`,`\"`)",
+          "expression": "fmt.Sprintf(`\"%s|%s|%d|%s\"`, r.col_ts, r.col_ticker, r.col_qty, decimal2(r.col_price))",
           "type": "string"
         }
       },
@@ -118,17 +120,18 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 1_read_txns produces Cassandra table txns:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">ts</th><th class="text-right">txn_json</th></thead><tbody>
-<tr><td>6094664611844062359</td><td>ARKW</td><td>0</td><td>2021-04-14</td><td>{"ts":"2021-04-14","t":"FSLY","q":1532,"p":71.92}</td></tr>
-<tr><td>8537883289672171463</td><td>ARKF</td><td>0</td><td>2022-02-03</td><td>{"ts":"2022-02-03","t":"SNAP","q":-933,"p":24.5}</td></tr>
-<tr><td>2749076004491469954</td><td>ARKQ</td><td>0</td><td>2021-11-12</td><td>{"ts":"2021-11-12","t":"BIDU","q":-368,"p":170.57}</td></tr>
-<tr><td>7445773725017646389</td><td>ARKK</td><td>0</td><td>2021-05-07</td><td>{"ts":"2021-05-07","t":"TWLO","q":37128,"p":307.15}</td></tr>
-<tr><td>8993784235489443377</td><td>ARKK</td><td>0</td><td>2021-11-12</td><td>{"ts":"2021-11-12","t":"SKLZ","q":-26172,"p":12.5}</td></tr>
-<tr><td>206487046063108640</td><td>ARKW</td><td>0</td><td>2022-09-20</td><td>{"ts":"2022-09-20","t":"NNDM","q":-3,"p":2.45}</td></tr>
-<tr><td>3354548830737968360</td><td>ARKG</td><td>0</td><td>2022-10-20</td><td>{"ts":"2022-10-20","t":"ONVO","q":896,"p":1.71}</td></tr>
-<tr><td>8851154163572220846</td><td>ARKQ</td><td>0</td><td>2022-10-28</td><td>{"ts":"2022-10-28","t":"AVAV","q":-1166,"p":90.14}</td></tr>
-<tr><td>151913958205174664</td><td>ARKG</td><td>0</td><td>2021-05-04</td><td>{"ts":"2021-05-04","t":"GH","q":-7216,"p":148.19}</td></tr>
-<tr><td>8571157745347545844</td><td>ARKK</td><td>0</td><td>2021-12-29</td><td>{"ts":"2021-12-29","t":"HOOD","q":-43488,"p":17.11}</td></tr>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">ts</th><th class="text-right">txn_json</th></thead><tbody>
+<tr><td>2587346277616661029</td><td>ARKQ</td><td>0</td><td>2021-04-09</td><td>"2021-04-09|IRDM|27117|42.95"</td></tr>
+<tr><td>8058523756562434107</td><td>ARKW</td><td>0</td><td>2022-06-22</td><td>"2022-06-22|GBTC|11246|12.96"</td></tr>
+<tr><td>5691201099142348053</td><td>ARKG</td><td>0</td><td>2022-11-11</td><td>"2022-11-11|CDXS|55689|6.84"</td></tr>
+<tr><td>262360517248037460</td><td>ARKG</td><td>0</td><td>2022-04-29</td><td>"2022-04-29|ACCD|1543713|5.56"</td></tr>
+<tr><td>4010264079755232786</td><td>ARKF</td><td>0</td><td>2021-07-26</td><td>"2021-07-26|PATH|92655|62.39"</td></tr>
+<tr><td>580357491565213583</td><td>ARKG</td><td>0</td><td>2021-11-02</td><td>"2021-11-02|VERV|6921|52.94"</td></tr>
+<tr><td>8031803561601393301</td><td>ARKK</td><td>0</td><td>2021-07-21</td><td>"2021-07-21|TXG|31240|184.06"</td></tr>
+<tr><td>84347160782433589</td><td>ARKF</td><td>0</td><td>2021-12-07</td><td>"2021-12-07|STNE|-20408|16.8"</td></tr>
+<tr><td>3086360915248135679</td><td>ARKQ</td><td>0</td><td>2022-01-24</td><td>"2022-01-24|BYDDY|-12210|61.7"</td></tr>
+<tr><td>6799970392833002444</td><td>ARKQ</td><td>0</td><td>2021-07-19</td><td>"2021-07-19|TCEHY|-1569|69.97"</td></tr>
 </tbody></table>
 <p>Total 79487 rows</p>
 </div>
@@ -139,7 +142,6 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   "1_read_accounts": {
     "type": "file_table",
     "desc": "Load accounts from csv",
-    "explicit_run_only": true,
     "r": {
       "urls": [
         "{dir_in}/accounts.csv"
@@ -180,13 +182,14 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 1_read_accounts produces Cassandra table accounts:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">earliest_period_start</th></thead><tbody>
-<tr><td>748401470040242660</td><td>ARKK</td><td>0</td><td>2020-12-31</td></tr>
-<tr><td>6621936461880082804</td><td>ARKF</td><td>0</td><td>2020-12-31</td></tr>
-<tr><td>1522209384545663127</td><td>ARKW</td><td>0</td><td>2020-12-31</td></tr>
-<tr><td>2380715082357295080</td><td>ARKG</td><td>0</td><td>2020-12-31</td></tr>
-<tr><td>5559895917703115577</td><td>ARKQ</td><td>0</td><td>2020-12-31</td></tr>
-<tr><td>6520205207003275793</td><td>ARKX</td><td>0</td><td>2020-12-31</td></tr>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">earliest_period_start</th></thead><tbody>
+<tr><td>1844852441546341834</td><td>ARKK</td><td>0</td><td>2020-12-31</td></tr>
+<tr><td>7842096268861126874</td><td>ARKQ</td><td>0</td><td>2020-12-31</td></tr>
+<tr><td>1309455181663667797</td><td>ARKX</td><td>0</td><td>2020-12-31</td></tr>
+<tr><td>6959969552891013918</td><td>ARKG</td><td>0</td><td>2020-12-31</td></tr>
+<tr><td>7032023660306557735</td><td>ARKW</td><td>0</td><td>2020-12-31</td></tr>
+<tr><td>2620023871393000445</td><td>ARKF</td><td>0</td><td>2020-12-31</td></tr>
 </tbody></table>
 <p>Total 6 rows</p>
 </div>
@@ -197,7 +200,6 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   "1_read_period_holdings": {
     "type": "file_table",
     "desc": "Load holdings from csv",
-    "explicit_run_only": true,
     "r": {
       "urls": [
         "{dir_in}/holdings.csv"
@@ -247,7 +249,7 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
           "type": "string"
         },
         "holding_json": {
-          "expression": "fmt.Sprintf(`{\"d\":\"%s\",\"t\":\"%s\",\"q\":%d}`, r.col_eod, r.col_ticker, r.col_qty)",
+          "expression": "fmt.Sprintf(`\"%s|%s|%d\"`, r.col_eod, r.col_ticker, r.col_qty)",
           "type": "string"
         }
       },
@@ -258,17 +260,18 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 1_read_period_holdings produces Cassandra table period_holdings:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">eod</th><th class="text-right">holding_json</th></thead><tbody>
-<tr><td>523927006809746992</td><td>ARKW</td><td>0</td><td>2022-03-31</td><td>{"d":"2022-03-31","t":"PLTR","q":50}</td></tr>
-<tr><td>7964715912605789246</td><td>ARKW</td><td>0</td><td>2022-06-30</td><td>{"d":"2022-06-30","t":"VCYT","q":962271}</td></tr>
-<tr><td>7321126894636851304</td><td>ARKK</td><td>0</td><td>2022-03-31</td><td>{"d":"2022-03-31","t":"IRDM","q":913}</td></tr>
-<tr><td>159541754259824109</td><td>ARKK</td><td>0</td><td>2021-06-30</td><td>{"d":"2021-06-30","t":"PACB","q":6470871}</td></tr>
-<tr><td>3147847123612473758</td><td>ARKG</td><td>0</td><td>2021-06-30</td><td>{"d":"2021-06-30","t":"TXG","q":1114540}</td></tr>
-<tr><td>6088195109262281354</td><td>ARKW</td><td>0</td><td>2021-03-31</td><td>{"d":"2021-03-31","t":"SNAP","q":1293117}</td></tr>
-<tr><td>3371442508833222747</td><td>ARKQ</td><td>0</td><td>2021-06-30</td><td>{"d":"2021-06-30","t":"ADSK","q":119}</td></tr>
-<tr><td>8119438770895972412</td><td>ARKF</td><td>0</td><td>2022-12-31</td><td>{"d":"2022-12-31","t":"3690","q":0}</td></tr>
-<tr><td>760021395079726942</td><td>ARKF</td><td>0</td><td>2021-12-31</td><td>{"d":"2021-12-31","t":"6060","q":6081}</td></tr>
-<tr><td>464401136269549803</td><td>ARKG</td><td>0</td><td>2022-12-31</td><td>{"d":"2022-12-31","t":"SYRS","q":0}</td></tr>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">eod</th><th class="text-right">holding_json</th></thead><tbody>
+<tr><td>120779861358948894</td><td>ARKX</td><td>0</td><td>2022-09-30</td><td>"2022-09-30|KTOS|1741326"</td></tr>
+<tr><td>4844171472413275121</td><td>ARKW</td><td>0</td><td>2021-12-31</td><td>"2021-12-31|FSLY|85"</td></tr>
+<tr><td>8094531162130969568</td><td>ARKK</td><td>0</td><td>2021-12-31</td><td>"2021-12-31|TRMB|2040897"</td></tr>
+<tr><td>5629687996933754035</td><td>ARKQ</td><td>0</td><td>2021-03-31</td><td>"2021-03-31|NIO|0"</td></tr>
+<tr><td>8320094651713409914</td><td>ARKX</td><td>0</td><td>2021-06-30</td><td>"2021-06-30|MKFG|0"</td></tr>
+<tr><td>403872239716635090</td><td>ARKK</td><td>0</td><td>2020-12-31</td><td>"2020-12-31|TER|0"</td></tr>
+<tr><td>1645336250561295416</td><td>ARKX</td><td>0</td><td>2021-09-30</td><td>"2021-09-30|NVDA|7817"</td></tr>
+<tr><td>1009997571983556129</td><td>ARKG</td><td>0</td><td>2021-03-31</td><td>"2021-03-31|PACB|14204625"</td></tr>
+<tr><td>3596585721417360193</td><td>ARKG</td><td>0</td><td>2022-06-30</td><td>"2022-06-30|GH|794"</td></tr>
+<tr><td>2581714236544905773</td><td>ARKX</td><td>0</td><td>2021-09-30</td><td>"2021-09-30|PLTR|283345"</td></tr>
 </tbody></table>
 <p>Total 3914 rows</p>
 </div>
@@ -279,6 +282,7 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   "2_account_txns_outer": {
     "type": "table_lookup_table",
     "desc": "For each account, merge all txns into single json string",
+    "start_policy": "{manual_if_multi}",
     "r": {
       "table": "accounts",
       "expected_batches_total": 10
@@ -305,13 +309,14 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 2_account_txns_outer produces Cassandra table account_txns:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">txns_json</th></thead><tbody>
-<tr><td>7337640464596222089</td><td>ARKX</td><td>6</td><td>{"ts":"2021-04-23","t":"AIR","q":-286,"p":119.13},{"ts":"2021-07-20","t":"AVAV","q":8887,"p":96.85}, ... total length 181595</td></tr>
-<tr><td>3719903644314909584</td><td>ARKF</td><td>5</td><td>{"ts":"2022-02-04","t":"Z","q":-2835,"p":48.94},{"ts":"2022-12-31","t":"IPOB","q":-872035,"p":29.5}, ... total length 481037</td></tr>
-<tr><td>7773052335557492403</td><td>ARKG</td><td>5</td><td>{"ts":"2022-05-10","t":"PSNL","q":86800,"p":4.4},{"ts":"2022-01-21","t":"IOVA","q":-15248,"p":13.96} ... total length 1084244</td></tr>
-<tr><td>2948673979393982941</td><td>ARKW</td><td>5</td><td>{"ts":"2021-05-28","t":"NFLX","q":-465,"p":502.81},{"ts":"2021-04-30","t":"PYPL","q":-34800,"p":262. ... total length 714787</td></tr>
-<tr><td>4577965328217475423</td><td>ARKK</td><td>0</td><td>{"ts":"2021-03-04","t":"SQ","q":266809,"p":218.41},{"ts":"2021-03-11","t":"SQ","q":120492,"p":241.72 ... total length 1011871</td></tr>
-<tr><td>6410928427592534468</td><td>ARKQ</td><td>3</td><td>{"ts":"2022-06-15","t":"AVAV","q":-38717,"p":83.61},{"ts":"2022-05-11","t":"SNPS","q":-117,"p":260.8 ... total length 563105</td></tr>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">txns_json</th></thead><tbody>
+<tr><td>133491151350819234</td><td>ARKX</td><td>6</td><td>"2022-05-10|ACHR|-13665|3.34","2021-05-07|DE|-3300|394.22","2022-09-06|MKFG|13016|2.37","2022-03-03| ... total length 105764</td></tr>
+<tr><td>8354642669759315914</td><td>ARKF</td><td>9</td><td>"2022-02-02|GLBE|216876|38.17","2022-06-14|PATH|-21861|17.75","2021-09-14|KSPI|-1404|113","2021-02-1 ... total length 281243</td></tr>
+<tr><td>5231205311566687863</td><td>ARKG</td><td>6</td><td>"2021-08-23|CLLS|-2099|13.48","2022-02-17|PLTR|-36|11.77","2021-09-14|INCY|-2994|72.24","2022-07-13| ... total length 636188</td></tr>
+<tr><td>7522254119129968820</td><td>ARKK</td><td>2</td><td>"2022-08-24|RBLX|45060|41.18","2021-07-26|DOCU|2120|305.77","2021-03-26|MCRB|-82173|18.87","2022-10- ... total length 596281</td></tr>
+<tr><td>6858403599919527653</td><td>ARKQ</td><td>8</td><td>"2021-07-14|TCEHY|-1152|71.83","2021-08-11|XONE|-2140|17.28","2021-04-16|AVAV|-7049|108.4","2022-01- ... total length 329102</td></tr>
+<tr><td>8392498949058647234</td><td>ARKW</td><td>0</td><td>"2021-08-13|ETSY|-1746|192.08","2022-12-22|NVDA|-452|153.39","2022-01-04|NET|5531|114.96","2022-01-2 ... total length 418834</td></tr>
 </tbody></table>
 <p>Total 6 rows</p>
 </div>
@@ -322,6 +327,7 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   "2_account_period_holdings_outer": {
     "type": "table_lookup_table",
     "desc": "For each account, merge all holdings into single json string",
+    "start_policy": "{manual_if_multi}",
     "r": {
       "table": "accounts",
       "expected_batches_total": 10
@@ -351,13 +357,14 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 2_account_period_holdings_outer produces Cassandra table account_period_holdings:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">holdings_json</th></thead><tbody>
-<tr><td>3798263933557717806</td><td>ARKF</td><td>5</td><td>{"d":"2022-06-30","t":"ROKU","q":0},{"d":"2022-06-30","t":"BABA","q":200},{"d":"2021-06-30","t":"HDB ... total length 25305</td></tr>
-<tr><td>2297870030956086858</td><td>ARKK</td><td>0</td><td>{"d":"2022-12-31","t":"PATH","q":0},{"d":"2022-12-31","t":"MTLS","q":0},{"d":"2021-03-31","t":"COIN" ... total length 28246</td></tr>
-<tr><td>6490459023829990771</td><td>ARKX</td><td>6</td><td>{"d":"2021-06-30","t":"XLNX","q":17088},{"d":"2022-03-31","t":"GOOG","q":2899},{"d":"2021-06-30","t" ... total length 17095</td></tr>
-<tr><td>7126461419439144862</td><td>ARKW</td><td>5</td><td>{"d":"2022-03-31","t":"FTCH","q":101},{"d":"2021-06-30","t":"JD","q":1452974},{"d":"2022-03-31","t": ... total length 29139</td></tr>
-<tr><td>5291018643877674808</td><td>ARKQ</td><td>3</td><td>{"d":"2021-12-31","t":"ROK","q":1248},{"d":"2022-12-31","t":"WKHS","q":0},{"d":"2022-06-30","t":"ISR ... total length 23268</td></tr>
-<tr><td>3073048863807356155</td><td>ARKG</td><td>5</td><td>{"d":"2022-03-31","t":"CLLS","q":606},{"d":"2021-03-31","t":"PRME","q":0},{"d":"2020-12-31","t":"PHR ... total length 30734</td></tr>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">holdings_json</th></thead><tbody>
+<tr><td>3506489190793690889</td><td>ARKG</td><td>6</td><td>"2022-12-31|NSTG|0","2021-03-31|SRPT|1851195","2022-09-30|DRNA|96","2022-03-31|ONVO|201189","2020-12 ... total length 18350</td></tr>
+<tr><td>5521338660495980318</td><td>ARKW</td><td>0</td><td>"2021-03-31|TEAM|284311","2022-12-31|SNOW|0","2021-03-31|Z|1367988","2021-09-30|TWTR|4475167","2022- ... total length 17187</td></tr>
+<tr><td>6556059227660797012</td><td>ARKF</td><td>9</td><td>"2021-09-30|COIN|795658","2022-12-31|GLBE|0","2021-09-30|FB|208953","2021-03-31|TCS LI|1332266","202 ... total length 14937</td></tr>
+<tr><td>7597486096890187308</td><td>ARKX</td><td>6</td><td>"2022-06-30|3690|203063","2022-09-30|KTOS|1741326","2022-03-31|SPR|191224","2021-12-31|SPR|202648"," ... total length 10055</td></tr>
+<tr><td>851009968452317298</td><td>ARKK</td><td>2</td><td>"2022-03-31|TER|475","2020-12-31|PLTR|0","2022-06-30|HUYA|189","2022-09-30|TCEHY|134","2021-03-31|TR ... total length 16870</td></tr>
+<tr><td>3849863648629409774</td><td>ARKQ</td><td>8</td><td>"2021-06-30|BZ|425891","2022-12-31|U|0","2021-09-30|EXPC|2683982","2022-09-30|NVDA|115352","2022-12- ... total length 13764</td></tr>
 </tbody></table>
 <p>Total 6 rows</p>
 </div>
@@ -368,6 +375,7 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   "3_build_account_period_activity": {
     "type": "table_lookup_table",
     "desc": "For each account, merge holdings and txns",
+    "start_policy": "{manual_if_multi}",
     "r": {
       "table": "account_txns",
       "expected_batches_total": 10
@@ -398,13 +406,14 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 3_build_account_period_activity produces Cassandra table account_period_activity:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">holdings_json</th><th class="text-right">txns_json</th></thead><tbody>
-<tr><td>2832510643465443886</td><td>ARKW</td><td>6</td><td>[{"d":"2022-03-31","t":"FTCH","q":101},{"d":"2021-06-30","t":"JD","q":1452974},{"d":"2022-03-31","t" ... total length 29141</td><td>[{"ts":"2021-05-28","t":"NFLX","q":-465,"p":502.81},{"ts":"2021-04-30","t":"PYPL","q":-34800,"p":262 ... total length 714789</td></tr>
-<tr><td>8724188995369700700</td><td>ARKQ</td><td>9</td><td>[{"d":"2021-12-31","t":"ROK","q":1248},{"d":"2022-12-31","t":"WKHS","q":0},{"d":"2022-06-30","t":"IS ... total length 23270</td><td>[{"ts":"2022-06-15","t":"AVAV","q":-38717,"p":83.61},{"ts":"2022-05-11","t":"SNPS","q":-117,"p":260. ... total length 563107</td></tr>
-<tr><td>3797016840160679147</td><td>ARKX</td><td>1</td><td>[{"d":"2021-06-30","t":"XLNX","q":17088},{"d":"2022-03-31","t":"GOOG","q":2899},{"d":"2021-06-30","t ... total length 17097</td><td>[{"ts":"2021-04-23","t":"AIR","q":-286,"p":119.13},{"ts":"2021-07-20","t":"AVAV","q":8887,"p":96.85} ... total length 181597</td></tr>
-<tr><td>6149240839756633886</td><td>ARKK</td><td>4</td><td>[{"d":"2022-12-31","t":"PATH","q":0},{"d":"2022-12-31","t":"MTLS","q":0},{"d":"2021-03-31","t":"COIN ... total length 28248</td><td>[{"ts":"2021-03-04","t":"SQ","q":266809,"p":218.41},{"ts":"2021-03-11","t":"SQ","q":120492,"p":241.7 ... total length 1011873</td></tr>
-<tr><td>1335953350070866378</td><td>ARKF</td><td>2</td><td>[{"d":"2022-06-30","t":"ROKU","q":0},{"d":"2022-06-30","t":"BABA","q":200},{"d":"2021-06-30","t":"HD ... total length 25307</td><td>[{"ts":"2022-02-04","t":"Z","q":-2835,"p":48.94},{"ts":"2022-12-31","t":"IPOB","q":-872035,"p":29.5} ... total length 481039</td></tr>
-<tr><td>1945457872909272069</td><td>ARKG</td><td>8</td><td>[{"d":"2022-03-31","t":"CLLS","q":606},{"d":"2021-03-31","t":"PRME","q":0},{"d":"2020-12-31","t":"PH ... total length 30736</td><td>[{"ts":"2022-05-10","t":"PSNL","q":86800,"p":4.4},{"ts":"2022-01-21","t":"IOVA","q":-15248,"p":13.96 ... total length 1084246</td></tr>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">holdings_json</th><th class="text-right">txns_json</th></thead><tbody>
+<tr><td>2618211313873703279</td><td>ARKX</td><td>0</td><td>["2022-06-30|3690|203063","2022-09-30|KTOS|1741326","2022-03-31|SPR|191224","2021-12-31|SPR|202648", ... total length 10057</td><td>["2022-05-10|ACHR|-13665|3.34","2021-05-07|DE|-3300|394.22","2022-09-06|MKFG|13016|2.37","2022-03-03 ... total length 105766</td></tr>
+<tr><td>7730360701964962666</td><td>ARKF</td><td>4</td><td>["2021-09-30|COIN|795658","2022-12-31|GLBE|0","2021-09-30|FB|208953","2021-03-31|TCS LI|1332266","20 ... total length 14939</td><td>["2022-02-02|GLBE|216876|38.17","2022-06-14|PATH|-21861|17.75","2021-09-14|KSPI|-1404|113","2021-02- ... total length 281245</td></tr>
+<tr><td>4848226235652605868</td><td>ARKK</td><td>1</td><td>["2022-03-31|TER|475","2020-12-31|PLTR|0","2022-06-30|HUYA|189","2022-09-30|TCEHY|134","2021-03-31|T ... total length 16872</td><td>["2022-08-24|RBLX|45060|41.18","2021-07-26|DOCU|2120|305.77","2021-03-26|MCRB|-82173|18.87","2022-10 ... total length 596283</td></tr>
+<tr><td>7620804993772899826</td><td>ARKQ</td><td>7</td><td>["2021-06-30|BZ|425891","2022-12-31|U|0","2021-09-30|EXPC|2683982","2022-09-30|NVDA|115352","2022-12 ... total length 13766</td><td>["2021-07-14|TCEHY|-1152|71.83","2021-08-11|XONE|-2140|17.28","2021-04-16|AVAV|-7049|108.4","2022-01 ... total length 329104</td></tr>
+<tr><td>6617328317653861530</td><td>ARKG</td><td>0</td><td>["2022-12-31|NSTG|0","2021-03-31|SRPT|1851195","2022-09-30|DRNA|96","2022-03-31|ONVO|201189","2020-1 ... total length 18352</td><td>["2021-08-23|CLLS|-2099|13.48","2022-02-17|PLTR|-36|11.77","2021-09-14|INCY|-2994|72.24","2022-07-13 ... total length 636190</td></tr>
+<tr><td>3227819590137877318</td><td>ARKW</td><td>2</td><td>["2021-03-31|TEAM|284311","2022-12-31|SNOW|0","2021-03-31|Z|1367988","2021-09-30|TWTR|4475167","2022 ... total length 17189</td><td>["2021-08-13|ETSY|-1746|192.08","2022-12-22|NVDA|-452|153.39","2022-01-04|NET|5531|114.96","2022-01- ... total length 418836</td></tr>
 </tbody></table>
 <p>Total 6 rows</p>
 </div>
@@ -449,13 +458,14 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 4_calc_account_period_perf produces Cassandra table account_period_perf:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">perf_json</th></thead><tbody>
-<tr><td>6887364451659257268</td><td>ARKF</td><td>6</td><td>{"2021": {"All": {"cagr": -0.1912, "twr": -0.1912}, "Communication Services": {"cagr": -0.4067, "twr ... total length 4679</td></tr>
-<tr><td>5754198081589614465</td><td>ARKK</td><td>6</td><td>{"2021": {"All": {"cagr": -0.2398, "twr": -0.2398}, "Communication Services": {"cagr": -0.3183, "twr ... total length 4731</td></tr>
-<tr><td>32049402890064872</td><td>ARKW</td><td>3</td><td>{"2021": {"All": {"cagr": -0.1949, "twr": -0.1949}, "Communication Services": {"cagr": -0.293, "twr" ... total length 4758</td></tr>
-<tr><td>4248855088935145245</td><td>ARKQ</td><td>9</td><td>{"2021": {"All": {"cagr": -0.0152, "twr": -0.0152}, "Communication Services": {"cagr": 0.062, "twr": ... total length 4674</td></tr>
-<tr><td>8662263145276984767</td><td>ARKX</td><td>9</td><td>{"2021": {"All": {"cagr": -0.1055, "twr": -0.1055}, "Communication Services": {"cagr": 0.1719, "twr" ... total length 4544</td></tr>
-<tr><td>1210483319197080237</td><td>ARKG</td><td>5</td><td>{"2021": {"All": {"cagr": -0.3384, "twr": -0.3384}, "Communication Services": {"cagr": 0.1666, "twr" ... total length 4533</td></tr>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">perf_json</th></thead><tbody>
+<tr><td>5940186441348519617</td><td>ARKX</td><td>0</td><td>{"2021": {"All": {"cagr": -0.1055, "twr": -0.1055}, "Communication Services": {"cagr": 0.1719, "twr" ... total length 4544</td></tr>
+<tr><td>4849645507883377956</td><td>ARKF</td><td>8</td><td>{"2021": {"All": {"cagr": -0.1912, "twr": -0.1912}, "Communication Services": {"cagr": -0.4067, "twr ... total length 4679</td></tr>
+<tr><td>2228990773412516205</td><td>ARKK</td><td>1</td><td>{"2021": {"All": {"cagr": -0.2398, "twr": -0.2398}, "Communication Services": {"cagr": -0.3183, "twr ... total length 4731</td></tr>
+<tr><td>2300653478629187302</td><td>ARKW</td><td>9</td><td>{"2021": {"All": {"cagr": -0.1949, "twr": -0.1949}, "Communication Services": {"cagr": -0.293, "twr" ... total length 4758</td></tr>
+<tr><td>4131923837221936723</td><td>ARKG</td><td>3</td><td>{"2021": {"All": {"cagr": -0.3384, "twr": -0.3384}, "Communication Services": {"cagr": 0.1666, "twr" ... total length 4533</td></tr>
+<tr><td>3013935535393510462</td><td>ARKQ</td><td>6</td><td>{"2021": {"All": {"cagr": -0.0152, "twr": -0.0152}, "Communication Services": {"cagr": 0.062, "twr": ... total length 4674</td></tr>
 </tbody></table>
 <p>Total 6 rows</p>
 </div>
@@ -506,17 +516,18 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 5_tag_by_period produces Cassandra table account_period_perf_by_period:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">perf_json</th><th class="text-right">period</th></thead><tbody>
-<tr><td>3812613906073144497</td><td>ARKK</td><td>7</td><td>{"2021": {"All": {"cagr": -0.2398, "twr": -0.2398}, "Communication Services": {"cagr": -0.3183, "twr ... total length 4731</td><td>2022Q4</td></tr>
-<tr><td>7276369387634914856</td><td>ARKX</td><td>4</td><td>{"2021": {"All": {"cagr": -0.1055, "twr": -0.1055}, "Communication Services": {"cagr": 0.1719, "twr" ... total length 4544</td><td>2021Q3</td></tr>
-<tr><td>6738115215161291018</td><td>ARKW</td><td>0</td><td>{"2021": {"All": {"cagr": -0.1949, "twr": -0.1949}, "Communication Services": {"cagr": -0.293, "twr" ... total length 4758</td><td>2022Q2</td></tr>
-<tr><td>7605309852895153944</td><td>ARKG</td><td>6</td><td>{"2021": {"All": {"cagr": -0.3384, "twr": -0.3384}, "Communication Services": {"cagr": 0.1666, "twr" ... total length 4533</td><td>2021Q1</td></tr>
-<tr><td>1922480560878025461</td><td>ARKF</td><td>2</td><td>{"2021": {"All": {"cagr": -0.1912, "twr": -0.1912}, "Communication Services": {"cagr": -0.4067, "twr ... total length 4679</td><td>2022Q3</td></tr>
-<tr><td>7092756260584728207</td><td>ARKK</td><td>7</td><td>{"2021": {"All": {"cagr": -0.2398, "twr": -0.2398}, "Communication Services": {"cagr": -0.3183, "twr ... total length 4731</td><td>2021</td></tr>
-<tr><td>4467122228499360750</td><td>ARKG</td><td>6</td><td>{"2021": {"All": {"cagr": -0.3384, "twr": -0.3384}, "Communication Services": {"cagr": 0.1666, "twr" ... total length 4533</td><td>2021</td></tr>
-<tr><td>6162316215288009881</td><td>ARKX</td><td>4</td><td>{"2021": {"All": {"cagr": -0.1055, "twr": -0.1055}, "Communication Services": {"cagr": 0.1719, "twr" ... total length 4544</td><td>2021Q2</td></tr>
-<tr><td>1759821806393733334</td><td>ARKF</td><td>2</td><td>{"2021": {"All": {"cagr": -0.1912, "twr": -0.1912}, "Communication Services": {"cagr": -0.4067, "twr ... total length 4679</td><td>2021Q2</td></tr>
-<tr><td>3848238608544572988</td><td>ARKW</td><td>0</td><td>{"2021": {"All": {"cagr": -0.1949, "twr": -0.1949}, "Communication Services": {"cagr": -0.293, "twr" ... total length 4758</td><td>2022Q4</td></tr>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">perf_json</th><th class="text-right">period</th></thead><tbody>
+<tr><td>16258496403682928</td><td>ARKW</td><td>5</td><td>{"2021": {"All": {"cagr": -0.1949, "twr": -0.1949}, "Communication Services": {"cagr": -0.293, "twr" ... total length 4758</td><td>2021Q1</td></tr>
+<tr><td>6409235141644625130</td><td>ARKK</td><td>5</td><td>{"2021": {"All": {"cagr": -0.2398, "twr": -0.2398}, "Communication Services": {"cagr": -0.3183, "twr ... total length 4731</td><td>2022Q1</td></tr>
+<tr><td>485805896765640535</td><td>ARKQ</td><td>7</td><td>{"2021": {"All": {"cagr": -0.0152, "twr": -0.0152}, "Communication Services": {"cagr": 0.062, "twr": ... total length 4674</td><td>2022Q2</td></tr>
+<tr><td>6234490550527682285</td><td>ARKW</td><td>5</td><td>{"2021": {"All": {"cagr": -0.1949, "twr": -0.1949}, "Communication Services": {"cagr": -0.293, "twr" ... total length 4758</td><td>2022Q1</td></tr>
+<tr><td>6797782836296021287</td><td>ARKG</td><td>0</td><td>{"2021": {"All": {"cagr": -0.3384, "twr": -0.3384}, "Communication Services": {"cagr": 0.1666, "twr" ... total length 4533</td><td>2021Q3</td></tr>
+<tr><td>5525927667461070012</td><td>ARKW</td><td>5</td><td>{"2021": {"All": {"cagr": -0.1949, "twr": -0.1949}, "Communication Services": {"cagr": -0.293, "twr" ... total length 4758</td><td>2022Q4</td></tr>
+<tr><td>4152539243068825420</td><td>ARKX</td><td>1</td><td>{"2021": {"All": {"cagr": -0.1055, "twr": -0.1055}, "Communication Services": {"cagr": 0.1719, "twr" ... total length 4544</td><td>2021Q2</td></tr>
+<tr><td>7078341914729386756</td><td>ARKW</td><td>5</td><td>{"2021": {"All": {"cagr": -0.1949, "twr": -0.1949}, "Communication Services": {"cagr": -0.293, "twr" ... total length 4758</td><td>2021Q4</td></tr>
+<tr><td>3921321870495637113</td><td>ARKW</td><td>5</td><td>{"2021": {"All": {"cagr": -0.1949, "twr": -0.1949}, "Communication Services": {"cagr": -0.293, "twr" ... total length 4758</td><td>2021</td></tr>
+<tr><td>579969918966745166</td><td>ARKG</td><td>0</td><td>{"2021": {"All": {"cagr": -0.3384, "twr": -0.3384}, "Communication Services": {"cagr": 0.1666, "twr" ... total length 4533</td><td>2021</td></tr>
 </tbody></table>
 <p>Total 60 rows</p>
 </div>
@@ -570,17 +581,18 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 5_tag_by_sector produces Cassandra table account_period_perf_by_period_sector:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">perf_json</th><th class="text-right">period</th><th class="text-right">sector</th></thead><tbody>
-<tr><td>4880353688536716330</td><td>ARKX</td><td>7</td><td>{"2021": {"All": {"cagr": -0.1055, "twr": -0.1055}, "Communication Services": {"cagr": 0.1719, "twr" ... total length 4544</td><td>2022Q3</td><td>All</td></tr>
-<tr><td>5966907642021688353</td><td>ARKG</td><td>2</td><td>{"2021": {"All": {"cagr": -0.3384, "twr": -0.3384}, "Communication Services": {"cagr": 0.1666, "twr" ... total length 4533</td><td>2021Q2</td><td>Communication Services</td></tr>
-<tr><td>216345607086265348</td><td>ARKW</td><td>5</td><td>{"2021": {"All": {"cagr": -0.1949, "twr": -0.1949}, "Communication Services": {"cagr": -0.293, "twr" ... total length 4758</td><td>2021Q3</td><td>Financial Services</td></tr>
-<tr><td>444465478572115389</td><td>ARKW</td><td>9</td><td>{"2021": {"All": {"cagr": -0.1949, "twr": -0.1949}, "Communication Services": {"cagr": -0.293, "twr" ... total length 4758</td><td>2022Q1</td><td>Industrials</td></tr>
-<tr><td>4655715813499361957</td><td>ARKK</td><td>9</td><td>{"2021": {"All": {"cagr": -0.2398, "twr": -0.2398}, "Communication Services": {"cagr": -0.3183, "twr ... total length 4731</td><td>2022Q1</td><td>Financial Services</td></tr>
-<tr><td>3105771363861377355</td><td>ARKQ</td><td>6</td><td>{"2021": {"All": {"cagr": -0.0152, "twr": -0.0152}, "Communication Services": {"cagr": 0.062, "twr": ... total length 4674</td><td>2021Q1</td><td>Consumer Defensive</td></tr>
-<tr><td>1473264958443625609</td><td>ARKK</td><td>2</td><td>{"2021": {"All": {"cagr": -0.2398, "twr": -0.2398}, "Communication Services": {"cagr": -0.3183, "twr ... total length 4731</td><td>2022Q4</td><td>Technology</td></tr>
-<tr><td>4441230069590019727</td><td>ARKX</td><td>0</td><td>{"2021": {"All": {"cagr": -0.1055, "twr": -0.1055}, "Communication Services": {"cagr": 0.1719, "twr" ... total length 4544</td><td>2021Q2</td><td>Communication Services</td></tr>
-<tr><td>347198857808667031</td><td>ARKG</td><td>3</td><td>{"2021": {"All": {"cagr": -0.3384, "twr": -0.3384}, "Communication Services": {"cagr": 0.1666, "twr" ... total length 4533</td><td>2022Q3</td><td>All</td></tr>
-<tr><td>5194216653932103424</td><td>ARKK</td><td>5</td><td>{"2021": {"All": {"cagr": -0.2398, "twr": -0.2398}, "Communication Services": {"cagr": -0.3183, "twr ... total length 4731</td><td>2022Q2</td><td>Healthcare</td></tr>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">perf_json</th><th class="text-right">period</th><th class="text-right">sector</th></thead><tbody>
+<tr><td>7168965143715713226</td><td>ARKK</td><td>2</td><td>{"2021": {"All": {"cagr": -0.2398, "twr": -0.2398}, "Communication Services": {"cagr": -0.3183, "twr ... total length 4731</td><td>2022</td><td>Healthcare</td></tr>
+<tr><td>7269178601070942003</td><td>ARKQ</td><td>5</td><td>{"2021": {"All": {"cagr": -0.0152, "twr": -0.0152}, "Communication Services": {"cagr": 0.062, "twr": ... total length 4674</td><td>2022Q4</td><td>Financial Services</td></tr>
+<tr><td>5295164466069382562</td><td>ARKQ</td><td>3</td><td>{"2021": {"All": {"cagr": -0.0152, "twr": -0.0152}, "Communication Services": {"cagr": 0.062, "twr": ... total length 4674</td><td>2021Q1</td><td>Communication Services</td></tr>
+<tr><td>9063329390583926200</td><td>ARKW</td><td>2</td><td>{"2021": {"All": {"cagr": -0.1949, "twr": -0.1949}, "Communication Services": {"cagr": -0.293, "twr" ... total length 4758</td><td>2022Q2</td><td>Consumer Defensive</td></tr>
+<tr><td>5342794677629852851</td><td>ARKG</td><td>5</td><td>{"2021": {"All": {"cagr": -0.3384, "twr": -0.3384}, "Communication Services": {"cagr": 0.1666, "twr" ... total length 4533</td><td>2022Q1</td><td>Financial Services</td></tr>
+<tr><td>7414104404588080305</td><td>ARKF</td><td>4</td><td>{"2021": {"All": {"cagr": -0.1912, "twr": -0.1912}, "Communication Services": {"cagr": -0.4067, "twr ... total length 4679</td><td>2021Q3</td><td>Communication Services</td></tr>
+<tr><td>6115848667962190958</td><td>ARKX</td><td>2</td><td>{"2021": {"All": {"cagr": -0.1055, "twr": -0.1055}, "Communication Services": {"cagr": 0.1719, "twr" ... total length 4544</td><td>2021Q1</td><td>Communication Services</td></tr>
+<tr><td>7658207571250279737</td><td>ARKK</td><td>4</td><td>{"2021": {"All": {"cagr": -0.2398, "twr": -0.2398}, "Communication Services": {"cagr": -0.3183, "twr ... total length 4731</td><td>2021Q3</td><td>Consumer Cyclical</td></tr>
+<tr><td>5851178065865165370</td><td>ARKK</td><td>2</td><td>{"2021": {"All": {"cagr": -0.2398, "twr": -0.2398}, "Communication Services": {"cagr": -0.3183, "twr ... total length 4731</td><td>2022Q4</td><td>All</td></tr>
+<tr><td>6085460532978503518</td><td>ARKW</td><td>4</td><td>{"2021": {"All": {"cagr": -0.1949, "twr": -0.1949}, "Communication Services": {"cagr": -0.293, "twr" ... total length 4758</td><td>2021Q1</td><td>All</td></tr>
 </tbody></table>
 <p>Total 540 rows</p>
 </div>
@@ -639,17 +651,18 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 6_perf_json_to_columns produces Cassandra table account_period_sector_twr_cagr:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">cagr</th><th class="text-right">period</th><th class="text-right">sector</th><th class="text-right">twr</th></thead><tbody>
-<tr><td>2051940333335580608</td><td>ARKF</td><td>30</td><td>-42.3</td><td>2022Q4</td><td>Communication Services</td><td>-12.94</td></tr>
-<tr><td>467099065024923780</td><td>ARKG</td><td>16</td><td>-66.06</td><td>2022Q1</td><td>All</td><td>-23.39</td></tr>
-<tr><td>4793009141456092103</td><td>ARKK</td><td>42</td><td>-85.25</td><td>2022Q2</td><td>Communication Services</td><td>-37.95</td></tr>
-<tr><td>1668642860725665609</td><td>ARKG</td><td>50</td><td>-2.49</td><td>2022Q2</td><td>Communication Services</td><td>-0.63</td></tr>
-<tr><td>4172230767046282068</td><td>ARKF</td><td>63</td><td>-69.22</td><td>2021Q4</td><td>Communication Services</td><td>-25.69</td></tr>
-<tr><td>3320490046305540588</td><td>ARKQ</td><td>91</td><td>-32.86</td><td>2021Q1</td><td>Healthcare</td><td>-9.36</td></tr>
-<tr><td>6384236349569128686</td><td>ARKW</td><td>37</td><td>22.25</td><td>2022Q4</td><td>Healthcare</td><td>5.19</td></tr>
-<tr><td>3902626804003825458</td><td>ARKG</td><td>32</td><td>-1.75</td><td>2022Q2</td><td>Financial Services</td><td>-0.44</td></tr>
-<tr><td>2059833829580478020</td><td>ARKQ</td><td>37</td><td>1.73</td><td>2021</td><td>Technology</td><td>1.73</td></tr>
-<tr><td>4830284743586419631</td><td>ARKQ</td><td>12</td><td>-73.12</td><td>2022Q3</td><td>Consumer Cyclical</td><td>-28.19</td></tr>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">account_id</th><th class="text-right">batch_idx</th><th class="text-right">cagr</th><th class="text-right">period</th><th class="text-right">sector</th><th class="text-right">twr</th></thead><tbody>
+<tr><td>8137916471552369728</td><td>ARKF</td><td>57</td><td>0.36</td><td>2022Q4</td><td>Real Estate</td><td>0.09</td></tr>
+<tr><td>2235881837030019840</td><td>ARKX</td><td>98</td><td>-30.93</td><td>2021Q4</td><td>Consumer Cyclical</td><td>-8.91</td></tr>
+<tr><td>1549235067597828388</td><td>ARKQ</td><td>34</td><td>-56.39</td><td>2021Q3</td><td>Consumer Defensive</td><td>-18.87</td></tr>
+<tr><td>7821394913153981096</td><td>ARKG</td><td>85</td><td>0</td><td>2022Q3</td><td>Consumer Cyclical</td><td>0</td></tr>
+<tr><td>2115971575274467196</td><td>ARKW</td><td>29</td><td>-33.66</td><td>2021Q3</td><td>Technology</td><td>-9.83</td></tr>
+<tr><td>69418455958825887</td><td>ARKK</td><td>0</td><td>47.3</td><td>2021Q3</td><td>Consumer Cyclical</td><td>10.25</td></tr>
+<tr><td>2515764555023439805</td><td>ARKG</td><td>26</td><td>0</td><td>2021Q2</td><td>Industrials</td><td>0</td></tr>
+<tr><td>1568926299271490416</td><td>ARKW</td><td>16</td><td>-36.75</td><td>2022Q4</td><td>All</td><td>-10.91</td></tr>
+<tr><td>6966961175879963676</td><td>ARKQ</td><td>45</td><td>0</td><td>2021</td><td>Real Estate</td><td>0</td></tr>
+<tr><td>350162544516462577</td><td>ARKX</td><td>42</td><td>0</td><td>2022Q4</td><td>Real Estate</td><td>0</td></tr>
 </tbody></table>
 <p>Total 540 rows</p>
 </div>
@@ -710,7 +723,8 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 7_file_account_period_sector_perf produces data file:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">ARK fund</th><th class="text-right">Period</th><th class="text-right">Sector</th><th class="text-right">Time-weighted annualized return %</th></thead><tbody>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">ARK fund</th><th class="text-right">Period</th><th class="text-right">Sector</th><th class="text-right">Time-weighted annualized return %</th></thead><tbody>
 <tr><td>ARKF</td><td>2021</td><td>All</td><td>-19.12</td></tr>
 <tr><td>ARKF</td><td>2021</td><td>Communication Services</td><td>-40.67</td></tr>
 <tr><td>ARKF</td><td>2021</td><td>Consumer Cyclical</td><td>-22.28</td></tr>
@@ -782,7 +796,8 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 7_file_account_year_perf produces data file:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">ARK fund</th><th class="text-right">Period</th><th class="text-right">Sector</th><th class="text-right">Time-weighted annualized return %</th></thead><tbody>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">ARK fund</th><th class="text-right">Period</th><th class="text-right">Sector</th><th class="text-right">Time-weighted annualized return %</th></thead><tbody>
 <tr><td>ARKF</td><td>2021</td><td>All</td><td>-19.12</td></tr>
 <tr><td>ARKF</td><td>2022</td><td>All</td><td>-63.35</td></tr>
 <tr><td>ARKG</td><td>2021</td><td>All</td><td>-33.84</td></tr>

@@ -1,11 +1,12 @@
 <html><head><style>
 html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}body{margin:0}h1{margin:.67em 0;font-size:2em}pre{font-family:monospace,serif;font-size:1em}pre{white-space:pre-wrap}table{border-collapse:collapse;border-spacing:0}@media print{*{color:#000!important;text-shadow:none!important;background:transparent!important;box-shadow:none!important}pre{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr{page-break-inside:avoid}@page{margin:2cm .5cm}p,h2,h3{orphans:3;widows:3}h2,h3{page-break-after:avoid}.table td,.table th{background-color:#fff!important}.table{border-collapse:collapse!important}}*,*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}html{font-size:62.5%;-webkit-tap-highlight-color:rgba(0,0,0,0)}body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.428571429;color:#333;background-color:#fff}p{margin:0 0 10px}.text-right{text-align:right}h1,h2,h3{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:500;line-height:1.1}h1,h2,h3{margin-top:20px;margin-bottom:10px}h1{font-size:36px}h2{font-size:30px}h3{font-size:24px}pre{font-family:Monaco,Menlo,Consolas,"Courier New",monospace}pre{display:block;padding:9.5px;margin:0 0 10px;font-size:13px;line-height:1.428571429;color:#333;word-break:break-all;word-wrap:break-word;background-color:#f5f5f5;border:1px solid #ccc;border-radius:4px}.container{padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}.container:before,.container:after{display:table;content:" "}.container:after{clear:both}.container:before,.container:after{display:table;content:" "}.container:after{clear:both}.row{margin-right:-15px;margin-left:-15px}.row:before,.row:after{display:table;content:" "}.row:after{clear:both}.row:before,.row:after{display:table;content:" "}.row:after{clear:both}@media(min-width:768px){.container{max-width:750px}}@media(min-width:992px){.container{max-width:970px}}@media(min-width:1200px){.container{max-width:1170px}}table{max-width:100%;background-color:transparent}th{text-align:left}.table{width:100%;margin-bottom:20px}.table thead>tr>th,.table tbody>tr>td{padding:8px;line-height:1.428571429;vertical-align:top;border-top:1px solid #ddd}.table thead>tr>th{vertical-align:bottom;border-bottom:2px solid #ddd}.table thead:first-child tr:first-child th{border-top:0}.table-striped>tbody>tr:nth-child(odd)>td{background-color:#f9f9f9}@-ms-viewport{width:device-width}@media screen and (max-width:400px){@-ms-viewport{width:320px}}</style></head><body>
 <div class="container">
-<div class=row><h1>fannie_mae_quicktest script and data</h1></div>
+<div class=row><h1>fannie_mae_quicktest_local_fs_one script and data</h1></div>
 <div class="row">
 <h2>Input files</h2>
 <h3>Payments</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">Current Actual UPB</th><th class="text-right">UPB at Issuance</th><th class="text-right">Original Interest Rate</th><th class="text-right">Loan Identifier</th><th class="text-right">Seller Name</th><th class="text-right">Monthly Reporting Period</th><th class="text-right">Remaining Months To Maturity</th><th class="text-right">Origination Date</th><th class="text-right">Deal Name</th><th class="text-right">Borrower Credit Score at Origination</th><th class="text-right">Zero Balance Effective Date</th><th class="text-right">Scheduled Principal Current</th><th class="text-right">Remaining Months to Legal Maturity</th><th class="text-right">Original UPB</th><th class="text-right">Original Loan Term</th></thead><tbody>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">Current Actual UPB</th><th class="text-right">UPB at Issuance</th><th class="text-right">Original Interest Rate</th><th class="text-right">Loan Identifier</th><th class="text-right">Seller Name</th><th class="text-right">Monthly Reporting Period</th><th class="text-right">Remaining Months To Maturity</th><th class="text-right">Origination Date</th><th class="text-right">Deal Name</th><th class="text-right">Borrower Credit Score at Origination</th><th class="text-right">Zero Balance Effective Date</th><th class="text-right">Scheduled Principal Current</th><th class="text-right">Remaining Months to Legal Maturity</th><th class="text-right">Original UPB</th><th class="text-right">Original Loan Term</th></thead><tbody>
 <tr><td>485775.65</td><td>485775.65</td><td>6.875</td><td>136610574</td><td>Flagstar Bank, National Association</td><td>20230820</td><td>350</td><td>20221020</td><td>CAS 2023 R08 G1</td><td>735</td><td>0</td><td>0</td><td>351</td><td>490000</td><td>360</td></tr>
 <tr><td>248112.85</td><td>248112.85</td><td>6.375</td><td>136610575</td><td>Planet Home Lending, LLC</td><td>20230820</td><td>352</td><td>20221020</td><td>CAS 2023 R08 G1</td><td>709</td><td>0</td><td>0</td><td>352</td><td>250000</td><td>360</td></tr>
 <tr><td>468571.34</td><td>468571.34</td><td>6.5</td><td>136610576</td><td>Rocket Mortgage, LLC</td><td>20230820</td><td>351</td><td>20221020</td><td>CAS 2023 R08 G1</td><td>787</td><td>0</td><td>0</td><td>351</td><td>473000</td><td>360</td></tr>
@@ -26,7 +27,6 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   "01_read_payments": {
     "type": "file_table",
     "desc": "Read source files to a table",
-    "start_policy": "manual",
     "r": {
       "urls": "{file_urls|stringlist}",
       "columns": {
@@ -168,17 +168,18 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 01_read_payments produces Cassandra table payments:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">batch_idx</th><th class="text-right">borrower_credit_score_at_origination</th><th class="text-right">deal_name</th><th class="text-right">loan_id</th><th class="text-right">original_interest_rate</th><th class="text-right">original_loan_term</th><th class="text-right">original_upb</th><th class="text-right">origination_date</th><th class="text-right">payment_json</th><th class="text-right">seller_name</th><th class="text-right">upb_at_issuance</th></thead><tbody>
-<tr><td>800158702408273113</td><td>0</td><td>795</td><td>CAS 2023 R08 G1</td><td>136629718</td><td>4.99</td><td>360</td><td>263000.00</td><td>20221120</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":259946.84,"remaining_months_to_legal_matur ... total length 176</td><td>DHI Mortgage Company, Ltd.</td><td>259946.84</td></tr>
-<tr><td>5036305467290968929</td><td>0</td><td>812</td><td>CAS 2023 R08 G1</td><td>136630214</td><td>7.375</td><td>360</td><td>240000.00</td><td>20221220</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":236445.01,"remaining_months_to_legal_matur ... total length 176</td><td>Other</td><td>236445.01</td></tr>
-<tr><td>5493206693245834598</td><td>0</td><td>773</td><td>CAS 2023 R08 G1</td><td>136629716</td><td>5.5</td><td>360</td><td>440000.00</td><td>20221120</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":436040.01,"remaining_months_to_legal_matur ... total length 176</td><td>Wells Fargo Bank, N.A.</td><td>436040.01</td></tr>
-<tr><td>5336853318372598624</td><td>1</td><td>770</td><td>CAS 2023 R08 G1</td><td>136661243</td><td>5.5</td><td>360</td><td>347000.00</td><td>20220920</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":342944.54,"remaining_months_to_legal_matur ... total length 176</td><td>Other</td><td>342944.54</td></tr>
-<tr><td>5174616656769165964</td><td>1</td><td>786</td><td>CAS 2023 R08 G1</td><td>136666733</td><td>7.125</td><td>360</td><td>92000.00</td><td>20220920</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":91244.32,"remaining_months_to_legal_maturi ... total length 175</td><td>Other</td><td>91244.32</td></tr>
-<tr><td>944407427530961572</td><td>0</td><td>779</td><td>CAS 2023 R08 G1</td><td>136620073</td><td>4.625</td><td>360</td><td>499000.00</td><td>20221020</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":490550.87,"remaining_months_to_legal_matur ... total length 176</td><td>PennyMac Loan Services, LLC</td><td>490550.87</td></tr>
-<tr><td>8530273457917276461</td><td>0</td><td>767</td><td>CAS 2023 R08 G1</td><td>136615952</td><td>6.5</td><td>360</td><td>333000.00</td><td>20221020</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":330330.37,"remaining_months_to_legal_matur ... total length 176</td><td>PHH Mortgage Corporation</td><td>330330.37</td></tr>
-<tr><td>7385719806124278426</td><td>1</td><td>722</td><td>CAS 2023 R08 G1</td><td>136647216</td><td>5.375</td><td>360</td><td>610000.00</td><td>20220920</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":602309.89,"remaining_months_to_legal_matur ... total length 176</td><td>Other</td><td>602309.89</td></tr>
-<tr><td>1799901551253216355</td><td>0</td><td>765</td><td>CAS 2023 R08 G1</td><td>136624327</td><td>6.875</td><td>360</td><td>272000.00</td><td>20221120</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":270134.77,"remaining_months_to_legal_matur ... total length 176</td><td>Other</td><td>270134.77</td></tr>
-<tr><td>1980761531658210837</td><td>0</td><td>753</td><td>CAS 2023 R08 G1</td><td>136630325</td><td>6.625</td><td>360</td><td>336000.00</td><td>20221120</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":333582.14,"remaining_months_to_legal_matur ... total length 176</td><td>Other</td><td>333582.14</td></tr>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">batch_idx</th><th class="text-right">borrower_credit_score_at_origination</th><th class="text-right">deal_name</th><th class="text-right">loan_id</th><th class="text-right">original_interest_rate</th><th class="text-right">original_loan_term</th><th class="text-right">original_upb</th><th class="text-right">origination_date</th><th class="text-right">payment_json</th><th class="text-right">seller_name</th><th class="text-right">upb_at_issuance</th></thead><tbody>
+<tr><td>2692698828023470054</td><td>0</td><td>763</td><td>CAS 2023 R08 G1</td><td>136625690</td><td>6.25</td><td>360</td><td>291000.00</td><td>20221020</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":288660.84,"remaining_months_to_legal_matur ... total length 176</td><td>Rocket Mortgage, LLC</td><td>288660.84</td></tr>
+<tr><td>3997131445414456708</td><td>1</td><td>689</td><td>CAS 2023 R08 G1</td><td>136642797</td><td>6.75</td><td>360</td><td>407000.00</td><td>20221220</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":404597.56,"remaining_months_to_legal_matur ... total length 176</td><td>Other</td><td>404597.56</td></tr>
+<tr><td>2928770662528460462</td><td>1</td><td>768</td><td>CAS 2023 R08 G1</td><td>136662702</td><td>6.125</td><td>360</td><td>84000.00</td><td>20220920</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":83164.58,"remaining_months_to_legal_maturi ... total length 175</td><td>Other</td><td>83164.58</td></tr>
+<tr><td>4433795961790658242</td><td>1</td><td>736</td><td>CAS 2023 R08 G1</td><td>136650451</td><td>5.625</td><td>360</td><td>276000.00</td><td>20220920</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":272590.71,"remaining_months_to_legal_matur ... total length 176</td><td>Rocket Mortgage, LLC</td><td>272590.71</td></tr>
+<tr><td>1266457818141924647</td><td>0</td><td>793</td><td>CAS 2023 R08 G1</td><td>136616839</td><td>5</td><td>360</td><td>363000.00</td><td>20220820</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":358495.61,"remaining_months_to_legal_matur ... total length 176</td><td>Other</td><td>358495.61</td></tr>
+<tr><td>4560171343055258208</td><td>0</td><td>734</td><td>CAS 2023 R08 G1</td><td>136619674</td><td>7.625</td><td>360</td><td>191000.00</td><td>20221120</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":190043.18,"remaining_months_to_legal_matur ... total length 176</td><td>Other</td><td>190043.18</td></tr>
+<tr><td>7624527983841155731</td><td>1</td><td>777</td><td>CAS 2023 R08 G1</td><td>136643547</td><td>7.125</td><td>360</td><td>79000.00</td><td>20221120</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":78235.63,"remaining_months_to_legal_maturi ... total length 175</td><td>United Wholesale Mortgage, LLC</td><td>78235.63</td></tr>
+<tr><td>7791730123361816823</td><td>0</td><td>793</td><td>CAS 2023 R08 G1</td><td>136632792</td><td>5.625</td><td>360</td><td>480000.00</td><td>20221020</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":474480.85,"remaining_months_to_legal_matur ... total length 176</td><td>Other</td><td>474480.85</td></tr>
+<tr><td>3649628387832893919</td><td>1</td><td>809</td><td>CAS 2023 R08 G1</td><td>136670781</td><td>5.25</td><td>360</td><td>559000.00</td><td>20221020</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":546107.15,"remaining_months_to_legal_matur ... total length 176</td><td>Other</td><td>546107.15</td></tr>
+<tr><td>8707679687933728275</td><td>1</td><td>808</td><td>CAS 2023 R08 G1</td><td>136662618</td><td>5.99</td><td>360</td><td>600000.00</td><td>20221020</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":589153.26,"remaining_months_to_legal_matur ... total length 176</td><td>Guaranteed Rate, Inc.</td><td>589153.26</td></tr>
 </tbody></table>
 <p>Total 60345 rows</p>
 </div>
@@ -189,6 +190,7 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   "02_loan_ids": {
     "type": "distinct_table",
     "desc": "Select distinct loan ids",
+    "start_policy": "{manual_if_multi}",
     "rerun_policy": "fail",
     "r": {
       "table": "payments",
@@ -243,17 +245,18 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 02_loan_ids produces Cassandra table loan_ids:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">batch_idx</th><th class="text-right">borrower_credit_score_at_origination</th><th class="text-right">deal_name</th><th class="text-right">loan_id</th><th class="text-right">original_interest_rate</th><th class="text-right">original_loan_term</th><th class="text-right">original_upb</th><th class="text-right">origination_date</th><th class="text-right">seller_name</th><th class="text-right">upb_at_issuance</th></thead><tbody>
-<tr><td>6752608178272806248</td><td>7</td><td>701</td><td>CAS 2023 R08 G1</td><td>136666554</td><td>5.875</td><td>360</td><td>320000.00</td><td>20220820</td><td>Other</td><td>316322.06</td></tr>
-<tr><td>5266430700445856702</td><td>4</td><td>704</td><td>CAS 2023 R08 G1</td><td>136644734</td><td>7.625</td><td>360</td><td>169000.00</td><td>20221120</td><td>Other</td><td>167048.07</td></tr>
-<tr><td>6905476334942424028</td><td>4</td><td>743</td><td>CAS 2023 R08 G1</td><td>136646722</td><td>5.875</td><td>360</td><td>244000.00</td><td>20220920</td><td>Other</td><td>241195.58</td></tr>
-<tr><td>2944990095003651352</td><td>8</td><td>787</td><td>CAS 2023 R08 G1</td><td>136653570</td><td>4.375</td><td>360</td><td>499000.00</td><td>20221020</td><td>Other</td><td>442394.00</td></tr>
-<tr><td>1093947416060466722</td><td>5</td><td>760</td><td>CAS 2023 R08 G1</td><td>136656080</td><td>6.875</td><td>360</td><td>400000.00</td><td>20220920</td><td>United Wholesale Mortgage, LLC</td><td>34389.66</td></tr>
-<tr><td>1196091718114697743</td><td>7</td><td>745</td><td>CAS 2023 R08 G1</td><td>136648243</td><td>6.1</td><td>360</td><td>511000.00</td><td>20221020</td><td>Other</td><td>506455.79</td></tr>
-<tr><td>2534038776161250431</td><td>5</td><td>784</td><td>CAS 2023 R08 G1</td><td>136614592</td><td>6.625</td><td>360</td><td>200000.00</td><td>20221020</td><td>Other</td><td>198376.39</td></tr>
-<tr><td>2122096588038957732</td><td>6</td><td>704</td><td>CAS 2023 R08 G1</td><td>136621098</td><td>6.125</td><td>360</td><td>420000.00</td><td>20221020</td><td>Other</td><td>416250.12</td></tr>
-<tr><td>1561582520404290930</td><td>8</td><td>671</td><td>CAS 2023 R08 G1</td><td>136660590</td><td>5.375</td><td>360</td><td>273000.00</td><td>20220820</td><td>Lakeview Loan Servicing, LLC</td><td>269310.18</td></tr>
-<tr><td>7868265320365713909</td><td>1</td><td>715</td><td>CAS 2023 R08 G1</td><td>136636015</td><td>7.5</td><td>360</td><td>400000.00</td><td>20221220</td><td>Guild Mortgage Company LLC</td><td>396977.70</td></tr>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">batch_idx</th><th class="text-right">borrower_credit_score_at_origination</th><th class="text-right">deal_name</th><th class="text-right">loan_id</th><th class="text-right">original_interest_rate</th><th class="text-right">original_loan_term</th><th class="text-right">original_upb</th><th class="text-right">origination_date</th><th class="text-right">seller_name</th><th class="text-right">upb_at_issuance</th></thead><tbody>
+<tr><td>6457891039259649104</td><td>9</td><td>767</td><td>CAS 2023 R08 G1</td><td>136660929</td><td>5.125</td><td>360</td><td>114000.00</td><td>20220920</td><td>Other</td><td>112240.33</td></tr>
+<tr><td>8595116722281286274</td><td>0</td><td>755</td><td>CAS 2023 R08 G1</td><td>136625253</td><td>4.875</td><td>360</td><td>379000.00</td><td>20221020</td><td>Truist Bank</td><td>374737.06</td></tr>
+<tr><td>642312648763271491</td><td>5</td><td>777</td><td>CAS 2023 R08 G1</td><td>136644773</td><td>6.125</td><td>360</td><td>336000.00</td><td>20221120</td><td>Guaranteed Rate, Inc.</td><td>282979.09</td></tr>
+<tr><td>6431317821336340373</td><td>7</td><td>804</td><td>CAS 2023 R08 G1</td><td>136622247</td><td>6.25</td><td>360</td><td>284000.00</td><td>20221020</td><td>Wells Fargo Bank, N.A.</td><td>281241.23</td></tr>
+<tr><td>538570546331060335</td><td>7</td><td>713</td><td>CAS 2023 R08 G1</td><td>136661077</td><td>6.125</td><td>360</td><td>213000.00</td><td>20220820</td><td>Other</td><td>210465.86</td></tr>
+<tr><td>9125367591281352855</td><td>1</td><td>804</td><td>CAS 2023 R08 G1</td><td>136636360</td><td>6.7</td><td>360</td><td>175000.00</td><td>20221120</td><td>Truist Bank</td><td>173758.69</td></tr>
+<tr><td>3891149617198986514</td><td>8</td><td>698</td><td>CAS 2023 R08 G1</td><td>136624835</td><td>5.875</td><td>360</td><td>505000.00</td><td>20221120</td><td>Other</td><td>500746.75</td></tr>
+<tr><td>9003692999608911916</td><td>1</td><td>787</td><td>CAS 2023 R08 G1</td><td>136649709</td><td>5.625</td><td>360</td><td>288000.00</td><td>20220920</td><td>Other</td><td>284532.60</td></tr>
+<tr><td>7229415194510547357</td><td>6</td><td>745</td><td>CAS 2023 R08 G1</td><td>136625596</td><td>5.75</td><td>360</td><td>880000.00</td><td>20221020</td><td>Planet Home Lending, LLC</td><td>871570.76</td></tr>
+<tr><td>6276762338259684685</td><td>7</td><td>774</td><td>CAS 2023 R08 G1</td><td>136652859</td><td>4.125</td><td>360</td><td>376000.00</td><td>20220920</td><td>Other</td><td>370708.19</td></tr>
 </tbody></table>
 <p>Total 60345 rows</p>
 </div>
@@ -264,6 +267,7 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   "02_deal_names": {
     "type": "distinct_table",
     "desc": "Select distinct deal names",
+    "start_policy": "{manual_if_multi}",
     "rerun_policy": "fail",
     "r": {
       "table": "loan_ids",
@@ -285,8 +289,9 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 02_deal_names produces Cassandra table deal_names:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">batch_idx</th><th class="text-right">deal_name</th></thead><tbody>
-<tr><td>877194347010206401</td><td>8</td><td>CAS 2023 R08 G1</td></tr>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">batch_idx</th><th class="text-right">deal_name</th></thead><tbody>
+<tr><td>531989646856925890</td><td>0</td><td>CAS 2023 R08 G1</td></tr>
 </tbody></table>
 <p>Total 1 rows</p>
 </div>
@@ -297,6 +302,7 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   "03_deal_total_upbs": {
     "type": "table_lookup_table",
     "desc": "For each deal, calculate total UPBs",
+    "start_policy": "{manual_if_multi}",
     "r": {
       "table": "deal_names",
       "expected_batches_total": "{expected_batches|number}"
@@ -337,8 +343,9 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 03_deal_total_upbs produces Cassandra table deal_total_upbs:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">batch_idx</th><th class="text-right">deal_name</th><th class="text-right">total_original_upb</th><th class="text-right">total_original_upb_for_nonzero_credit_scores</th><th class="text-right">total_original_upb_for_nonzero_rates</th><th class="text-right">total_upb_at_issuance</th></thead><tbody>
-<tr><td>313607574826253983</td><td>0</td><td>CAS 2023 R08 G1</td><td>19356281000.00</td><td>19339292000.00</td><td>19356281000.00</td><td>18880190518.06</td></tr>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">batch_idx</th><th class="text-right">deal_name</th><th class="text-right">total_original_upb</th><th class="text-right">total_original_upb_for_nonzero_credit_scores</th><th class="text-right">total_original_upb_for_nonzero_rates</th><th class="text-right">total_upb_at_issuance</th></thead><tbody>
+<tr><td>8630296434510783352</td><td>5</td><td>CAS 2023 R08 G1</td><td>19356281000.00</td><td>19339292000.00</td><td>19356281000.00</td><td>18880190518.06</td></tr>
 </tbody></table>
 <p>Total 1 rows</p>
 </div>
@@ -349,6 +356,7 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   "04_loan_payment_summaries": {
     "type": "table_lookup_table",
     "desc": "For each loan, merge all payments into single json string",
+    "start_policy": "{manual_if_multi}",
     "r": {
       "table": "loan_ids",
       "expected_batches_total": "{expected_batches|number}"
@@ -407,28 +415,30 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 04_loan_payment_summaries produces Cassandra table loan_payment_summaries:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">batch_idx</th><th class="text-right">borrower_credit_score_at_origination</th><th class="text-right">deal_name</th><th class="text-right">loan_id</th><th class="text-right">original_interest_rate</th><th class="text-right">original_loan_term</th><th class="text-right">original_upb</th><th class="text-right">origination_date</th><th class="text-right">payments_json</th><th class="text-right">seller_name</th><th class="text-right">upb_at_issuance</th></thead><tbody>
-<tr><td>5615601356399117662</td><td>0</td><td>791</td><td>CAS 2023 R08 G1</td><td>136655355</td><td>5.625</td><td>360</td><td>232000.00</td><td>20220920</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":227886.47,"remaining_months_to_legal_matur ... total length 176</td><td>Rocket Mortgage, LLC</td><td>227886.47</td></tr>
-<tr><td>8565153193046043795</td><td>1</td><td>773</td><td>CAS 2023 R08 G1</td><td>136631422</td><td>7.125</td><td>360</td><td>252000.00</td><td>20221120</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":250353.93,"remaining_months_to_legal_matur ... total length 176</td><td>Movement Mortgage, LLC</td><td>250353.93</td></tr>
-<tr><td>2091126007504879937</td><td>3</td><td>789</td><td>CAS 2023 R08 G1</td><td>136623344</td><td>6.875</td><td>360</td><td>393000.00</td><td>20221120</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":389808.48,"remaining_months_to_legal_matur ... total length 176</td><td>Other</td><td>389808.48</td></tr>
-<tr><td>2530295410698261372</td><td>6</td><td>787</td><td>CAS 2023 R08 G1</td><td>136652858</td><td>5.125</td><td>360</td><td>217000.00</td><td>20220920</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":214402.77,"remaining_months_to_legal_matur ... total length 176</td><td>Other</td><td>214402.77</td></tr>
-<tr><td>6565463557089476830</td><td>8</td><td>747</td><td>CAS 2023 R08 G1</td><td>136638856</td><td>6.625</td><td>360</td><td>200000.00</td><td>20221120</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":198560.79,"remaining_months_to_legal_matur ... total length 176</td><td>Other</td><td>198560.79</td></tr>
-<tr><td>4327040615284299267</td><td>4</td><td>770</td><td>CAS 2023 R08 G1</td><td>136645262</td><td>5.75</td><td>360</td><td>325000.00</td><td>20221020</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":320745.38,"remaining_months_to_legal_matur ... total length 176</td><td>PennyMac Loan Services, LLC</td><td>320745.38</td></tr>
-<tr><td>7877495430632455773</td><td>0</td><td>709</td><td>CAS 2023 R08 G1</td><td>136668343</td><td>5.125</td><td>360</td><td>392000.00</td><td>20220820</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":384018.56,"remaining_months_to_legal_matur ... total length 176</td><td>Rocket Mortgage, LLC</td><td>384018.56</td></tr>
-<tr><td>7680739600616671107</td><td>9</td><td>801</td><td>CAS 2023 R08 G1</td><td>136618203</td><td>4.75</td><td>360</td><td>241000.00</td><td>20221120</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":235714.16,"remaining_months_to_legal_matur ... total length 176</td><td>DHI Mortgage Company, Ltd.</td><td>235714.16</td></tr>
-<tr><td>6499719906859484905</td><td>5</td><td>785</td><td>CAS 2023 R08 G1</td><td>136643839</td><td>4.875</td><td>360</td><td>375000.00</td><td>20220820</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":369823.69,"remaining_months_to_legal_matur ... total length 176</td><td>CitiMortgage, Inc.</td><td>369823.69</td></tr>
-<tr><td>4166276169274525341</td><td>5</td><td>796</td><td>CAS 2023 R08 G1</td><td>136642439</td><td>5.875</td><td>360</td><td>203000.00</td><td>20221020</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":201513.99,"remaining_months_to_legal_matur ... total length 176</td><td>Other</td><td>201513.99</td></tr>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">batch_idx</th><th class="text-right">borrower_credit_score_at_origination</th><th class="text-right">deal_name</th><th class="text-right">loan_id</th><th class="text-right">original_interest_rate</th><th class="text-right">original_loan_term</th><th class="text-right">original_upb</th><th class="text-right">origination_date</th><th class="text-right">payments_json</th><th class="text-right">seller_name</th><th class="text-right">upb_at_issuance</th></thead><tbody>
+<tr><td>1615231738186287830</td><td>3</td><td>752</td><td>CAS 2023 R08 G1</td><td>136661569</td><td>6.125</td><td>360</td><td>134000.00</td><td>20220820</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":132925.83,"remaining_months_to_legal_matur ... total length 176</td><td>CitiMortgage, Inc.</td><td>132925.83</td></tr>
+<tr><td>7388934975796115909</td><td>8</td><td>784</td><td>CAS 2023 R08 G1</td><td>136612118</td><td>6.5</td><td>360</td><td>370000.00</td><td>20221020</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":366923.6,"remaining_months_to_legal_maturi ... total length 175</td><td>Other</td><td>366923.60</td></tr>
+<tr><td>7345126107333234134</td><td>0</td><td>735</td><td>CAS 2023 R08 G1</td><td>136649774</td><td>7.125</td><td>360</td><td>284000.00</td><td>20220820</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":280901.84,"remaining_months_to_legal_matur ... total length 176</td><td>Wells Fargo Bank, N.A.</td><td>280901.84</td></tr>
+<tr><td>2095797490938898800</td><td>6</td><td>780</td><td>CAS 2023 R08 G1</td><td>136653220</td><td>6.625</td><td>360</td><td>253000.00</td><td>20221020</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":249839.53,"remaining_months_to_legal_matur ... total length 176</td><td>Other</td><td>249839.53</td></tr>
+<tr><td>4381682178806700587</td><td>0</td><td>739</td><td>CAS 2023 R08 G1</td><td>136637703</td><td>7.625</td><td>360</td><td>1013000.00</td><td>20221120</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":1006505.42,"remaining_months_to_legal_matu ... total length 177</td><td>NewRez LLC</td><td>1006505.42</td></tr>
+<tr><td>8472024047843872395</td><td>0</td><td>781</td><td>CAS 2023 R08 G1</td><td>136611546</td><td>5.125</td><td>360</td><td>412000.00</td><td>20221120</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":385685.84,"remaining_months_to_legal_matur ... total length 176</td><td>Guaranteed Rate, Inc.</td><td>385685.84</td></tr>
+<tr><td>2014515344537304865</td><td>5</td><td>818</td><td>CAS 2023 R08 G1</td><td>136618938</td><td>5.375</td><td>360</td><td>362000.00</td><td>20221020</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":158739.13,"remaining_months_to_legal_matur ... total length 176</td><td>Guaranteed Rate, Inc.</td><td>158739.13</td></tr>
+<tr><td>5278786596005708792</td><td>8</td><td>795</td><td>CAS 2023 R08 G1</td><td>136645760</td><td>4.99</td><td>360</td><td>295000.00</td><td>20221020</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":291740.39,"remaining_months_to_legal_matur ... total length 176</td><td>PennyMac Loan Services, LLC</td><td>291740.39</td></tr>
+<tr><td>3282519401989431663</td><td>3</td><td>711</td><td>CAS 2023 R08 G1</td><td>136662678</td><td>7.125</td><td>360</td><td>528000.00</td><td>20221120</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":524551.12,"remaining_months_to_legal_matur ... total length 176</td><td>Guild Mortgage Company LLC</td><td>524551.12</td></tr>
+<tr><td>3715302605673428185</td><td>9</td><td>772</td><td>CAS 2023 R08 G1</td><td>136647124</td><td>6.375</td><td>360</td><td>400000.00</td><td>20220920</td><td>{"monthly_reporting_period":20230820,"current_actual_upb":396329.19,"remaining_months_to_legal_matur ... total length 176</td><td>Rocket Mortgage, LLC</td><td>396329.19</td></tr>
 </tbody></table>
 <p>Total 60345 rows</p>
 </div>
 <div class="row">
-<h2>04_loan_summaries_calculated</h2>
-<h3>Script node 04_loan_summaries_calculated:</h3>
+<h2>04_loan_smrs_clcltd</h2>
+<h3>Script node 04_loan_smrs_clcltd:</h3>
 <pre id="json">{
-  "04_loan_summaries_calculated": {
+  "04_loan_smrs_clcltd": {
     "type": "table_custom_tfm_table",
     "custom_proc_type": "py_calc",
     "desc": "Apply Python calculations to loan summaries",
+    "start_policy": "{manual_if_multi}",
     "r": {
       "table": "loan_payment_summaries",
       "rowset_size": 1000,
@@ -458,7 +468,7 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
       }
     },
     "w": {
-      "name": "loan_summaries_calculated",
+      "name": "loan_smrs_clcltd",
       "fields": {
         "loan_id": {
           "expression": "r.loan_id",
@@ -518,24 +528,25 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
         }
       },
       "indexes": {
-        "idx_loan_summaries_calculated_deal_name": "non_unique(deal_name)",
-        "idx_loan_summaries_calculated_deal_name_seller_name": "non_unique(deal_name,seller_name)"
+        "idx_loan_smrs_clcltd_deal_name": "non_unique(deal_name)",
+        "idx_loan_smrs_clcltd_deal_name_seller_name": "non_unique(deal_name,seller_name)"
       }
     }
   }
 }</pre>
-<h3>Script node 04_loan_summaries_calculated produces Cassandra table loan_summaries_calculated:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">batch_idx</th><th class="text-right">borrower_credit_score_at_origination</th><th class="text-right">deal_name</th><th class="text-right">is_original_loan_term_30y</th><th class="text-right">loan_id</th><th class="text-right">original_interest_rate</th><th class="text-right">original_loan_term</th><th class="text-right">original_upb</th><th class="text-right">origination_date</th><th class="text-right">paid_off_amount</th><th class="text-right">paid_off_ratio</th><th class="text-right">payments_behind_ratio</th><th class="text-right">payments_json</th><th class="text-right">seller_name</th><th class="text-right">upb_at_issuance</th></thead><tbody>
-<tr><td>1902079926941358870</td><td>2</td><td>777</td><td>CAS 2023 R08 G1</td><td>1</td><td>136648159</td><td>5.5</td><td>360</td><td>196000.00</td><td>20220820</td><td>3435.63</td><td>0.0175287244898</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 192564.37, "remaining_months_to_legal_ ... total length 187</td><td>Other</td><td>192564.37</td></tr>
-<tr><td>7453138006806099791</td><td>8</td><td>772</td><td>CAS 2023 R08 G1</td><td>1</td><td>136651304</td><td>7.125</td><td>360</td><td>187000.00</td><td>20220920</td><td>1535.97</td><td>0.0082137433155</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 185464.03, "remaining_months_to_legal_ ... total length 187</td><td>Other</td><td>185464.03</td></tr>
-<tr><td>2472512365020153061</td><td>9</td><td>681</td><td>CAS 2023 R08 G1</td><td>1</td><td>136652572</td><td>5.375</td><td>360</td><td>184000.00</td><td>20220420</td><td>8644.63</td><td>0.0469816847826</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 175355.37, "remaining_months_to_legal_ ... total length 187</td><td>Wells Fargo Bank, N.A.</td><td>175355.37</td></tr>
-<tr><td>813601969446710458</td><td>5</td><td>691</td><td>CAS 2023 R08 G1</td><td>1</td><td>136649728</td><td>4.99</td><td>360</td><td>200000.00</td><td>20220820</td><td>2956.02</td><td>0.0147801</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 197043.98, "remaining_months_to_legal_ ... total length 187</td><td>Other</td><td>197043.98</td></tr>
-<tr><td>3247919753834913741</td><td>4</td><td>801</td><td>CAS 2023 R08 G1</td><td>1</td><td>136655321</td><td>6.5</td><td>360</td><td>100000.00</td><td>20220920</td><td>949.33</td><td>0.0094933</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 99050.67, "remaining_months_to_legal_m ... total length 186</td><td>Rocket Mortgage, LLC</td><td>99050.67</td></tr>
-<tr><td>1204590044583179496</td><td>1</td><td>777</td><td>CAS 2023 R08 G1</td><td>1</td><td>136623287</td><td>5.5</td><td>360</td><td>290000.00</td><td>20220620</td><td>6220.40</td><td>0.0214496551724</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 283779.6, "remaining_months_to_legal_m ... total length 186</td><td>Other</td><td>283779.60</td></tr>
-<tr><td>4275718643698385707</td><td>2</td><td>776</td><td>CAS 2023 R08 G1</td><td>1</td><td>136638229</td><td>7.125</td><td>360</td><td>205000.00</td><td>20221120</td><td>1537.78</td><td>0.0075013658537</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 203462.22, "remaining_months_to_legal_ ... total length 187</td><td>Other</td><td>203462.22</td></tr>
-<tr><td>6708365940665219385</td><td>5</td><td>787</td><td>CAS 2023 R08 G1</td><td>1</td><td>136635763</td><td>6.625</td><td>360</td><td>376000.00</td><td>20221120</td><td>2785.19</td><td>0.0074074202128</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 373214.81, "remaining_months_to_legal_ ... total length 187</td><td>PennyMac Corp.</td><td>373214.81</td></tr>
-<tr><td>278099872061570400</td><td>0</td><td>799</td><td>CAS 2023 R08 G1</td><td>1</td><td>136656846</td><td>6.75</td><td>360</td><td>381000.00</td><td>20220820</td><td>3711.60</td><td>0.0097417322835</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 377288.4, "remaining_months_to_legal_m ... total length 186</td><td>Rocket Mortgage, LLC</td><td>377288.40</td></tr>
-<tr><td>6979645106913423381</td><td>7</td><td>713</td><td>CAS 2023 R08 G1</td><td>1</td><td>136639391</td><td>5.99</td><td>360</td><td>258000.00</td><td>20221020</td><td>2430.82</td><td>0.0094217829457</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 255569.18, "remaining_months_to_legal_ ... total length 187</td><td>Rocket Mortgage, LLC</td><td>255569.18</td></tr>
+<h3>Script node 04_loan_smrs_clcltd produces Cassandra table loan_smrs_clcltd:</h3>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">batch_idx</th><th class="text-right">borrower_credit_score_at_origination</th><th class="text-right">deal_name</th><th class="text-right">is_original_loan_term_30y</th><th class="text-right">loan_id</th><th class="text-right">original_interest_rate</th><th class="text-right">original_loan_term</th><th class="text-right">original_upb</th><th class="text-right">origination_date</th><th class="text-right">paid_off_amount</th><th class="text-right">paid_off_ratio</th><th class="text-right">payments_behind_ratio</th><th class="text-right">payments_json</th><th class="text-right">seller_name</th><th class="text-right">upb_at_issuance</th></thead><tbody>
+<tr><td>603204304175406901</td><td>1</td><td>743</td><td>CAS 2023 R08 G1</td><td>1</td><td>136660854</td><td>4.75</td><td>360</td><td>100000.00</td><td>20221020</td><td>1150.44</td><td>0.0115044</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 98849.56, "remaining_months_to_legal_m ... total length 186</td><td>Other</td><td>98849.56</td></tr>
+<tr><td>831208868887076987</td><td>6</td><td>791</td><td>CAS 2023 R08 G1</td><td>1</td><td>136635500</td><td>7.125</td><td>360</td><td>252000.00</td><td>20221120</td><td>1857.36</td><td>0.0073704761905</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 250142.64, "remaining_months_to_legal_ ... total length 187</td><td>Flagstar Bank, National Association</td><td>250142.64</td></tr>
+<tr><td>7053664686515573330</td><td>9</td><td>806</td><td>CAS 2023 R08 G1</td><td>1</td><td>136670778</td><td>6.625</td><td>360</td><td>296000.00</td><td>20221020</td><td>2677.36</td><td>0.0090451351351</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 293322.64, "remaining_months_to_legal_ ... total length 187</td><td>Other</td><td>293322.64</td></tr>
+<tr><td>1759235850494190894</td><td>9</td><td>702</td><td>CAS 2023 R08 G1</td><td>1</td><td>136618278</td><td>6.375</td><td>360</td><td>403000.00</td><td>20221020</td><td>3927.38</td><td>0.0097453598015</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 399072.62, "remaining_months_to_legal_ ... total length 187</td><td>Rocket Mortgage, LLC</td><td>399072.62</td></tr>
+<tr><td>4576886964196765939</td><td>0</td><td>804</td><td>CAS 2023 R08 G1</td><td>1</td><td>136618509</td><td>6.875</td><td>360</td><td>320000.00</td><td>20221020</td><td>2475.74</td><td>0.0077366875</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 317524.26, "remaining_months_to_legal_ ... total length 187</td><td>Other</td><td>317524.26</td></tr>
+<tr><td>8058973352069471630</td><td>3</td><td>754</td><td>CAS 2023 R08 G1</td><td>1</td><td>136650930</td><td>5.875</td><td>360</td><td>578000.00</td><td>20220920</td><td>7137.56</td><td>0.0123487197232</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 570862.44, "remaining_months_to_legal_ ... total length 187</td><td>Other</td><td>570862.44</td></tr>
+<tr><td>234237901939414011</td><td>5</td><td>774</td><td>CAS 2023 R08 G1</td><td>1</td><td>136630013</td><td>6.875</td><td>360</td><td>278000.00</td><td>20221120</td><td>2547.66</td><td>0.0091642446043</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 275452.34, "remaining_months_to_legal_ ... total length 187</td><td>United Wholesale Mortgage, LLC</td><td>275452.34</td></tr>
+<tr><td>2884255536010915568</td><td>5</td><td>739</td><td>CAS 2023 R08 G1</td><td>1</td><td>136624837</td><td>5.125</td><td>360</td><td>364000.00</td><td>20220920</td><td>4356.55</td><td>0.011968543956</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 359643.45, "remaining_months_to_legal_ ... total length 187</td><td>Other</td><td>359643.45</td></tr>
+<tr><td>3111210525372372631</td><td>8</td><td>680</td><td>CAS 2023 R08 G1</td><td>1</td><td>136614971</td><td>7.25</td><td>360</td><td>188000.00</td><td>20221120</td><td>12196.51</td><td>0.0648750531915</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 175803.49, "remaining_months_to_legal_ ... total length 187</td><td>United Wholesale Mortgage, LLC</td><td>175803.49</td></tr>
+<tr><td>8713878476140162668</td><td>7</td><td>703</td><td>CAS 2023 R08 G1</td><td>1</td><td>136652127</td><td>6.5</td><td>360</td><td>113000.00</td><td>20221020</td><td>542.93</td><td>0.0048046902655</td><td>0</td><td>[{"monthly_reporting_period": 20230820, "current_actual_upb": 112457.07, "remaining_months_to_legal_ ... total length 187</td><td>Other</td><td>112457.07</td></tr>
 </tbody></table>
 <p>Total 60345 rows</p>
 </div>
@@ -546,13 +557,14 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   "05_deal_seller_summaries": {
     "type": "table_lookup_table",
     "desc": "For each deal/seller, calculate aggregates from calculated loan summaries",
+    "start_policy": "{manual_if_multi}",
     "rerun_policy": "fail",
     "r": {
       "table": "deal_sellers",
       "expected_batches_total": "{expected_batches|number}"
     },
     "l": {
-      "index_name": "idx_loan_summaries_calculated_deal_name_seller_name",
+      "index_name": "idx_loan_smrs_clcltd_deal_name_seller_name",
       "join_on": "r.deal_name,r.seller_name",
       "group": true,
       "join_type": "left"
@@ -625,17 +637,18 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 05_deal_seller_summaries produces Cassandra table deal_seller_summaries:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">avg_borrower_credit_score_at_origination</th><th class="text-right">avg_original_interest_rate</th><th class="text-right">avg_paid_off_ratio</th><th class="text-right">avg_payments_behind_ratio</th><th class="text-right">batch_idx</th><th class="text-right">deal_name</th><th class="text-right">max_borrower_credit_score_at_origination</th><th class="text-right">max_original_interest_rate</th><th class="text-right">min_borrower_credit_score_at_origination</th><th class="text-right">min_original_interest_rate</th><th class="text-right">seller_name</th><th class="text-right">total_loans</th><th class="text-right">total_original_loan_term_30y</th><th class="text-right">total_original_upb</th><th class="text-right">total_paid_off_amount</th><th class="text-right">total_upb_at_issuance</th></thead><tbody>
-<tr><td>2893991749081546317</td><td>757.352984524687</td><td>6.344100957996</td><td>0.0252521387433</td><td>0</td><td>6</td><td>CAS 2023 R08 G1</td><td>829</td><td>7.625</td><td>0</td><td>3.75</td><td>Fairway Independent Mortgage Corporation</td><td>1357</td><td>1355</td><td>457905000.00</td><td>12699866.91</td><td>445205133.09</td></tr>
-<tr><td>5357438395202032473</td><td>750.76983435048</td><td>6.552690496949</td><td>0.0171519399367</td><td>0</td><td>5</td><td>CAS 2023 R08 G1</td><td>825</td><td>8.125</td><td>0</td><td>3</td><td>NewRez LLC</td><td>1147</td><td>1144</td><td>379065000.00</td><td>6383953.49</td><td>372681046.51</td></tr>
-<tr><td>7235310274837037295</td><td>753.587826086957</td><td>6.534476521739</td><td>0.019365020949</td><td>0</td><td>6</td><td>CAS 2023 R08 G1</td><td>824</td><td>8.125</td><td>623</td><td>3.75</td><td>Flagstar Bank, National Association</td><td>575</td><td>575</td><td>194992000.00</td><td>4062149.92</td><td>190929850.08</td></tr>
-<tr><td>3573471684421377849</td><td>765.139410187668</td><td>5.552450402145</td><td>0.024113716336</td><td>0</td><td>7</td><td>CAS 2023 R08 G1</td><td>820</td><td>7.125</td><td>624</td><td>3.25</td><td>CitiMortgage, Inc.</td><td>746</td><td>745</td><td>276412000.00</td><td>7097228.84</td><td>269314771.16</td></tr>
-<tr><td>9033258309346024608</td><td>758.647607934656</td><td>4.884947491248</td><td>0.0228911796314</td><td>0</td><td>2</td><td>CAS 2023 R08 G1</td><td>827</td><td>7.375</td><td>0</td><td>3.25</td><td>DHI Mortgage Company, Ltd.</td><td>857</td><td>857</td><td>268469000.00</td><td>6135452.44</td><td>262333547.56</td></tr>
-<tr><td>2046922479759246362</td><td>749.176102459613</td><td>6.095726240722</td><td>0.0190210740031</td><td>0</td><td>6</td><td>CAS 2023 R08 G1</td><td>829</td><td>8.125</td><td>601</td><td>3.875</td><td>Rocket Mortgage, LLC</td><td>6871</td><td>6837</td><td>2205904000.00</td><td>43306960.59</td><td>2162597039.41</td></tr>
-<tr><td>6066198704004736390</td><td>761.10300081103</td><td>5.938240064882</td><td>0.0253620346696</td><td>0</td><td>4</td><td>CAS 2023 R08 G1</td><td>823</td><td>7.625</td><td>0</td><td>2.99</td><td>Guaranteed Rate, Inc.</td><td>1233</td><td>1233</td><td>443720000.00</td><td>12278921.05</td><td>431441078.95</td></tr>
-<tr><td>3112795190318877763</td><td>753.40875</td><td>6.69331875</td><td>0.0216680045482</td><td>0</td><td>0</td><td>CAS 2023 R08 G1</td><td>819</td><td>8.125</td><td>0</td><td>3.5</td><td>CrossCountry Mortgage, LLC</td><td>800</td><td>798</td><td>237075000.00</td><td>5715230.05</td><td>231359769.95</td></tr>
-<tr><td>6171034476166660796</td><td>754.732716227943</td><td>6.51039282615</td><td>0.018578250003</td><td>0</td><td>6</td><td>CAS 2023 R08 G1</td><td>829</td><td>8.125</td><td>620</td><td>4.125</td><td>United Wholesale Mortgage, LLC</td><td>3457</td><td>3452</td><td>1148073000.00</td><td>22176379.26</td><td>1125896620.74</td></tr>
-<tr><td>7697567447654914531</td><td>764.224839400428</td><td>5.68989793005</td><td>0.0261027904338</td><td>0</td><td>7</td><td>CAS 2023 R08 G1</td><td>824</td><td>7.5</td><td>0</td><td>3.05</td><td>Truist Bank</td><td>1401</td><td>1399</td><td>428974000.00</td><td>11747338.03</td><td>417226661.97</td></tr>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">avg_borrower_credit_score_at_origination</th><th class="text-right">avg_original_interest_rate</th><th class="text-right">avg_paid_off_ratio</th><th class="text-right">avg_payments_behind_ratio</th><th class="text-right">batch_idx</th><th class="text-right">deal_name</th><th class="text-right">max_borrower_credit_score_at_origination</th><th class="text-right">max_original_interest_rate</th><th class="text-right">min_borrower_credit_score_at_origination</th><th class="text-right">min_original_interest_rate</th><th class="text-right">seller_name</th><th class="text-right">total_loans</th><th class="text-right">total_original_loan_term_30y</th><th class="text-right">total_original_upb</th><th class="text-right">total_paid_off_amount</th><th class="text-right">total_upb_at_issuance</th></thead><tbody>
+<tr><td>2605030512062607645</td><td>761.10300081103</td><td>5.938240064882</td><td>0.0253620346696</td><td>0</td><td>7</td><td>CAS 2023 R08 G1</td><td>823</td><td>7.625</td><td>0</td><td>2.99</td><td>Guaranteed Rate, Inc.</td><td>1233</td><td>1233</td><td>443720000.00</td><td>12278921.05</td><td>431441078.95</td></tr>
+<tr><td>7681190877932109215</td><td>749.657512116317</td><td>6.008479806139</td><td>0.0180495347051</td><td>0</td><td>2</td><td>CAS 2023 R08 G1</td><td>821</td><td>7.625</td><td>620</td><td>4.25</td><td>Lakeview Loan Servicing, LLC</td><td>619</td><td>612</td><td>231574000.00</td><td>4177208.66</td><td>227396791.34</td></tr>
+<tr><td>3666906138091569880</td><td>748.060203283815</td><td>6.451825645035</td><td>0.0201185425195</td><td>0</td><td>7</td><td>CAS 2023 R08 G1</td><td>824</td><td>7.99</td><td>0</td><td>2.75</td><td>Planet Home Lending, LLC</td><td>1279</td><td>1277</td><td>432167000.00</td><td>8169068.41</td><td>423997931.59</td></tr>
+<tr><td>2717906083198624711</td><td>756.492569002123</td><td>5.7203492569</td><td>0.0276388077482</td><td>0</td><td>2</td><td>CAS 2023 R08 G1</td><td>823</td><td>7.625</td><td>0</td><td>3.99</td><td>Fifth Third Bank, National Association</td><td>942</td><td>941</td><td>285578000.00</td><td>8575728.03</td><td>277002271.97</td></tr>
+<tr><td>744404163417716791</td><td>764.380952380952</td><td>5.763708293914</td><td>0.0267600623223</td><td>0</td><td>4</td><td>CAS 2023 R08 G1</td><td>828</td><td>7.625</td><td>0</td><td>2.75</td><td>Wells Fargo Bank, N.A.</td><td>3171</td><td>3166</td><td>1115305000.00</td><td>32102763.26</td><td>1083202236.74</td></tr>
+<tr><td>4082150750686757249</td><td>751.008688097307</td><td>5.941403127715</td><td>0.0186537553046</td><td>0</td><td>1</td><td>CAS 2023 R08 G1</td><td>821</td><td>8.125</td><td>620</td><td>3</td><td>loanDepot.com, LLC</td><td>1151</td><td>1151</td><td>388120000.00</td><td>7360117.11</td><td>380759882.89</td></tr>
+<tr><td>8132355452051647433</td><td>736.685932388222</td><td>6.311190839695</td><td>0.0179177539925</td><td>0</td><td>5</td><td>CAS 2023 R08 G1</td><td>820</td><td>8.125</td><td>601</td><td>4.25</td><td>Nationstar Mortgage LLC</td><td>917</td><td>913</td><td>266952000.00</td><td>5065464.57</td><td>261886535.43</td></tr>
+<tr><td>292831738858778117</td><td>753.40875</td><td>6.69331875</td><td>0.0216680045482</td><td>0</td><td>3</td><td>CAS 2023 R08 G1</td><td>819</td><td>8.125</td><td>0</td><td>3.5</td><td>CrossCountry Mortgage, LLC</td><td>800</td><td>798</td><td>237075000.00</td><td>5715230.05</td><td>231359769.95</td></tr>
+<tr><td>6183503794039805140</td><td>753.587826086957</td><td>6.534476521739</td><td>0.019365020949</td><td>0</td><td>9</td><td>CAS 2023 R08 G1</td><td>824</td><td>8.125</td><td>623</td><td>3.75</td><td>Flagstar Bank, National Association</td><td>575</td><td>575</td><td>194992000.00</td><td>4062149.92</td><td>190929850.08</td></tr>
+<tr><td>3592591457388772981</td><td>754.732716227943</td><td>6.51039282615</td><td>0.018578250003</td><td>0</td><td>2</td><td>CAS 2023 R08 G1</td><td>829</td><td>8.125</td><td>620</td><td>4.125</td><td>United Wholesale Mortgage, LLC</td><td>3457</td><td>3452</td><td>1148073000.00</td><td>22176379.26</td><td>1125896620.74</td></tr>
 </tbody></table>
 <p>Total 25 rows</p>
 </div>
@@ -646,12 +659,13 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   "05_deal_summaries": {
     "type": "table_lookup_table",
     "desc": "For each deal, calculate aggregates from calculated loan summaries",
+    "start_policy": "{manual_if_multi}",
     "r": {
       "table": "deal_total_upbs",
       "expected_batches_total": "{expected_batches|number}"
     },
     "l": {
-      "index_name": "idx_loan_summaries_calculated_deal_name",
+      "index_name": "idx_loan_smrs_clcltd_deal_name",
       "join_on": "r.deal_name",
       "group": true,
       "join_type": "left"
@@ -728,26 +742,27 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 05_deal_summaries produces Cassandra table deal_summaries:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">rowid</th><th class="text-right">avg_paid_off_ratio</th><th class="text-right">avg_payments_behind_ratio</th><th class="text-right">batch_idx</th><th class="text-right">deal_name</th><th class="text-right">max_borrower_credit_score_at_origination</th><th class="text-right">max_original_interest_rate</th><th class="text-right">min_borrower_credit_score_at_origination</th><th class="text-right">min_original_interest_rate</th><th class="text-right">total_loans</th><th class="text-right">total_original_loan_term_30y</th><th class="text-right">total_original_upb</th><th class="text-right">total_original_upb_for_nonzero_credit_scores</th><th class="text-right">total_original_upb_for_nonzero_rates</th><th class="text-right">total_paid_off_amount</th><th class="text-right">total_upb_at_issuance</th><th class="text-right">wa_borrower_credit_score_at_origination_by_original_upb</th><th class="text-right">wa_original_interest_rate_by_original_upb</th></thead><tbody>
-<tr><td>5697416122093459290</td><td>0.0231112037748</td><td>0</td><td>6</td><td>CAS 2023 R08 G1</td><td>832</td><td>8.125</td><td>600</td><td>2.5</td><td>60345</td><td>60114</td><td>19356281000.00</td><td>19339292000.00</td><td>19356281000.00</td><td>476091393.37</td><td>18880190518.06</td><td>1.4670429761e+13</td><td>118134224964</td></tr>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">rowid</th><th class="text-right">avg_paid_off_ratio</th><th class="text-right">avg_payments_behind_ratio</th><th class="text-right">batch_idx</th><th class="text-right">deal_name</th><th class="text-right">max_borrower_credit_score_at_origination</th><th class="text-right">max_original_interest_rate</th><th class="text-right">min_borrower_credit_score_at_origination</th><th class="text-right">min_original_interest_rate</th><th class="text-right">total_loans</th><th class="text-right">total_original_loan_term_30y</th><th class="text-right">total_original_upb</th><th class="text-right">total_original_upb_for_nonzero_credit_scores</th><th class="text-right">total_original_upb_for_nonzero_rates</th><th class="text-right">total_paid_off_amount</th><th class="text-right">total_upb_at_issuance</th><th class="text-right">wa_borrower_credit_score_at_origination_by_original_upb</th><th class="text-right">wa_original_interest_rate_by_original_upb</th></thead><tbody>
+<tr><td>6121652427606545559</td><td>0.0231112037748</td><td>0</td><td>4</td><td>CAS 2023 R08 G1</td><td>832</td><td>8.125</td><td>600</td><td>2.5</td><td>60345</td><td>60114</td><td>19356281000.00</td><td>19339292000.00</td><td>19356281000.00</td><td>476091393.37</td><td>18880190518.06</td><td>1.4670429761e+13</td><td>118134224964</td></tr>
 </tbody></table>
 <p>Total 1 rows</p>
 </div>
 <div class="row">
-<h2>04_write_file_loan_summaries_calculated</h2>
-<h3>Script node 04_write_file_loan_summaries_calculated:</h3>
+<h2>04_write_file_loan_smrs_clcltd</h2>
+<h3>Script node 04_write_file_loan_smrs_clcltd:</h3>
 <pre id="json">{
-  "04_write_file_loan_summaries_calculated": {
+  "04_write_file_loan_smrs_clcltd": {
     "type": "table_file",
     "desc": "Write from table to file loan_summaries.parquet",
     "r": {
-      "table": "loan_summaries_calculated"
+      "table": "loan_smrs_clcltd"
     },
     "w": {
       "top": {
         "order": "loan_id(asc)"
       },
-      "url_template": "{dir_out}/loan_summaries_calculated.parquet",
+      "url_template": "{dir_out}/loan_smrs_clcltd.parquet",
       "columns": [
         {
           "parquet": {
@@ -857,8 +872,9 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
     }
   }
 }</pre>
-<h3>Script node 04_write_file_loan_summaries_calculated produces data file:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">loan_id</th><th class="text-right">deal_name</th><th class="text-right">seller_name</th><th class="text-right">original_interest_rate</th><th class="text-right">borrower_credit_score_at_origination</th><th class="text-right">origination_date</th><th class="text-right">original_upb</th><th class="text-right">upb_at_issuance</th><th class="text-right">original_loan_term</th><th class="text-right">payments_json</th><th class="text-right">payments_behind_ratio</th><th class="text-right">paid_off_amount</th><th class="text-right">paid_off_ratio</th></thead><tbody>
+<h3>Script node 04_write_file_loan_smrs_clcltd produces data file:</h3>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">loan_id</th><th class="text-right">deal_name</th><th class="text-right">seller_name</th><th class="text-right">original_interest_rate</th><th class="text-right">borrower_credit_score_at_origination</th><th class="text-right">origination_date</th><th class="text-right">original_upb</th><th class="text-right">upb_at_issuance</th><th class="text-right">original_loan_term</th><th class="text-right">payments_json</th><th class="text-right">payments_behind_ratio</th><th class="text-right">paid_off_amount</th><th class="text-right">paid_off_ratio</th></thead><tbody>
 <tr><td>136610574</td><td>CAS 2023 R08 G1</td><td>Flagstar Bank, National Association</td><td>6.875</td><td>735</td><td>20221020</td><td>490000</td><td>485775.65</td><td>360</td><td>[{monthly_reporting_period": 20230820</td><td> "current_actual_upb": 485775.65</td><td> "remaining_months_to_legal_maturity": 351</td><td> "remaining_months_to_maturity": 350</td><td> "zero_balance_effective_date": 0}]"</td><td>0</td><td>4224.35</td><td>0.00862</td></tr>
 <tr><td>136610575</td><td>CAS 2023 R08 G1</td><td>Planet Home Lending, LLC</td><td>6.375</td><td>709</td><td>20221020</td><td>250000</td><td>248112.85</td><td>360</td><td>[{monthly_reporting_period": 20230820</td><td> "current_actual_upb": 248112.85</td><td> "remaining_months_to_legal_maturity": 352</td><td> "remaining_months_to_maturity": 352</td><td> "zero_balance_effective_date": 0}]"</td><td>0</td><td>1887.15</td><td>0.00755</td></tr>
 <tr><td>136610576</td><td>CAS 2023 R08 G1</td><td>Rocket Mortgage, LLC</td><td>6.5</td><td>787</td><td>20221020</td><td>473000</td><td>468571.34</td><td>360</td><td>[{monthly_reporting_period": 20230820</td><td> "current_actual_upb": 468571.34</td><td> "remaining_months_to_legal_maturity": 351</td><td> "remaining_months_to_maturity": 351</td><td> "zero_balance_effective_date": 0}]"</td><td>0</td><td>4428.66</td><td>0.00936</td></tr>
@@ -1021,7 +1037,8 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 05_write_file_deal_seller_summaries produces data file:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">deal_name</th><th class="text-right">seller_name</th><th class="text-right">avg_original_interest_rate</th><th class="text-right">min_original_interest_rate</th><th class="text-right">max_original_interest_rate</th><th class="text-right">avg_borrower_credit_score_at_origination</th><th class="text-right">min_borrower_credit_score_at_origination</th><th class="text-right">max_borrower_credit_score_at_origination</th><th class="text-right">total_original_upb</th><th class="text-right">total_original_upb_paid_off_ratio</th><th class="text-right">total_upb_at_issuance</th><th class="text-right">total_loans</th><th class="text-right">total_original_loan_term_30y</th><th class="text-right">avg_payments_behind_ratio</th><th class="text-right">total_paid_off_amount</th><th class="text-right">avg_paid_off_ratio</th></thead><tbody>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">deal_name</th><th class="text-right">seller_name</th><th class="text-right">avg_original_interest_rate</th><th class="text-right">min_original_interest_rate</th><th class="text-right">max_original_interest_rate</th><th class="text-right">avg_borrower_credit_score_at_origination</th><th class="text-right">min_borrower_credit_score_at_origination</th><th class="text-right">max_borrower_credit_score_at_origination</th><th class="text-right">total_original_upb</th><th class="text-right">total_original_upb_paid_off_ratio</th><th class="text-right">total_upb_at_issuance</th><th class="text-right">total_loans</th><th class="text-right">total_original_loan_term_30y</th><th class="text-right">avg_payments_behind_ratio</th><th class="text-right">total_paid_off_amount</th><th class="text-right">avg_paid_off_ratio</th></thead><tbody>
 <tr><td>CAS 2023 R08 G1</td><td>CitiMortgage, Inc.</td><td>5.552</td><td>3.25</td><td>7.125</td><td>765.14</td><td>624</td><td>820</td><td>276412000</td><td>0.02568</td><td>269314771.16</td><td>746</td><td>745</td><td>0</td><td>7097228.84</td><td>0.02411</td></tr>
 <tr><td>CAS 2023 R08 G1</td><td>CrossCountry Mortgage, LLC</td><td>6.693</td><td>3.5</td><td>8.125</td><td>753.41</td><td>0</td><td>819</td><td>237075000</td><td>0.02411</td><td>231359769.95</td><td>800</td><td>798</td><td>0</td><td>5715230.05</td><td>0.02167</td></tr>
 <tr><td>CAS 2023 R08 G1</td><td>DHI Mortgage Company, Ltd.</td><td>4.885</td><td>3.25</td><td>7.375</td><td>758.65</td><td>0</td><td>827</td><td>268469000</td><td>0.02285</td><td>262333547.56</td><td>857</td><td>857</td><td>0</td><td>6135452.44</td><td>0.02289</td></tr>
@@ -1176,7 +1193,8 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   }
 }</pre>
 <h3>Script node 05_write_file_deal_summaries produces data file:</h3>
-<table class="table table-striped text-right" style="font-size:smaller"><thead><th class="text-right">deal_name</th><th class="text-right">wa_original_interest_rate_by_original_upb</th><th class="text-right">min_original_interest_rate</th><th class="text-right">max_original_interest_rate</th><th class="text-right">wa_borrower_credit_score_at_origination_by_original_upb</th><th class="text-right">min_borrower_credit_score_at_origination</th><th class="text-right">max_borrower_credit_score_at_origination</th><th class="text-right">total_original_upb</th><th class="text-right">total_original_upb_paid_off_ratio</th><th class="text-right">total_upb_at_issuance</th><th class="text-right">total_loans</th><th class="text-right">total_original_loan_term_30y</th><th class="text-right">avg_payments_behind_ratio</th><th class="text-right">total_paid_off_amount</th><th class="text-right">avg_paid_off_ratio</th></thead><tbody>
+<table class="table table-striped text-right" style="font-size:smaller">
+<thead><th class="text-right">deal_name</th><th class="text-right">wa_original_interest_rate_by_original_upb</th><th class="text-right">min_original_interest_rate</th><th class="text-right">max_original_interest_rate</th><th class="text-right">wa_borrower_credit_score_at_origination_by_original_upb</th><th class="text-right">min_borrower_credit_score_at_origination</th><th class="text-right">max_borrower_credit_score_at_origination</th><th class="text-right">total_original_upb</th><th class="text-right">total_original_upb_paid_off_ratio</th><th class="text-right">total_upb_at_issuance</th><th class="text-right">total_loans</th><th class="text-right">total_original_loan_term_30y</th><th class="text-right">avg_payments_behind_ratio</th><th class="text-right">total_paid_off_amount</th><th class="text-right">avg_paid_off_ratio</th></thead><tbody>
 <tr><td>CAS 2023 R08 G1</td><td>6.103</td><td>2.5</td><td>8.125</td><td>758.58</td><td>600</td><td>832</td><td>19356281000</td><td>0.0246</td><td>18880190518.06</td><td>60345</td><td>60114</td><td>0</td><td>476091393.37</td><td>0.02311</td></tr>
 </tbody></table>
 <p>Total 1 rows</p>
