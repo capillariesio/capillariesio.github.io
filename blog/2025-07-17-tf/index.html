@@ -24,20 +24,28 @@
 </head>
 
 <body>
-  <div class="container">
-    <div class="row mt-3 mb-3">
-      <div class="col-6">
-        <h1><img src="../../i/logo.svg" alt="Capillaries logo" style="width:40px;margin-right:10px;">Capillaries: notes
-        </h1>
-      </div>
-      <div class="col-3">
-        <a href="../index.html" class="btn btn-primary float-end">Blog home</a>
-      </div>
-      <div class="col-3">
-        <a href="https://github.com/capillariesio/capillaries" class="btn btn-primary float-end">Source code and
-          documentation</a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="../index.html"><img src="../../i/logo.svg" alt="Capillaries logo"
+          style="width:20px;margin-right:10px;margin-bottom:5px;">Capillaries: notes</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="../index.html">Blog home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="https://github.com/capillariesio/capillaries">Source code</a>
+          </li>
+        </ul>
       </div>
     </div>
+  </nav>
+
+  <div class="container">
 
     <div class="row mt-4 mb-4">
       <div class="col-12">
@@ -50,31 +58,37 @@
       <div class="col-9">
         <h3>Scalability numbers</h3>
         <p>
-          The <a href="https://github.com/capillariesio/capillaries-deploy">capillaries-deploy</a> project has been put on hold, <a
+          The <a href="https://github.com/capillariesio/capillaries-deploy">capillaries-deploy</a> project has been put
+          on hold, <a
             href="https://github.com/capillariesio/capillaries/tree/main/deploy/tf/cassandra_cluster">Terraform</a> is
           now the preferred tool for testing Capillaries deployments.
           Another round of scalability testing was performed. As before, we use setups where:
-          </p>
-          <ul>
-            <li>number_of_daemons = number_of_cassandra_nodes</li>
-            <li>Cassandra nodes are x4 more powerful than Capillaries instances</li>
-          </ul>
-          <p>Here is what
-          has changed since the <a href="https://capillaries.io/blog/2024-08-10-scaleup-scaleout/index.html">last round</a>:
         </p>
         <ul>
-          <li><a href="https://github.com/capillariesio/capillaries/pull/87">code improvements</a>:  async Cassandra writer with no unnecessary buffering; configuration file caching</li>
+          <li>number_of_daemons = number_of_cassandra_nodes</li>
+          <li>Cassandra nodes are x4 more powerful than Capillaries instances</li>
+        </ul>
+        <p>Here is what
+          has changed since the <a href="https://capillaries.io/blog/2024-08-10-scaleup-scaleout/index.html">last
+            round</a>:
+        </p>
+        <ul>
+          <li><a href="https://github.com/capillariesio/capillaries/pull/87">code improvements</a>: async Cassandra
+            writer with no unnecessary buffering; configuration file caching</li>
           <li>updated worker thread and Cassandra writer thread parameters</li>
           <li>RabbitMQ and Prometheus servers now run on the bastion VM (see <a
               href="https://raw.githubusercontent.com/capillariesio/capillaries/refs/heads/main/deploy/tf/cassandra_cluster/doc/deployment.svg">deployment
               diagram</a>)</li>
-          <li>each test now uses three runs - load, join, and calc - instead of a single run: this makes execution pattern analysis easier</li>
+          <li>each test now uses three runs - load, join, and calc - instead of a single run: this makes execution
+            pattern analysis easier</li>
           <li>the GOMEMLIMIT environment variable is now set to prevent OOM errors in high-load scenarios</li>
         </ul>
-        <p>As <a href="https://capillaries.io/blog/2024-08-10-scaleup-scaleout/index.html">before</a>, <a href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md">portfolio test</a> is used for performance benchmarking. The updated results are presented below.</p>
+        <p>As <a href="https://capillaries.io/blog/2024-08-10-scaleup-scaleout/index.html">before</a>, <a
+            href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md">portfolio
+            test</a> is used for performance benchmarking. The updated results are presented below.</p>
       </div>
       <div class="col-3">
-        <img src="./i/many-old-pcs.png"  class="img-fluid"/>
+        <img src="./i/many-old-pcs.png" class="img-fluid" />
       </div>
     </div>
 
@@ -1278,7 +1292,8 @@ output_total_ec2_hourly_cost                = "$14.004500/hr"
           and <a
             href="https://github.com/capillariesio/capillaries/blob/main/doc/binconfig.md#writer_workers">writer_workers</a>
           daemon parameters can feel somewhat mysterious. Common sense suggests that thread_pool_size should
-          correlate with the number of CPUs/cores, while writer_workers reflects "how many writes per second my Cassandra
+          correlate with the number of CPUs/cores, while writer_workers reflects "how many writes per second my
+          Cassandra
           cluster can handle". Let's examine a typical CPU usage pattern observed in a low-end VM setup.</p>
         <img src="./i/s/c7g.8/4/01-cpu.png" class="img-fluid" />
         <p>There are clearly three zones in this CPU usage pattern:</p>
@@ -1289,16 +1304,20 @@ output_total_ec2_hourly_cost                = "$14.004500/hr"
           <li>Python-heavy calculations: daemon CPU usage spikes to 100% (expected, good), Cassandra CPU usage is
             very low (expected, good)</li>
         </ul>
-        <p><strong>The objective is to maintain relatively high CPU utilization for both Daemon and Cassandra instances across all 3 zones, while also avoiding situations whenre too many daemon threads are idling - waiting for Cassandra read/write operations to complete.</strong> Here are some tuning guidelines.</p>
+        <p><strong>The objective is to maintain relatively high CPU utilization for both Daemon and Cassandra instances
+            across all 3 zones, while also avoiding situations whenre too many daemon threads are idling - waiting for
+            Cassandra read/write operations to complete.</strong> Here are some tuning guidelines.</p>
         <ul>
-        <li>"load": the rule is simple: hit Cassandra as hard as you can using write_workers and,
-          while avoiding OOM errors on the daemon side.</li>
-        <li>"joins": increasing thread_pool_size from a reasonable "number_of_cores x 1.5" to "number_of_cores x 3" yields good results. Increasing writer_workers beyond a certain point does not
-          help much.</li>
-        <li>"Python calculations": keep thread_pool_size above the number_of_cores (but not
-          exessively high). The writer_workers value is largely irrelevant here, so it can be kept low.</li>
-          </ul>
-        <p>In the example shown in the CPU profile above, we used "thread_pool_size = number_of_cores x 3" and "writer_workers =
+          <li>"load": the rule is simple: hit Cassandra as hard as you can using write_workers and,
+            while avoiding OOM errors on the daemon side.</li>
+          <li>"joins": increasing thread_pool_size from a reasonable "number_of_cores x 1.5" to "number_of_cores x 3"
+            yields good results. Increasing writer_workers beyond a certain point does not
+            help much.</li>
+          <li>"Python calculations": keep thread_pool_size above the number_of_cores (but not
+            exessively high). The writer_workers value is largely irrelevant here, so it can be kept low.</li>
+        </ul>
+        <p>In the example shown in the CPU profile above, we used "thread_pool_size = number_of_cores x 3" and
+          "writer_workers =
           12":</p>
         <pre>
 output_cassandra_cpus = "8 cpus ($0.362900/hr)"
@@ -1312,9 +1331,11 @@ output_daemon_writer_workers = 12
 output_daemon_writers_per_cassandra_cpu = 9
 output_total_ec2_hourly_cost = "$1.814100/hr"          
         </pre>
-        <p>Why these values? Mainly because they allow us to avoid OOM errors during the "load" phase while maintaining relatively high Casandra CPU usage during both the "load" and "joins" phases.</p>
+        <p>Why these values? Mainly because they allow us to avoid OOM errors during the "load" phase while maintaining
+          relatively high Casandra CPU usage during both the "load" and "joins" phases.</p>
         <p>"thread_pool_size = number_of_cores x 3" may be
-          overkill for the "Python calculations" zone - we could likely achieve similar performance with, say, "thread_pool_size =
+          overkill for the "Python calculations" zone - we could likely achieve similar performance with, say,
+          "thread_pool_size =
           number_of_cores x 1.5". Howerver, Capillaries is not smart enough to throttle thread_pool_size
           dynamically based on the type of the transform type.</p>
         <p>Is it worth increasing writer_workers to push Cassandra harder? Observations show that increasing
@@ -1326,11 +1347,15 @@ output_total_ec2_hourly_cost = "$1.814100/hr"
       <div class="col-12">
         <h3>The "Cassandra dip"</h3>
         <p>There is a noticeable dip in Cassandra CPU usage at the start of the "load" phase. My theory is that the
-          start of the dip <strong>marks the moment when Capillaries daemon garbage collector kicks in</strong> consuming  CPU cycles that would otherwise support Cassandra writes. This Prometheus metric -
+          start of the dip <strong>marks the moment when Capillaries daemon garbage collector kicks in</strong>
+          consuming CPU cycles that would otherwise support Cassandra writes. This Prometheus metric -
           <i>"100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) +
-          avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))"</i> - shows memory usage:</p>
+            avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))"</i> - shows
+          memory usage:
+        </p>
         <img src="./i/s/c7g.8/4/02-mem.png" class="img-fluid" />
-        <p> For this test, GOMEMLIMIT was set to 75% of total RAM. However, because this is a soft limit (and there are other processes besides Capillaries daemon running on each instance), daemon memory
+        <p> For this test, GOMEMLIMIT was set to 75% of total RAM. However, because this is a soft limit (and there are
+          other processes besides Capillaries daemon running on each instance), daemon memory
           consumption stabilizes around 85%. While this may be aggressive for production environments, it makes
           sense for performance testing.</p>
       </div>
@@ -1340,17 +1365,26 @@ output_total_ec2_hourly_cost = "$1.814100/hr"
       <div class="col-12">
         <h3>Powerful setups: performance degradation?</h3>
         <p>More expensive setups (with more instances or/and more powerful instances) complete the test faster, but
-         tend to show higher cost per run. Why? <strong>Why is the black dot on both charts so far from the theoretical optimum?</strong> Here is the CPU usage profile for a 4-node Cassandra cluster with 64 cores per node:</p>
+          tend to show higher cost per run. Why? <strong>Why is the black dot on both charts so far from the theoretical
+            optimum?</strong> Here is the CPU usage profile for a 4-node Cassandra cluster with 64 cores per node:</p>
         <img src="./i/s/c7g.32/4/01-cpu.png" class="img-fluid" />
-        <p>The simple answer: we were not able to sufficiently engage the daemon instances or Cassandra nodes - CPU usage
+        <p>The simple answer: we were not able to sufficiently engage the daemon instances or Cassandra nodes - CPU
+          usage
           remained relatively low. But, again, why? There may be a number of explanations for that.</p>
-          <ol>
-            <li>Insufficient load: There are no clear “plateaus” in the CPU chart, which might suggest that the test dataset (14 million transactions) isn’t large enough to sustain high load. This is unlikely though - those CPU peaks at 80–90% suggest that the hardware was being put to work.</li>
-            <li>Idle CPU due to batching: closer to the end of each of the three runs, CPU power may not be fully utilized because there's “no work” left for daemon threads between batches. Using a larger dataset with smaller batch sizes might make the right-hand slope of each phase “hill” steeper - more like a cliff.</li>
-            <li>We may be hitting network performance ceilings. AWS instance types with an “n” offer higher bandwidth, and testing with these could confirm this theory.</li>
-            <li>Unknown Capillaries design limitations: There may be architectural inefficiencies or bottlenecks in Capillaries that we haven’t yet identified.</li>
-          </ol>
-        <p>There could be other factors. Further (more expensive) testing with larger datasets might provide answers.</p>
+        <ol>
+          <li>Insufficient load: There are no clear “plateaus” in the CPU chart, which might suggest that the test
+            dataset (14 million transactions) isn’t large enough to sustain high load. This is unlikely though - those
+            CPU peaks at 80–90% suggest that the hardware was being put to work.</li>
+          <li>Idle CPU due to batching: closer to the end of each of the three runs, CPU power may not be fully utilized
+            because there's “no work” left for daemon threads between batches. Using a larger dataset with smaller batch
+            sizes might make the right-hand slope of each phase “hill” steeper - more like a cliff.</li>
+          <li>We may be hitting network performance ceilings. AWS instance types with an “n” offer higher bandwidth, and
+            testing with these could confirm this theory.</li>
+          <li>Unknown Capillaries design limitations: There may be architectural inefficiencies or bottlenecks in
+            Capillaries that we haven’t yet identified.</li>
+        </ol>
+        <p>There could be other factors. Further (more expensive) testing with larger datasets might provide answers.
+        </p>
       </div>
     </div>
 

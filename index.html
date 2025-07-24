@@ -16,7 +16,11 @@
     <meta name="keywords" content="distributed, data, processing">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <meta property="og:title" content="capillaries">
     <meta property="og:type" content="website">
     <meta property="og:url" content="http://capillaries.io/">
@@ -25,49 +29,46 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="./i/logo.svg" alt="Capillaries logo"
+                    style="width:20px;margin-right:10px;margin-bottom:5px;">Capillaries</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="./blog/index.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page"
+                            href="https://github.com/capillariesio/capillaries">Source code</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
-    <div class="row mt-3 mb-3">
-      <div class="col-6">
-        <h1><img src="./i/logo.svg" alt="Capillaries logo" style="width:40px;margin-right:10px;">Capillaries</h1>
-      </div>
-      <div class="col-3">
-          <a href="./blog/index.html" class="btn btn-primary float-end">Blog</a>
-      </div>
-      <div class="col-3">
-          <a href="https://github.com/capillariesio/capillaries" class="btn btn-primary float-end">Source code and documentation</a>
-      </div>
-    </div>
 
-        <!-- <div class="row" style="margin-top: 10px; margin-bottom: 20px;">
+        <div class="row">
+            <div class="col-3"></div>
             <div class="col-6">
-                <img src="i/logo.svg" alt="Capillaries logo" class="pull-left logo" style="width:40px">
-                <h1>Capillaries</h1>
+                <h3 style="text-align:center;">
+                    Capillaries: distributed data processing platform focused on
+                    delivering enriched, customer-ready, production-quality data
+                    within SLA time limits
+                </h3>
             </div>
-            <div class="col-3">
-                <ul class="nav nav-pills pull-right" style="margin-top: 20px">
-                    <li><a href="./blog/index.html"><img src="i/web-content-icon.svg"
-                                style="width: 20px;margin-bottom: 2px;margin-right: 6px;" alt="blog">Blog</a></li>
-                </ul>
-            </div>
-            <div class="col-3">
-                <ul class="nav nav-pills pull-right" style="margin-top: 20px">
-                    <li><a href="https://github.com/capillariesio/Capillaries"><img src="i/github-mark.svg"
-                                style="width: 20px;margin-bottom: 3px;margin-right: 6px;" alt="github">Source code and
-                            docs</a></li>
-                </ul>
-            </div>
-        </div> -->
-
-        <h3>
-            Distributed data processing platform focused on <br/>
-            delivering enriched, customer-ready, production-quality data <br/>
-            within SLA time limits
-        </h3>
-
+            <div class="col-3"></div>
+        </div>
 
         <div class="row">
             <div class="col-12">
-		<object data="i/capi-animation.svg" style="width:100%;margin-top:100px;margin-bottom:100px;"></object>
+                <object data="i/capi-animation.svg" style="width:100%;margin-top:100px;margin-bottom:100px;"></object>
             </div>
         </div>
 
@@ -100,9 +101,17 @@
             <div class="col-11">
                 <h3>Configuration management consistency</h3>
                 <p>Capillaries enforces consistency through a declarative, structured configuration:</p>
-                1. The data processing DAG and relational algebra operations are specified declaratively in a <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#script">Capillaries script</a> as JSON configuration.<br/>
-                2. Field transformations use one-liner <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#go-expressions">Go expressions</a>, minimizing complexity and erro<br/>
-                3. Row-level <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#py_calc-processor">Python formulas</a>, while potentially complex, can be thoroughly covered with <a href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/portfolio/py/portfolio_calc_test.py">unit tests</a>.<br/>
+                1. The data processing DAG and relational algebra operations are specified declaratively in a <a
+                    href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#script">Capillaries
+                    script</a> as JSON configuration.<br />
+                2. Field transformations use one-liner <a
+                    href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#go-expressions">Go
+                    expressions</a>, minimizing complexity and erro<br />
+                3. Row-level <a
+                    href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#py_calc-processor">Python
+                    formulas</a>, while potentially complex, can be thoroughly covered with <a
+                    href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/portfolio/py/portfolio_calc_test.py">unit
+                    tests</a>.<br />
             </div>
         </div>
 
@@ -113,7 +122,9 @@
             </div>
             <div class="col-11">
                 <h3>Conservative cloud resource usage</h3>
-                <p>Capillaries excels in data-heavy, compute-intensive workloads that run periodically (daily, weekly, quarterly). It is designed to work efficiently on both private and public VM or container infrastructure, which can be:</p>
+                <p>Capillaries excels in data-heavy, compute-intensive workloads that run periodically (daily, weekly,
+                    quarterly). It is designed to work efficiently on both private and public VM or container
+                    infrastructure, which can be:</p>
                 <ul>
                     <li>allocated and provisioned in minutes</li>
                     <li>quickly disposed of once transformations are complete</li>
@@ -128,7 +139,8 @@
             </div>
             <div class="col-11">
                 <h3>Operator interaction</h3>
-                Capillaries allows operator interaction at designated processing steps, enabling human validation and manual go/no-go decisions within automated pipelines.
+                Capillaries allows operator interaction at designated processing steps, enabling human validation and
+                manual go/no-go decisions within automated pipelines.
             </div>
         </div>
 
@@ -138,18 +150,28 @@
 
         <div class="row">
             <div class="col-5">
-                <h3><img src="i/slideshow-line-icon.svg" alt="predict" style="width:30px;margin-right:20px;">Parallel processing</h3>
-                1. Executes multiple data processing tasks (<a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#script-node">DAG nodes</a>) concurrently.<br/>
+                <h3><img src="i/slideshow-line-icon.svg" alt="predict" style="width:30px;margin-right:20px;">Parallel
+                    processing</h3>
+                1. Executes multiple data processing tasks (<a
+                    href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#script-node">DAG
+                    nodes</a>) concurrently.<br />
                 2. Splits large datasets into smaller batches for parallel processing.
             </div>
             <div class="col-3">
-                <h3><img src="i/shield-checkmark-line-icon.svg" alt="predict" style="width:23px;margin-right:20px;">Fault tolerance</h3>
-                Designed to survive temporary database connectivity issues and individual <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#daemon">worker</a> node failures.
-                
+                <h3><img src="i/shield-checkmark-line-icon.svg" alt="predict"
+                        style="width:23px;margin-right:20px;">Fault
+                    tolerance</h3>
+                Designed to survive temporary database connectivity issues and individual <a
+                    href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#daemon">worker</a> node
+                failures.
+
             </div>
             <div class="col-4">
-                <h3><img src="i/reload-sync-icon.svg" alt="predict" style="width:23px;margin-right:20px;">Incremental computing</h3>
-                The pipeline can be broken into independen <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#run">runs</a>, allowing for flexible execution scheduling and easy re-runs for selected parts of the pipeline.
+                <h3><img src="i/reload-sync-icon.svg" alt="predict" style="width:23px;margin-right:20px;">Incremental
+                    computing</h3>
+                The pipeline can be broken into independen <a
+                    href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#run">runs</a>, allowing
+                for flexible execution scheduling and easy re-runs for selected parts of the pipeline.
             </div>
         </div>
 
@@ -165,55 +187,91 @@
                 <ul>
                     <li>Simple filters and field-level transformations can occur during loading</li>
                     <li>More complex transformations are performed after the data is fully loaded</li>
-                    <li>Data is only temporarily stored - just long enough to complete all transformations and output the results</li>
+                    <li>Data is only temporarily stored - just long enough to complete all transformations and output
+                        the results</li>
                 </ul>
                 Capillaries can be probably best described as "etlT"
                 </p>
 
                 <h3>Is Capillaries "low-code" or "no-code"?</h3>
-                <p>Capillaries is definitely "some-code" because data transformation rules may involve <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#go-expressions">Go expressions</a>
-                    and/or complex <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#py_calc-processor">Python formulas</a>. The "code" part applies only to the business logic, while the "orchestration" part does
+                <p>Capillaries is definitely "some-code" because data transformation rules may involve <a
+                        href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#go-expressions">Go
+                        expressions</a>
+                    and/or complex <a
+                        href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#py_calc-processor">Python
+                        formulas</a>. The "code" part applies only to the business logic, while the "orchestration" part
+                    does
                     not require any coding at all.
                 </p>
 
                 <h3>Why choose Capillaries over custom data pipelines?</h3>
                 <p>
-                    Capillaries handles orchestration, <a href="https://capillaries.io/blog/2024-08-10-scaleup-scaleout/index.html">scalability</a>, and intermediate data storage, so you can focus
+                    Capillaries handles orchestration, <a
+                        href="https://capillaries.io/blog/2024-08-10-scaleup-scaleout/index.html">scalability</a>, and
+                    intermediate data storage, so you can focus
                     entirely on your transformation logic.
                 </p>
                 <h3>Why choose Capillaries over other distributed processing systems?</h3>
                 <ul>
                     <li>it's free and <a href="https://github.com/capillariesio/capillaries">open-source</a></li>
-                    <li>fast to <a href="https://github.com/capillariesio/capillaries/blob/main/doc/what.md#capillaries-components">deploy</a> on any VM/container environment (and easy to tear down)</li>
-                    <li>it's better than no-code systems because it allows you to perform complex Python calculations at the row level</li>
-                    <li>it's better than code-heavy systems because it doesn’t require a thorough knowledge of any programming language</li>
-                    <li>with all intermediate data stored in <a href="https://github.com/capillariesio/capillaries/blob/main/doc/transcript_portfolio.md">Cassandra tables</a>, data processing steps are extremely
+                    <li>fast to <a
+                            href="https://github.com/capillariesio/capillaries/blob/main/doc/what.md#capillaries-components">deploy</a>
+                        on any VM/container environment (and easy to tear down)</li>
+                    <li>it's better than no-code systems because it allows you to perform complex Python calculations at
+                        the row level</li>
+                    <li>it's better than code-heavy systems because it doesn’t require a thorough knowledge of any
+                        programming language</li>
+                    <li>with all intermediate data stored in <a
+                            href="https://github.com/capillariesio/capillaries/blob/main/doc/transcript_portfolio.md">Cassandra
+                            tables</a>, data processing steps are extremely
                         transparent, making troubleshooting easier</li>
                 </ul>
                 <h3>What do I need to run Capillaries?</h3>
-                To set up <a href="https://github.com/capillariesio/capillaries/blob/main/doc/what.md#capillaries-components">Capillaries</a>, you will need:
+                To set up <a
+                    href="https://github.com/capillariesio/capillaries/blob/main/doc/what.md#capillaries-components">Capillaries</a>,
+                you will need:
                 <ul>
                     <li>a Cassandra cluster</li>
-                    <li>a few VMs/containers running <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#daemon">Capillaries workers</a></li>
-                    <li>a VM/container running Capillaries <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#webapi">Webapi</a> and <a href="https://capillaries.io/blog/2023-02-20-ui/index.html">UI</a></li>
+                    <li>a few VMs/containers running <a
+                            href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#daemon">Capillaries
+                            workers</a></li>
+                    <li>a VM/container running Capillaries <a
+                            href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#webapi">Webapi</a>
+                        and <a href="https://capillaries.io/blog/2023-02-20-ui/index.html">UI</a></li>
                     <li>a VM/container running RabbitMQ server</li>
                     <li>monitoring and logging infrastructure (optional, but recommended)</li>
                 </ul>
-                To run data processing jobs for a specific dataset, you need to provide configuration and data files, served from an NFS drive, HTTP(S) server, or S3 bucket:
+                To run data processing jobs for a specific dataset, you need to provide configuration and data files,
+                served from an NFS drive, HTTP(S) server, or S3 bucket:
                 <ul>
-                    <li>a <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#script">Capillaries script</a> containing the DAG and <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#go-expressions">Go field transformation expressions</a></li>
-                    <li>Python files with <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#py_calc-processor">formulas</a> used for row-level data transformations (optional)</li>
+                    <li>a <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#script">Capillaries
+                            script</a> containing the DAG and <a
+                            href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#go-expressions">Go
+                            field transformation expressions</a></li>
+                    <li>Python files with <a
+                            href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#py_calc-processor">formulas</a>
+                        used for row-level data transformations (optional)</li>
                     <li>input data in CSV or Parquet files</li>
                     </li>
                 </ul>
                 <p>
-                and a browser to use the <a href="https://capillaries.io/blog/2023-02-20-ui/index.html">Capillaries UI</a> or a REST API client to call <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#webapi">Capillaries Webapi</a> directly.
-                After a <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#run">Capillaries run</a> is complete, containing transformed data is available on NFS or S3.</p>
-                
+                    and a browser to use the <a href="https://capillaries.io/blog/2023-02-20-ui/index.html">Capillaries
+                        UI</a> or a REST API client to call <a
+                        href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#webapi">Capillaries
+                        Webapi</a> directly.
+                    After a <a
+                        href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#run">Capillaries
+                        run</a> is complete, containing transformed data is available on NFS or S3.</p>
+
 
                 <h3>Do I need to know SQL or a similar query language to define Capillaries transforms?</h3>
-                No. Capillaries supports transformations inspired by relational algebra (e.g., <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#lookup">lookups</a>,
-                grouping, and <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#tag_and_denormalize-processor">denormalization</a>), but they are declared in a <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#script">JSON script</a>, not written as SQL.
+                No. Capillaries supports transformations inspired by relational algebra (e.g., <a
+                    href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#lookup">lookups</a>,
+                grouping, and <a
+                    href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#tag_and_denormalize-processor">denormalization</a>),
+                but they are declared in a <a
+                    href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#script">JSON
+                    script</a>, not written as SQL.
             </div>
         </div>
 
