@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HQ9863ZP35"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-HQ9863ZP35');
+  </script>
+  <title>Capillaries blog: run profiles - worker threads or writers?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+  <link href="../../css/color.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="../index.html"><img src="../../i/logo.svg" alt="Capillaries logo"
+          style="width:20px;margin-right:10px;margin-bottom:5px;">Capillaries: notes</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="../index.html">Blog home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="https://github.com/capillariesio/capillaries">Source code</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <div class="row mt-4 mb-4">
+      <div class="col-12">
+        <h4>2024-08-05</h4>
+        <h2>Capillaries: imperative or declarative?</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-9">
+        <h3>Apache Spark news</h3>
+        <p>
+          Declarative Pipelines are expected to become part of Apache Spark 4.1.0.</p>
+        <p>
+          Databrics <a href="https://www.databricks.com/blog/bringing-declarative-pipelines-apache-spark-open-source-project">says</a>:
+        </p>
+        <p>
+          <i>
+            Building upon the strong foundation of Apache Spark, we are excited to announce a new addition to open
+            source: We’re donating Declarative Pipelines - a proven standard for building reliable, scalable data
+            pipelines - to Apache Spark. This contribution extends Apache Spark’s declarative power from individual
+            queries to full pipelines - allowing users to define what their pipeline should do, and letting Apache Spark
+            figure out how to do it. The design draws on years of observing real-world Apache Spark workloads, codifying
+            what we’ve learned into a declarative API that covers the most common patterns - including both batch and
+            streaming flows.
+          </i>
+        </p>
+      </div>
+      <div class="col-3">
+        <img src="./i/2025-08-05-imperative-02.png" class="img-fluid" />
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-12">
+        <h3>Capillaries: declarative from the day one</h3>
+        <p>
+          Not implying that "declarative is better than imperative" or that "Capillaries is superior to Spark." But it's
+          encouraging to see growing demand for a declarative approach within the Spark community, and that Spark is
+          evolving in that direction - because Capillaries embraced this model from the very beginning. Instead of
+          deriving the workflow from code, Capillaries operates on a DAG defined in a JSON configuration. This allows
+          users to focus on business logic while the framework handles workflow orchestration. As Databricks puts it,
+          this ultimately enables <i>"a leap forward in productivity, reliability, and maintainability - especially for
+            teams managing complex production pipelines."</i>
+        </p>
+      </div>
+    </div>
+
+
+    <div class=" footer">
+      <p>&copy;
+        <script type="text/javascript">document.write("2022-" + new Date().getFullYear());</script>
+        capillaries.io
+      </p>
+    </div>
+
+  </div>
+</body>
+
+</html>
