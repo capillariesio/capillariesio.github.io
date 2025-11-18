@@ -1295,7 +1295,12 @@ output_total_ec2_hourly_cost                = "$14.004500/hr"
           correlate with the number of CPUs/cores, while writer_workers reflects "how many writes per second my
           Cassandra
           cluster can handle". Let's examine a typical CPU usage pattern observed in a low-end VM setup.</p>
-        <img src="./i/s/c7g.8/4/01-cpu.png" class="img-fluid" />
+        <div style="position:relative; top:0;left:0;padding:0;">
+          <img src="./i/s/c7g.8/4/01-cpu.png" style="position: relative; top: 0; left: 0; border: 0px;max-width:100%;height:auto;"/>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1825 625" width="100%" style="position: absolute; top: 0; left: 0; border: 0px;max-width:100%;height:auto;">
+            <text x="400" y="400" fill="red" text-anchor="middle" alignment-baseline="hanging" style="font: 48px sans-serif;">Cassandra dip</text>/>
+          </svg>
+        </div>
         <p>There are clearly three zones in this CPU usage pattern:</p>
         <ul>
           <li>load data from file(s) to Cassandra tables: daemon instances run at 95% CPU (good), Cassandra nodes
@@ -1346,12 +1351,12 @@ output_total_ec2_hourly_cost = "$1.814100/hr"
     <div class="row">
       <div class="col-12">
         <h3>The "Cassandra dip"</h3>
-        <p>There is a noticeable dip in Cassandra CPU usage at the start of the "load" phase. My theory is that the
+        <p>There is a noticeable dip starting around 2.05am in Cassandra CPU usage at the start of the "load" phase. My theory is that the
           start of the dip <strong>marks the moment when Capillaries daemon garbage collector kicks in</strong>
           consuming CPU cycles that would otherwise support Cassandra writes. This Prometheus metric -
           <i>"100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) +
             avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))"</i> - shows
-          memory usage:
+          memory usage, and memory consumption hits the ceiling around 2:06am:
         </p>
         <img src="./i/s/c7g.8/4/02-mem.png" class="img-fluid" />
         <p> For this test, GOMEMLIMIT was set to 75% of total RAM. However, because this is a soft limit (and there are
@@ -1359,6 +1364,17 @@ output_total_ec2_hourly_cost = "$1.814100/hr"
           consumption stabilizes around 85%. While this may be aggressive for production environments, it makes
           sense for performance testing.</p>
       </div>
+      <p>
+        Another sign of GC starting to actively release memory on daemon instances - batch processing time increase, see Capillaries node batch history view:
+      </p>
+      <div style="position:relative; top:0;left:0;padding:0;">
+        <img src="./i/hitting-memory-limit-gc-kicks-in.png" style="position: relative; top: 0; left: 0; border: 0px;max-width:100%;height:auto;"/>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1259 902" width="100%" style="position: absolute; top: 0; left: 0; border: 0px;max-width:100%;height:auto;">
+          <path d="M660,500 L 820,370" stroke="red" stroke-width="5" stroke-linecap="round"/>
+          <text x="820" y="320" fill="red" text-anchor="middle" alignment-baseline="hanging" style="font: 36px sans-serif;">Batches take longer in Cassandra dip</text>/>
+        </svg>
+      </div>
+      <p> As daemon memory consumption stabilizes on the plateau, Cassandra CPU usage picks up and batch processing time goes back to smaller values.</p>
     </div>
 
     <div class="row">
