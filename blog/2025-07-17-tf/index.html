@@ -60,7 +60,7 @@
         <p>
           The <a href="https://github.com/capillariesio/capillaries-deploy">capillaries-deploy</a> project has been put
           on hold, <a
-            href="https://github.com/capillariesio/capillaries/tree/main/deploy/tf/cassandra_cluster">Terraform</a> is
+            href="https://github.com/capillariesio/capillaries/tree/main/deploy">Terraform</a> is
           now the preferred tool for testing Capillaries deployments.
           Another round of scalability testing was performed. As before, we use setups where:
         </p>
@@ -77,7 +77,7 @@
             writer with no unnecessary buffering; configuration file caching</li>
           <li>updated worker thread and Cassandra writer thread parameters</li>
           <li>RabbitMQ and Prometheus servers now run on the bastion VM (see <a
-              href="https://raw.githubusercontent.com/capillariesio/capillaries/refs/heads/main/deploy/tf/cassandra_cluster/doc/deployment.svg">deployment
+              href="https://raw.githubusercontent.com/capillariesio/capillaries/refs/heads/main/deploy/doc/deployment.svg">deployment
               diagram</a>)</li>
           <li>each test now uses three runs - load, join, and calc - instead of a single run: this makes execution
             pattern analysis easier</li>
