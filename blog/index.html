@@ -51,6 +51,28 @@
 
 		<div class="row mt-3">
 			<div class="col-3">
+				<a href="./2026-05-20-oom/index.html"><img
+						src="./2026-05-20-oom/i/capillaries-crash.jpg" width="100%" alt=""></a>
+			</div>
+			<div class="col-9">
+				<h4>2026-05-20</h4>
+				<h3>Capillaries: OOM errors</h3>
+				<p>
+				Capillaries should not crash. However, sometimes something like this happens.
+				</p>
+				<p>Symptoms</p>
+				<p>In this example, two Capillaries daemon instances suddenly stop working,
+					while two other instances acquire the stalled batches and complete the data processing.
+					Before processing the stalled batches, the live daemons leave warnings in the log file
+					and give those stalled batches another chance until the <i>max_batch_processing_time</i> timeout expires:
+				</p>
+				<pre style="font-family:monospace;color: gray;">"will wait for another 102601ms until 120000ms timeout, some other instance may still be handling this batch"</pre>
+				<p>This is a typical Prometheus view showing statistics from the daemons, Cassandra nodes, and the bastion instance. <a href="./2026-05-20-oom/index.html">Read more...</a></p>
+			</div>
+		</div>
+
+		<div class="row mt-3">
+			<div class="col-3">
 				<a href="./2025-08-05-declarative/index.html"><img
 						src="./2025-08-05-declarative/i/2025-08-05-imperative-02.png" width="100%" alt=""></a>
 			</div>

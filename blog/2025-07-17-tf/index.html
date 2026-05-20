@@ -1350,7 +1350,7 @@ output_total_ec2_hourly_cost = "$1.814100/hr"
 
     <div class="row">
       <div class="col-12">
-        <h3>The "Cassandra dip"</h3>
+        <h3 id="the-cassandra-dip">The "Cassandra dip"</h3>
         <p>There is a noticeable dip starting around 2.05am in Cassandra CPU usage at the start of the "load" phase. My theory is that the
           start of the dip <strong>marks the moment when Capillaries daemon garbage collector kicks in</strong>
           consuming CPU cycles that would otherwise support Cassandra writes. This Prometheus metric -

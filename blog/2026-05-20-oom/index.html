@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HQ9863ZP35"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-HQ9863ZP35');
+  </script>
+  <title>Capillaries blog: version update, performance, OOM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+  <link href="../../css/color.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="../index.html"><img src="../../i/logo.svg" alt="Capillaries logo"
+          style="width:20px;margin-right:10px;margin-bottom:5px;">Capillaries: notes</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="../index.html">Blog home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="https://github.com/capillariesio/capillaries">Source code</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <div class="row mt-4 mb-4">
+      <div class="col-9">
+        <h4>2026-05-20</h4>
+        <h2>Capillaries: OOM errors</h2>
+				<p>
+				Capillaries should not crash. However, sometimes something like this happens.
+				</p>
+				<h3>Symptoms</h3>
+				<p>In this example, two Capillaries daemon instances suddenly stop working,
+					while two other instances acquire the stalled batches and complete the data processing.
+					Before processing the stalled batches, the live daemons leave warnings in the log file
+					and give those stalled batches another chance until the <i>max_batch_processing_time</i> timeout expires:
+				</p>
+				<pre style="font-family:monospace;color: gray;">"will wait for another 102601ms until 120000ms timeout, some other instance may still be handling this batch"</pre>
+				<p>This is a typical Prometheus view showing statistics from the daemons, Cassandra nodes, and the bastion instance.</p>
+        <p>CPU consumption:</p>
+      </div>
+      <div class="col-3">
+        <img src="./i/capillaries-crash.jpg" class="img-fluid" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div style="position:relative; top:0;left:0;padding:0;">
+          <img src="./i/2026-05-18-cpu.png" style="position: relative; top: 0; left: 0; border: 0px;max-width:100%;height:auto;"/>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1821 612" width="100%" style="position: absolute; top: 0; left: 0; border: 0px;max-width:100%;height:auto;">
+            <text x="20" y="40" fill="red" text-anchor="start" alignment-baseline="hanging" style="font: 36px sans-serif;">Two daemons keep processing Python calculation node</text>/>
+            <path d="M500,80 L 700,400" stroke="red" stroke-width="5" stroke-linecap="round"/>
+            <text x="80" y="520" fill="red" text-anchor="start" alignment-baseline="hanging" style="font: 36px sans-serif;">Two daemons die</text>/>
+            <path d="M380,540 L 680,480" stroke="red" stroke-width="5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <p>Memory use:</p>
+        <div style="position:relative; top:0;left:0;padding:0;">
+          <img src="./i/2026-05-18-mem.png" style="position: relative; top: 0; left: 0; border: 0px;max-width:100%;height:auto;"/>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1811 634" width="100%" style="position: absolute; top: 0; left: 0; border: 0px;max-width:100%;height:auto;">
+            <text x="1800" y="10" fill="red" text-anchor="end" alignment-baseline="hanging" style="font: 36px sans-serif;">Two daemons keep processing Python calculation node</text>/>
+            <path d="M1300,50 L 1120,200" stroke="red" stroke-width="5" stroke-linecap="round"/>
+            <text x="280" y="180" fill="red" text-anchor="start" alignment-baseline="hanging" style="font: 36px sans-serif;">Two daemons die</text>/>
+            <path d="M580,190 L 660,150" stroke="red" stroke-width="5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <p>Obviously, all involved VM instances are still alive — Prometheus continues collecting CPU and memory statistics. It is only the Capillaries daemon that dies, and an OOM (out-of-memory) error is a common cause. There are two common scenarios to investigate.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>Go garbage collector kicks in too late</h3>
+        <p>Read about the <i>GOMEMLIMIT</i> and  <i>GOGC</i> environment variables. Capillaries daemons may allocate memory aggressively, and these settings can help the Go garbage collector perform more efficiently.</p>
+        <p>
+          For example, the Capillaries sample deployment scripts set GOGC=100 (the default value)
+          and GOMEMLIMIT=[75% of RAM] to leave some memory available for Python formula calculations.
+          In mission-critical environments, these settings may need to be lowered further.
+        </p>
+        <p>
+          More information about Go garbage collector settings for Capillaries can be found in the “The Cassandra Dip” section of <a href="../2025-07-17-tf/index.html#the-cassandra-dip">this post</a>.
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>Python calculation nodes</h3>
+        <p>When performing Python calculations, the Capillaries daemon invokes multiple instance of the Python interpreter.</p>
+        <p>
+          The screenshots above were taken from an environment with 8-CPU daemon VM instances, each running 24 worker threads. Therefore, each instance should be able to run up to 24 Python interpreters simultaneously.
+        </p>
+        <p>
+          This was not a problem while the Capillaries sample deployments used Ubuntu instances up to version 24.04, which ships with Python 3.12 by default. Ubuntu 26.04 introduces Python 3.14, and there are reports that the memory consumption model changed in Python 3.13, causing higher memory usage in some scenarios compared to Python 3.12.
+        </p>
+        <p>Running</p>
+        <pre style="font-family:monospace;color: gray;">journalctl -k | grep -i "oom"</pre>
+        <p>on the instance with a failed Capillaries daemon shows:</p>
+        <pre style="font-family:monospace;color: gray;">
+May 18 23:47:07 ip-10-5-0-101 kernel: python3 invoked oom-killer: gfp_mask=0x440dc0(GFP_KERNEL_ACCOUNT|__GFP_ZERO|_>
+May 18 23:47:07 ip-10-5-0-101 kernel: CPU: 5 UID: 1000 PID: 2066 Comm: python3 Not tainted 7.0.0-1004-aws #4-Ubuntu>
+May 18 23:47:07 ip-10-5-0-101 kernel: Hardware name: Amazon EC2 c7g.2xlarge/, BIOS 1.0 11/1/2018
+...
+May 18 23:47:07 ip-10-5-0-101 kernel: Out of memory: Killed process 1854 (capidaemon) total-vm:14825832kB, anon-rss></pre>
+        <p>This basically indicates that both the Python interpreter and the Capillaries daemon were terminated because of an OOM condition.</p>
+        <p>
+          The portfolio calculations used in this example should not require a large amount of memory,
+          so the data size itself should not matter significantly. To ensure that each Python interpreter
+          handled only 200 rows at a time instead of the default 1000, I temporarily changed the <i>rowset_size</i> setting
+          from 1000 to 200 in <i>test/data/cfg/portfolio/script_big.json</i>:</p>
+        <pre style="font-family:monospace;color: green;">
+"4_calc_account_period_perf": {
+    "type": "table_custom_tfm_table",
+    "custom_proc_type": "py_calc",
+    "desc": "Apply Python-based calculations to account holdings and txns",
+    "max_batch_processing_time": 120000,
+    "r": {
+        "table": "account_period_activity",
+        "rowset_size": 1000,
+        "expected_batches_total": 500
+    },
+    ...
+}</pre>
+        <p>That did not help - OOM errors continued to occur. Apparently, the problem was the Python runtime itself.</p>
+        <p>In the latest deploy scripts, Terraform scripts that provision Ubuntu 26.04 Capillaries daemon instances explicitly <strong>install Python 3.12
+          and configure Capillaries daemons to use it</strong> via the <i>CAPI_PYCALC_INTERPRETER_PATH</i> environment variable. The OOM errors are gone.</p>
+      </div>
+    </div>
+
+    <div class=" footer">
+      <p>&copy;
+        <script type="text/javascript">document.write("2022-" + new Date().getFullYear());</script>
+        capillaries.io
+      </p>
+    </div>
+
+  </div>
+</body>
+
+</html>
