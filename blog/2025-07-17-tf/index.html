@@ -11,7 +11,7 @@
 
     gtag('config', 'G-HQ9863ZP35');
   </script>
-  <title>Capillaries blog: run profiles - worker threads or writers?</title>
+  <title>Capillaries blog: Terraform deployment, scalability updates, and thread parameters</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
@@ -1269,6 +1269,82 @@ output_total_ec2_hourly_cost                = "$14.004500/hr"
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <div class="row no-gutters">
+          <table class="table text-right" style="font-size:smaller">
+            <thead>
+              <th>Deployment flavor</th>
+              <th>Cassandra node cores</th>
+              <th>Cassandra nodes</th>
+              <th>Run time, s</th>
+              <th>Cost of run</th>
+            </thead>
+            <tbody>
+              <tr class="color8">
+                <td rowspan="4" style="vertical-align: middle;">aws.arm64.c7g.8</td>
+                <td rowspan="4" style="vertical-align: middle; text-align:center;">8</td>
+                <td>4</td>
+                <td>976</td>
+                <td>$0.49</td>
+              </tr>
+              <tr class="color8">
+                <td>8</td>
+                <td>578</td>
+                <td>$0.57</td>
+              </tr>
+              <tr class="color8">
+                <td>16</td>
+                <td>296</td>
+                <td>$0.58</td>
+              </tr>
+              <tr class="color8">
+                <td>32</td>
+                <td>198</td>
+                <td>$0.77</td>
+              </tr>
+              <tr class="color16">
+                <td rowspan="3" style="vertical-align: middle;">aws.arm64.c7g.16</td>
+                <td rowspan="3" style="vertical-align: middle; text-align:center;">16</td>
+                <td>4</td>
+                <td>503</td>
+                <td>$0.50</td>
+              </tr>
+              <tr class="color16">
+                <td>8</td>
+                <td>275</td>
+                <td>$0.54</td>
+              </tr>
+              <tr class="color16">
+                <td>16</td>
+                <td>176</td>
+                <td>$0.68</td>
+              </tr>
+              <tr class="color32">
+                <td rowspan="2" style="vertical-align: middle;">aws.arm64.c7g.32</td>
+                <td rowspan="2" style="vertical-align: middle; text-align:center;">32</td>
+                <td>4</td>
+                <td>270</td>
+                <td>$0.53</td>
+              </tr>
+              <tr class="color32">
+                <td>8</td>
+                <td>176</td>
+                <td>$0.68</td>
+              </tr>
+              <tr class="color64">
+                <td rowspan="1" style="vertical-align: middle;">aws.arm64.c7g.64</td>
+                <td rowspan="1" style="vertical-align: middle; text-align:center;">64</td>
+                <td>4</td>
+                <td>209</td>
+                <td>$0.81</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

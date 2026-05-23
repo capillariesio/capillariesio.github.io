@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HQ9863ZP35"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-HQ9863ZP35');
+  </script>
+  <title>Capillaries blog:  AMQP 1.0, scalability update</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+  <link href="../../css/color.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="../index.html"><img src="../../i/logo.svg" alt="Capillaries logo"
+          style="width:20px;margin-right:10px;margin-bottom:5px;">Capillaries: notes</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="../index.html">Blog home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="https://github.com/capillariesio/capillaries">Source code</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <div class="row mt-4 mb-4">
+      <div class="col-9">
+        <h4>2026-05-22</h4>
+        <h2>Capillaries: AMQP 1.0, scalability update</h2>
+        <p>Notable changes since the <a href="../2025-07-17-tf/index.html">last scalability testing round</a>:
+        </p>
+        <ul>
+          <li>AMQP 1.0 support, Capillaries was tested with:
+            <ul>
+              <li>RabbitMQ 4.3.0</li>
+              <li>ActiveMQ Classic 6.2.5</li>
+              <li>ActiveMQ Artemis 2.53.0</li>
+            </ul>
+          </li>
+          <li>more conservative Cassandra LWT use to avoid contention errors (tested with Cassandra 5.0.8)</li>
+          <li>sample deployment now uses Ubuntu 26.04</li>
+        </ul>
+        <p>And it's time for the traditional scalability check-up, like in <a href="../2025-07-17-tf/index.html">2025</a>, and in <a href="../2024-08-10-scaleup-scaleout/index.html">2024</a>.
+          As usual, the <a href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md">portfolio test</a> was used
+          (996 <a href="../2023-04-08-portfolio/index.html">ARK-inspired</a> stock portfolios with 14,683,696 transactions and 713,800 end-of-month holding records). </p>
+      </div>
+      <div class="col-3">
+        <img src="./i/amqp-log.svg" class="img-fluid" />
+      </div>
+    </div>
+
+    <div class="row">
+      <table class="table table-striped text-right" style="font-size:smaller">
+        <thead>
+          <th class="text-center">Deployment flavor</th>
+          <th class="text-center" colspan="3">AWS instance</th>
+          <th class="text-center" colspan="2">4 Cassandra nodes</th>
+          <th class="text-center" colspan="2">8 Cassandra nodes</th>
+          <th class="text-center" colspan="2">16 Cassandra nodes</th>
+          <th class="text-center" colspan="2">32 Cassandra nodes</th>
+        </thead>
+        <thead>
+          <th class="text-right"></th>
+          <th class="text-right">Cassandra</th>
+          <th class="text-right">Daemon</th>
+          <th class="text-right">Bastion/RabbitMQ/Prometheus</th>
+          <th class="text-right">Total cores</th>
+          <th class="text-right">Hourly cost</th>
+          <th class="text-right">Total cores</th>
+          <th class="text-right">Hourly cost</th>
+          <th class="text-right">Total cores</th>
+          <th class="text-right">Hourly cost</th>
+          <th class="text-right">Total cores</th>
+          <th class="text-right">Hourly cost</th>
+        </thead>
+        <tbody>
+          <tr class="color8">
+            <td>aws.arm64.c7g.8</td>
+            <td>c7gd.2xlarge</td>
+            <td>c7g.large</td>
+            <td>c7g.large</td>
+            <td>42</td>
+            <td>$1.8141</td>
+            <td>82</td>
+            <td>$3.5557</td>
+            <td>162</td>
+            <td>$7.0389</td>
+            <td>322</td>
+            <td>$14.0053</td>
+          </tr>
+          <tr class="color16">
+            <td>aws.arm64.c7g.16</td>
+            <td>c7gd.4xlarge</td>
+            <td>c7g.xlarge</td>
+            <td>c7g.large</td>
+            <td>82</td>
+            <td>$3.5557</td>
+            <td>162</td>
+            <td>$7.0389</td>
+            <td>322</td>
+            <td>$14.0053</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="color32">
+            <td>aws.arm64.c7g.32</td>
+            <td>c7gd.8xlarge</td>
+            <td>c7g.2xlarge</td>
+            <td>c7g.large</td>
+            <td>162</td>
+            <td>$7.0385</td>
+            <td>322</td>
+            <td>$14.0045</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="color64">
+            <td>aws.arm64.c7g.64</td>
+            <td>c7gd.16xlarge</td>
+            <td>c7g.4xlarge</td>
+            <td>c7g.large</td>
+            <td>322</td>
+            <td>$14.0045</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <div class="row no-gutters">
+          <table class="table text-right" style="font-size:smaller">
+            <thead>
+              <th>Deployment flavor</th>
+              <th>Cassandra node cores</th>
+              <th>Cassandra nodes</th>
+              <th>Run time, s</th>
+              <th>Cost of run</th>
+            </thead>
+            <tbody>
+              <tr class="color8">
+                <td rowspan="4" style="vertical-align: middle;">aws.arm64.c7g.8</td>
+                <td rowspan="4" style="vertical-align: middle; text-align:center;">8</td>
+                <td>4</td>
+                <td>903</td>
+                <td>$0.46</td>
+              </tr>
+              <tr class="color8">
+                <td>8</td>
+                <td>497</td>
+                <td>$0.49</td>
+              </tr>
+              <tr class="color8">
+                <td>16</td>
+                <td>298</td>
+                <td>$0.58</td>
+              </tr>
+              <tr class="color8">
+                <td>32</td>
+                <td>182</td>
+                <td>$0.71</td>
+              </tr>
+              <tr class="color16">
+                <td rowspan="3" style="vertical-align: middle;">aws.arm64.c7g.16</td>
+                <td rowspan="3" style="vertical-align: middle; text-align:center;">16</td>
+                <td>4</td>
+                <td>441</td>
+                <td>$0.44</td>
+              </tr>
+              <tr class="color16">
+                <td>8</td>
+                <td>248</td>
+                <td>$0.48</td>
+              </tr>
+              <tr class="color16">
+                <td>16</td>
+                <td>160</td>
+                <td>$0.62</td>
+              </tr>
+              <tr class="color32">
+                <td rowspan="2" style="vertical-align: middle;">aws.arm64.c7g.32</td>
+                <td rowspan="2" style="vertical-align: middle; text-align:center;">32</td>
+                <td>4</td>
+                <td>259</td>
+                <td>$0.51</td>
+              </tr>
+              <tr class="color32">
+                <td>8</td>
+                <td>144</td>
+                <td>$0.56</td>
+              </tr>
+              <tr class="color64">
+                <td rowspan="1" style="vertical-align: middle;">aws.arm64.c7g.64</td>
+                <td rowspan="1" style="vertical-align: middle; text-align:center;">64</td>
+                <td>4</td>
+                <td>151</td>
+                <td>$0.59</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <img src="./i/time-and-cost.png" class="img-fluid" />
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <p>While overall performance numbers show some improvement (probably, thanks to the Cassandra LWT-related changes), scalability patterns remain largely <a href="../2025-07-17-tf/index.html">unchanged</a>.</p>
+      </div>
+    </div>
+
+    <div class=" footer">
+      <p>&copy;
+        <script type="text/javascript">document.write("2022-" + new Date().getFullYear());</script>
+        capillaries.io
+      </p>
+    </div>
+
+  </div>
+</body>
+
+</html>
