@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HQ9863ZP35"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-HQ9863ZP35');
+  </script>
+  <title>Capillaries blog: AMQP 1.0, scalability update</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+  <link href="../../css/color.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="../index.html"><img src="../../i/logo.svg" alt="Capillaries logo"
+          style="width:20px;margin-right:10px;margin-bottom:5px;">Capillaries: notes</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="../index.html">Blog home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="https://github.com/capillariesio/capillaries">Source code</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <div class="row mt-4 mb-4">
+      <div class="col-9">
+        <h4>2026-06-04</h4>
+        <h2>Capillaries: built with SLAs in mind</h2>
+        <p>Every IT manager’s secret dream: every SLA issue turns out to be “we just need more hardware.” No root-cause
+          analysis, no war rooms, no heroic debugging sessions at 3 in the morning - just add servers and watch the
+          graphs calm down.
+          Capillaries was built with exactly that fantasy in mind.
+        </p>
+        <p>
+          Picture this: you’ve got a critical data processing job running every hour/day/month, and it absolutely must
+          finish within a strict time window. But the data keeps growing a little with every run, and suddenly your
+          comfortable safety margin starts looking more like a countdown timer.
+        </p>
+        <p>
+          Now imagine being able to fix the problem the easy way: spin up a couple more servers, lean back in your
+          chair, and watch the processing times drop back into the green. That’s the kind of operational happiness
+          Capillaries aims for. <strong>Just add more daemon instances and Cassandra nodes.</strong>
+        </p>
+      </div>
+      <div class="col-3">
+        <img src="./i/sla-clock.svg" class="img-fluid" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>It's all about process and consistency</h3>
+        <p>Capillaries is not a data exploration tool. It’s a workhorse. It shows up every day, does the same repetitive
+          heavy lifting, and doesn’t complain about it. As long as the incoming data keeps following familiar patterns,
+          Capillaries keeps delivering results with boringly predictable performance - which, in infrastructure terms,
+          is about as close to happiness as it gets.</p>
+        <p>The best part: Capillaries daemon instances don’t need to coordinate their efforts.
+          Daemon workers simply pull small pieces of work (<a
+            href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#data-batch">batches</a>) from
+          the <a
+            href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#message-queue-setup">message
+            queue</a>, read the source data,
+          process it, save the results to <a
+            href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#cassandra-setup">Cassandra</a>,
+          and mark the batch as complete.
+        </p>
+        <p>
+          Once an entire Capillaries <a
+            href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#script">script</a> <a
+            href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#script-node">node</a> (a data
+          processing step) is finished, the worker marks the node as
+          complete. When all nodes in the script are complete, the whole <a
+            href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#run">run</a> - the entire job -
+          is marked as done.
+          In other words, the orchestration is handled by message queue and Cassandra. That duo quietly keeps everything
+          moving forward and guarantees eventual job consistency. </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>Linear scalability?</h3>
+        <p>
+          Unlikely. True linear scalability is incredibly rare in distributed systems. It’s basically the unicorn of
+          infrastructure engineering: everybody talks about it, but actually finding it is close to impossible.
+          Capillaries performance <a href="../2026-05-22-updates/index.html">measurements</a> paint a more realistic
+          picture - something much closer to logarithmic scalability.</p>
+
+        <p>Still, those measurements are extremely useful when you want to predict the performance of a cluster with,
+          say, twice as many daemon instances and Cassandra nodes.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>Performance numbers?</h3>
+        <p>
+          If you are into Cassandra reads/writes and memory/CPU stats, check out <a href="../2025-07-17-tf/index.html">scalability numbers for specific AWS EC2 deployments</a> with Prometheus graphs. </p>
+      </div>
+    </div>
+
+    <div class=" footer">
+      <p>&copy;
+        <script type="text/javascript">document.write("2022-" + new Date().getFullYear());</script>
+        capillaries.io
+      </p>
+    </div>
+
+  </div>
+</body>
+
+</html>

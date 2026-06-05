@@ -11,7 +11,7 @@
 
     gtag('config', 'G-HQ9863ZP35');
   </script>
-  <title>Capillaries blog:  AMQP 1.0, scalability update</title>
+  <title>Capillaries blog: AMQP 1.0, scalability update</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
@@ -64,12 +64,23 @@
           <li>more conservative Cassandra LWT use to avoid contention errors (tested with Cassandra 5.0.8)</li>
           <li>sample deployment now uses Ubuntu 26.04</li>
         </ul>
-        <p>And it's time for the traditional scalability check-up, like in <a href="../2025-07-17-tf/index.html">2025</a>, and in <a href="../2024-08-10-scaleup-scaleout/index.html">2024</a>.
-          As usual, the <a href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md">portfolio test</a> was used
-          (996 <a href="../2023-04-08-portfolio/index.html">ARK-inspired</a> stock portfolios with 14,683,696 transactions and 713,800 end-of-month holding records). </p>
       </div>
       <div class="col-3">
         <img src="./i/amqp-log.svg" class="img-fluid" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>Scalability testing results</h3>
+        <p>And it's time for the traditional scalability check-up, like in <a
+            href="../2025-07-17-tf/index.html">2025</a>, and in <a
+            href="../2024-08-10-scaleup-scaleout/index.html">2024</a>.
+          As usual, the <a
+            href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md">portfolio
+            test</a> was used
+          (996 <a href="../2023-04-08-portfolio/index.html">ARK-inspired</a> stock portfolios with 14,683,696
+          transactions and 713,800 end-of-month holding records). </p>
       </div>
     </div>
 
@@ -235,15 +246,128 @@
     </div>
 
     <div class="row">
+      <div class="col-12">
+        <p>As usual: colors (green, orange, red, black) - to scale up, number of Cassandra nodes (4, 8, 16, 32) - to
+          scale out.</p>
+      </div>
+    </div>
+
+    <div class="row">
       <img src="./i/time-and-cost.png" class="img-fluid" />
     </div>
 
     <div class="row">
       <div class="col-12">
-        <p>While overall performance numbers show some improvement (probably, thanks to the Cassandra LWT-related changes), scalability patterns remain largely <a href="../2025-07-17-tf/index.html">unchanged</a>.</p>
+        <p>While overall performance numbers show some improvement (probably, thanks to the Cassandra LWT-related
+          changes), scalability patterns remain largely <a href="../2025-07-17-tf/index.html">unchanged</a>.</p>
       </div>
     </div>
 
+    <div class="row">
+      <div class="col-12">
+        <h3>The story behind AMQP 1.0</h3>
+        <p>Some considerations when choosing a message queue engine for Capillaries.</p>
+
+        <h4>Exactly-once message delivery</h4>
+
+        <p>This is what we want, ideally. Unfortunately, exactly-once delivery is not a solved problem in the general
+          case, and components that perform actual data processing must be prepared to handle duplicate deliveries and
+          processing component crashes. Minimizing those cases is a good enough goal.</p>
+
+        <h4>Reasonably low latency</h4>
+
+        <p>This one is easy - no real-time updates are required.
+          Just make sure data processing components do not sit idle for too long. Capillaries is all about efficient
+          resource utilization.</p>
+
+        <h4>Standard communication protocol</h4>
+
+        <p>To minimize vendor lock-in, support a protocol rather than a specific message broker.</p>
+
+        <h4>Small messages</h4>
+
+        <p>Capillaries does not pass processed data through the message broker. Messages are therefore almost guaranteed
+          to be smaller than 2 KB.</p>
+
+        <h4>Queue capacity</h4>
+
+        <p>A Capillaries data processing node can be split into 100, 1000, or even more batches. A useful Capillaries
+          run will rarely contain more than 20 nodes. A powerful Capillaries deployment could probably handle 100 runs
+          simultaneously.</p>
+
+        <p>Each batch requires exactly one message, which means the system may contain up to:</p>
+
+        <p>1,000 x 20 x 100 = 2,000,000</p>
+
+        <p>messages at any given moment.</p>
+
+        <h4>Deleyed redelivery</h4>
+
+        <p>Capillaries assumes retries are essential. Common scenarios include failed data processing components or
+          messages delivered when a node is not yet ready to be processed because its dependency nodes have not
+          completed.</p>
+
+        <p>Retry delays must be configurable either globally in the message broker or individually for each returned
+          message.</p>
+
+        <h4>High availability</h4>
+
+        <p>Some users cannot afford to re-run part of a Capillaries script simply because the message broker was
+          unavailable for five minutes. Those users are willing to pay for sophisticated clustered broker solutions with
+          strong availability guarantees and a solid reputation.</p>
+
+        <h4>Platform support</h4>
+
+        <p>For on-premises deployments, the message broker should support both amd64 and arm64 Linux environments,
+          whether running in Docker containers or virtual machines.</p>
+
+        <h4>And the winner is...</h4>
+
+        <p>AMQP 0.9.1 was a solid choice for many years, but the industry appears to be gradually moving toward <a
+            href="https://www.amqp.org>">AMQP
+            1.0</a>.</p>
+
+        <p>The requirements above practically have "AMQP 1.0" written all over them.</p>
+
+        <p>An up-to-date list of AMQP brokers is maintained at <a
+            href="https://github.com/xinchen10/awesome-amqp?tab=readme-ov-file#brokers">https://github.com/xinchen10/awesome-amqp</a>.
+        </p>
+
+        <p>Among the current leaders are:</p>
+
+        <p>On-premises offerings:</p>
+        <ul>
+          <li>RabbitMQ 4 (maintained by developers at Broadcom)</li>
+          <li>Apache ActiveMQ Artemis (maintained by developers at IBM and RedHat)</li>
+          <li>Apache ActiveMQ Classic (maintained by developers at Talend)</li>
+        </ul>
+
+        <p>Cloud offerings:</p>
+        <ul>
+          <li>Azure Service Bus (although it does not support delayed redelivery)</li>
+          <li>Amazon MQ (using either ActiveMQ Classic or RabbitMQ under the hood)</li>
+          <li>nothing in GCP?</li>
+        </ul>
+
+        <p>Now, with AMQP 1.0 as the protocol of choice, which broker should be used for local development and testing?
+        </p>
+
+        <p>As of today, Capillaries has been successfully tested with RabbitMQ 4, ActiveMQ Classic, and ActiveMQ
+          Artemis.</p>
+
+        <p>At the moment, ActiveMQ Artemis is the primary choice because it feels like a cleaner, more modern successor
+          to Classic—with less legacy code and a simpler configuration model.</p>
+
+        <p>All three options require different server-side configurations for redelivery delays, as well as minor
+          client-side differences (for example, Release vs. Reject semantics).</p>
+
+        <p>As for cloud-based production deployments, Capillaries <strong>should</strong> work with both Amazon MQ
+          flavors.
+          It will <strong>not</strong> work with Azure Service Bus's AMQP 1.0 implementation until delayed redelivery is
+          supported on the
+          server side.</p>
+      </div>
+    </div>
     <div class=" footer">
       <p>&copy;
         <script type="text/javascript">document.write("2022-" + new Date().getFullYear());</script>

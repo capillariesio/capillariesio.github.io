@@ -59,8 +59,7 @@
         <h3>Scalability numbers</h3>
         <p>
           The <a href="https://github.com/capillariesio/capillaries-deploy">capillaries-deploy</a> project has been put
-          on hold, <a
-            href="https://github.com/capillariesio/capillaries/tree/main/deploy">Terraform</a> is
+          on hold, <a href="https://github.com/capillariesio/capillaries/tree/main/deploy">Terraform</a> is
           now the preferred tool for testing Capillaries deployments.
           Another round of scalability testing was performed. As before, we use setups where:
         </p>
@@ -83,12 +82,18 @@
             pattern analysis easier</li>
           <li>the GOMEMLIMIT environment variable is now set to prevent OOM errors in high-load scenarios</li>
         </ul>
-        <p>As <a href="https://capillaries.io/blog/2024-08-10-scaleup-scaleout/index.html">before</a>, <a
-            href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md">portfolio
-            test</a> is used for performance benchmarking. The updated results are presented below.</p>
       </div>
       <div class="col-3">
         <img src="./i/many-old-pcs.png" class="img-fluid" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <p>As <a href="https://capillaries.io/blog/2024-08-10-scaleup-scaleout/index.html">before</a>, <a
+            href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md">portfolio
+            test</a> (996 <a href="../2023-04-08-portfolio/index.html">ARK-inspired</a> stock portfolios with 14,683,696
+          transactions and 713,800 end-of-month holding records) is used for performance benchmarking. The updated
+          results are presented below.</p>
       </div>
     </div>
 
@@ -1372,9 +1377,12 @@ output_total_ec2_hourly_cost                = "$14.004500/hr"
           Cassandra
           cluster can handle". Let's examine a typical CPU usage pattern observed in a low-end VM setup.</p>
         <div style="position:relative; top:0;left:0;padding:0;">
-          <img src="./i/s/c7g.8/4/01-cpu.png" style="position: relative; top: 0; left: 0; border: 0px;max-width:100%;height:auto;"/>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1825 625" width="100%" style="position: absolute; top: 0; left: 0; border: 0px;max-width:100%;height:auto;">
-            <text x="400" y="400" fill="red" text-anchor="middle" alignment-baseline="hanging" style="font: 48px sans-serif;">Cassandra dip</text>/>
+          <img src="./i/s/c7g.8/4/01-cpu.png"
+            style="position: relative; top: 0; left: 0; border: 0px;max-width:100%;height:auto;" />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1825 625" width="100%"
+            style="position: absolute; top: 0; left: 0; border: 0px;max-width:100%;height:auto;">
+            <text x="400" y="400" fill="red" text-anchor="middle" alignment-baseline="hanging"
+              style="font: 48px sans-serif;">Cassandra dip</text>/>
           </svg>
         </div>
         <p>There are clearly three zones in this CPU usage pattern:</p>
@@ -1427,7 +1435,8 @@ output_total_ec2_hourly_cost = "$1.814100/hr"
     <div class="row">
       <div class="col-12">
         <h3 id="the-cassandra-dip">The "Cassandra dip"</h3>
-        <p>There is a noticeable dip starting around 2.05am in Cassandra CPU usage at the start of the "load" phase. My theory is that the
+        <p>There is a noticeable dip starting around 2.05am in Cassandra CPU usage at the start of the "load" phase. My
+          theory is that the
           start of the dip <strong>marks the moment when Capillaries daemon garbage collector kicks in</strong>
           consuming CPU cycles that would otherwise support Cassandra writes. This Prometheus metric -
           <i>"100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) +
@@ -1441,16 +1450,21 @@ output_total_ec2_hourly_cost = "$1.814100/hr"
           sense for performance testing.</p>
       </div>
       <p>
-        Another sign of GC starting to actively release memory on daemon instances - batch processing time increase, see Capillaries node batch history view:
+        Another sign of GC starting to actively release memory on daemon instances - batch processing time increase, see
+        Capillaries node batch history view:
       </p>
       <div style="position:relative; top:0;left:0;padding:0;">
-        <img src="./i/hitting-memory-limit-gc-kicks-in.png" style="position: relative; top: 0; left: 0; border: 0px;max-width:100%;height:auto;"/>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1259 902" width="100%" style="position: absolute; top: 0; left: 0; border: 0px;max-width:100%;height:auto;">
-          <path d="M660,500 L 820,370" stroke="red" stroke-width="5" stroke-linecap="round"/>
-          <text x="820" y="320" fill="red" text-anchor="middle" alignment-baseline="hanging" style="font: 36px sans-serif;">Batches take longer in Cassandra dip</text>/>
+        <img src="./i/hitting-memory-limit-gc-kicks-in.png"
+          style="position: relative; top: 0; left: 0; border: 0px;max-width:100%;height:auto;" />
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1259 902" width="100%"
+          style="position: absolute; top: 0; left: 0; border: 0px;max-width:100%;height:auto;">
+          <path d="M660,500 L 820,370" stroke="red" stroke-width="5" stroke-linecap="round" />
+          <text x="820" y="320" fill="red" text-anchor="middle" alignment-baseline="hanging"
+            style="font: 36px sans-serif;">Batches take longer in Cassandra dip</text>/>
         </svg>
       </div>
-      <p> As daemon memory consumption stabilizes on the plateau, Cassandra CPU usage picks up and batch processing time goes back to smaller values.</p>
+      <p> As daemon memory consumption stabilizes on the plateau, Cassandra CPU usage picks up and batch processing time
+        goes back to smaller values.</p>
     </div>
 
     <div class="row">
