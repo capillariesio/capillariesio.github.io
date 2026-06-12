@@ -51,27 +51,57 @@
 
 		<div class="row mt-3">
 			<div class="col-3">
-				<a href="./2026-06-04-sla/index.html"><img src="./2026-06-04-sla/i/sla-clock.svg" width="100%" alt=""></a>
+				<a href="./2026-06-15-multi-run/index.html"><img src="./2026-06-15-multi-run/i/title-multi-single.svg"
+						width="100%" alt=""></a>
 			</div>
 			<div class="col-9">
-				<h4>2026-06-04</h4>
-				<h3>Capillaries: built with SLAs in mind</h3>
-        <p>Every IT manager’s secret dream: every SLA issue turns out to be “we just need more hardware.” No root-cause
-          analysis, no war rooms, no heroic debugging sessions at 3 in the morning — just add servers and watch the
-          graphs calm down.
-          Capillaries was built with exactly that fantasy in mind.
-        </p>
-        <p>
-          Picture this: you’ve got a critical data processing job running every hour/day/month, and it absolutely must
-          finish within a strict time window. But the data keeps growing a little with every run, and suddenly your
-          comfortable safety margin starts looking more like a countdown timer. <a href="./2026-06-04-sla/index.html">Read more...</a>
-        </p>
+				<h4>2026-06-15</h4>
+				<h3>Capillaries: single-run vs multi-run scripts</h3>
+				<p>Run is one of the Capillaries cornerstones. In simple terms, a run is the process of executing one or multiple script nodes
+					without any intervention from the operator or other external actors. Simple Capillaries scripts may	use only
+					one run. In this case, the message queue is populated with messages that instruct Capillaries to process all nodes in the script.
+				</p>
+				<p>Sometimes it makes sense. But in other cases, this approach puts unnecessary stress on Capillaries
+					daemons, which are asked to process nodes that are not ready yet. You can call it <i>message pollution</i> -
+					the same message has to be retried again and again until the node it targets becomes ready for processing.
+				</p>
+				<p>
+					Let's see how bad this pollution can get and what we can do about it. <a
+						href="./2026-06-15-multi-run/index.html">Read more...</a>
+				</p>
 			</div>
 		</div>
 
 		<div class="row mt-3">
 			<div class="col-3">
-				<a href="./2026-05-22-updates/index.html"><img src="./2026-05-22-updates/i/amqp-log.svg" width="100%" alt=""></a>
+				<a href="./2026-06-04-sla/index.html"><img src="./2026-06-04-sla/i/sla-clock.svg" width="100%"
+						alt=""></a>
+			</div>
+			<div class="col-9">
+				<h4>2026-06-04</h4>
+				<h3>Capillaries: built with SLAs in mind</h3>
+				<p>Every IT manager’s secret dream: every SLA issue turns out to be “we just need more hardware.” No
+					root-cause
+					analysis, no war rooms, no heroic debugging sessions at 3 in the morning - just add servers and
+					watch the
+					graphs calm down.
+					Capillaries was built with exactly that fantasy in mind.
+				</p>
+				<p>
+					Picture this: you’ve got a critical data processing job running every hour/day/month, and it
+					absolutely must
+					finish within a strict time window. But the data keeps growing a little with every run, and suddenly
+					your
+					comfortable safety margin starts looking more like a countdown timer. <a
+						href="./2026-06-04-sla/index.html">Read more...</a>
+				</p>
+			</div>
+		</div>
+
+		<div class="row mt-3">
+			<div class="col-3">
+				<a href="./2026-05-22-updates/index.html"><img src="./2026-05-22-updates/i/amqp-log.svg" width="100%"
+						alt=""></a>
 			</div>
 			<div class="col-9">
 				<h4>2026-05-22</h4>
@@ -79,39 +109,43 @@
 				<p>Notable changes since the last scalability testing round:
 				</p>
 				<ul>
-				<li>AMQP 1.0 support, Capillaries was tested with:
-					<ul>
-					<li>RabbitMQ 4.3.0</li>
-					<li>ActiveMQ Classic 6.2.5</li>
-					<li>ActiveMQ Artemis 2.53.0</li>
-					</ul>
-				</li>
-				<li>more conservative Cassandra LWT use to avoid contention errors (tested with Cassandra 5.0.8)</li>
-				<li>sample deployment now uses Ubuntu 26.04</li>
+					<li>AMQP 1.0 support, Capillaries was tested with:
+						<ul>
+							<li>RabbitMQ 4.3.0</li>
+							<li>ActiveMQ Classic 6.2.5</li>
+							<li>ActiveMQ Artemis 2.53.0</li>
+						</ul>
+					</li>
+					<li>more conservative Cassandra LWT use to avoid contention errors (tested with Cassandra 5.0.8)
+					</li>
+					<li>sample deployment now uses Ubuntu 26.04</li>
 				</ul>
-				<p>And it's time for the traditional scalability check-up, <a href="./2026-05-22-updates/index.html">read more...</a> </p>
+				<p>And it's time for the traditional scalability check-up, <a
+						href="./2026-05-22-updates/index.html">read more...</a> </p>
 			</div>
 		</div>
 
 		<div class="row mt-3">
 			<div class="col-3">
-				<a href="./2026-05-20-oom/index.html"><img
-						src="./2026-05-20-oom/i/capillaries-crash.jpg" width="100%" alt=""></a>
+				<a href="./2026-05-20-oom/index.html"><img src="./2026-05-20-oom/i/capillaries-crash.jpg" width="100%"
+						alt=""></a>
 			</div>
 			<div class="col-9">
 				<h4>2026-05-20</h4>
 				<h3>Capillaries: OOM errors</h3>
 				<p>
-				Capillaries should not crash. However, sometimes something like this happens.
+					Capillaries should not crash. However, sometimes something like this happens.
 				</p>
 				<p>Symptoms</p>
 				<p>In this example, two Capillaries daemon instances suddenly stop working,
 					while two other instances acquire the stalled batches and complete the data processing.
 					Before processing the stalled batches, the live daemons leave warnings in the log file
-					and give those stalled batches another chance until the <i>max_batch_processing_time</i> timeout expires:
+					and give those stalled batches another chance until the <i>max_batch_processing_time</i> timeout
+					expires:
 				</p>
-				<pre style="font-family:monospace;color: gray;">"will wait for another 102601ms until 120000ms timeout, some other instance may still be handling this batch"</pre>
-				<p>This is a typical Prometheus view showing statistics from the daemons, Cassandra nodes, and the bastion instance. <a href="./2026-05-20-oom/index.html">Read more...</a></p>
+				<p>"will wait for another 102601ms until 120000ms timeout, some other instance may still be handling this batch"</p>
+				<p>This is a typical Prometheus view showing statistics from the daemons, Cassandra nodes, and the
+					bastion instance. <a href="./2026-05-20-oom/index.html">Read more...</a></p>
 			</div>
 		</div>
 
@@ -143,7 +177,8 @@
 					</i>
 				</p>
 				<p>
-					Capillaries: declarative from the day one. <a href="./2025-08-05-declarative/index.html">Read more...</a>
+					Capillaries: declarative from the day one. <a href="./2025-08-05-declarative/index.html">Read
+						more...</a>
 				</p>
 			</div>
 		</div>

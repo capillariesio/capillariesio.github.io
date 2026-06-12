@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HQ9863ZP35"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-HQ9863ZP35');
+  </script>
+  <title>Capillaries blog: AMQP 1.0, scalability update</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+  <link href="../../css/color.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="../index.html"><img src="../../i/logo.svg" alt="Capillaries logo"
+          style="width:20px;margin-right:10px;margin-bottom:5px;">Capillaries: notes</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="../index.html">Blog home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="https://github.com/capillariesio/capillaries">Source code</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <div class="row mt-4 mb-4">
+      <div class="col-9">
+        <h4>2026-07-01</h4>
+        <h2>Capillaries: single-run vs multi-run scripts</h2>
+        <p><a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#run">Run</a> is one of the
+          Capillaries cornerstones.
+          In simple terms, a run is the process of executing one or multiple <a
+            href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#script">script</a> <a
+            href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#script-node">nodes</a>
+          without any intervention from the operator or other external actors. Simple Capillaries scripts may use only
+          one run.
+          In this case, the <a
+            href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#processor-queue">message
+            queue</a>
+          is populated with messages that instruct Capillaries to process <strong>all</strong> nodes in the script.
+        </p>
+        <p>Sometimes it makes sense. But in other cases, this approach puts unnecessary stress on Capillaries
+          <a href="https://github.com/capillariesio/capillaries/blob/main/doc/glossary.md#daemon">daemons</a>,
+          which are asked to process nodes that are not ready yet. You can call it <i>message pollution</i> -
+          the same message has to be retried again and again until the node it targets becomes ready for processing.
+        </p>
+        <p>Let's see how bad this pollution can get and what we can do about it.</p>
+      </div>
+      <div class="col-3">
+        <img src="./i/title-multi-single.svg" class="img-fluid" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>Single-run script: can Capillaries do better?</h3>
+        <p>Consider this <a
+            href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md">Portfolio
+            integration test</a>, where all nodes are handled in a single run:</p>
+        <img src="./i/runs-one.png" class="img-fluid" style="margin-bottom: 20px" />
+        <p>The CPU load chart shows a pattern like this - some daemon instances are less loaded than their peers.
+          Ideally, we would expect CPU load to be evenly distributed across all instances. This imbalance occurs when
+          daemon instances, instead of performing actual data processing, spend time pulling messages from the queue
+          only to discover that they have arrived too early and must be returned to the queue:</p>
+        <div style="position:relative; top:0;left:0;padding:0;margin-bottom:20px;">
+          <img src="./i/cpu-one.jpg" style="position: relative; top: 0; left: 0; border: 0px;width:100%;height:auto;" />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1030 457" width="100%"
+            style="position: absolute; top: 0; left: 0; border: 0px;max-width:100%;height:auto;">
+            <circle cx="270" cy="280" r="50" stroke="red" fill="none" stroke-width="5" />
+            <circle cx="440" cy="240" r="40" stroke="red" fill="none" stroke-width="5" />
+            <circle cx="370" cy="80" r="50" stroke="red" fill="none" stroke-width="5" />
+            <circle cx="950" cy="250" r="40" stroke="red" fill="none" stroke-width="5" />
+          </svg>
+        </div>
+        <p>If you are new to Capillaries CPU load charts, start with the
+          <a href="../2023-11-15-portfolio-scale/index.html">ARK portfolio performance calculation at (slightly bigger)
+            scale</a> blog post. It explains what the different sections of the chart represent: loading data, joins,
+          Python calculations, and producing summaries.
+        </p>
+        <p>
+          For reference, the Prometheus legend for the chart above is as follows: Cassandra instances have IP addresses
+          ending in 11, 12, 13, and 14; Capillaries instances end in 101, 102, 103, and 104; localhost is the bastion
+          instance.
+        </p>
+        <img src="./i/vms.png" class="img-fluid" style="margin-bottom: 20px" />
+        <p>The chart below shows that, at each processing stage (a colored layer in the diagram), daemon instances
+          receive two kinds of messages from the queue:
+        <ul>
+          <li><i>Relevant messages</i> that can be processed at the current stage (the sum of all batches for the layer,
+            shown in the white arrow annotations).</li>
+          <li><i>Premature messages</i> that target nodes which are not yet ready for processing (the combined totals
+            from subsequent layers).</li>
+        </ul>
+        </p>
+        <p>
+          The red circles on the CPU chart above highlight places where 1,682 premature messages interfere with 1,051
+          relevant messages while Capillaries processes the "01_*"" nodes. Later, 122 premature messages interfere with
+          500 relevant messages as Capillaries finishes processing the "04_calc_account_period_perf" node.
+        </p>
+        <img src="./i/script-one.svg" class="img-fluid" style="margin-bottom: 20px" />
+        <p>
+          The pattern is clear: one unlucky daemon instance pulls a long sequence of premature messages, spends time
+          analyzing them and returning them to the queue, and only then receives the next relevant message. These
+          premature messages create unnecessary overhead and slow down script execution.
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>Multi-run script is the answer</h3>
+        <p>Let's split the script node layers into four separate runs:</p>
+        <img src="./i/runs-multi.png" class="img-fluid" style="margin-bottom: 20px" />
+        <p>
+          The overall execution time is now 465 + 279 + 157 + 44 = 945 seconds, compared to 1,025 seconds before - a
+          promising improvement. The CPU load is also perfectly uniform across all daemon instances:
+        </p>
+        <div style="position:relative; top:0;left:0;padding:0;margin-bottom:20px;">
+          <img src="./i/cpu-multi.jpg"
+            style="position: relative; top: 0; left: 0; border: 0px;width:100%;height:auto;" />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 963 456" width="100%"
+            style="position: absolute; top: 0; left: 0; border: 0px;max-width:100%;height:auto;">
+            <path d="M480,10 L480,446" stroke="red" fill="none" stroke-width="5" stroke-linecap="round" />
+            <path d="M730,10 L730,446" stroke="red" fill="none" stroke-width="5" stroke-linecap="round" />
+            <path d="M880,10 L880,446" stroke="red" fill="none" stroke-width="5" stroke-linecap="round" />
+            <text x="300" y="60" fill="red" text-anchor="middle" alignment-baseline="hanging"
+              style="font: 28px sans-serif;">Run 1</text>/>
+            <text x="610" y="60" fill="red" text-anchor="middle" alignment-baseline="hanging"
+              style="font: 28px sans-serif;">Run 2</text>/>
+            <text x="820" y="60" fill="red" text-anchor="middle" alignment-baseline="hanging"
+              style="font: 28px sans-serif;">Run 3</text>/>
+            <text x="925" y="60" fill="red" text-anchor="middle" alignment-baseline="hanging"
+              style="font: 28px sans-serif;">Run 4</text>/>
+          </svg>
+        </div>
+        <p>And here is the new message breakdown: relevant versus premature messages:</p>
+        <img src="./i/script-multi.svg" class="img-fluid" style="margin-bottom: 20px" />
+        <p>There is no longer any evidence of premature messages interfering with relevant ones.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>Why do we have premature messages in the first place?</h3>
+        <p>
+          Capillaries cannot rely on daemon instances to generate messages for the next processing stage because those
+          instances can fail at any time. Creating all messages for a run in a single step (via the API call or
+          Toolbelt) and letting the message queue handle retries is both simpler and more reliable than implementing a
+          complex orchestration mechanism that manages the lifecycle of every message individually.
+        </p>
+        <p>
+          Consider this a design trade-off.
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>Can we tell the message queue to hold back premature messages?</h3>
+        <p>
+          With AMQP, no.
+        </p>
+        <p>
+          However, we can implement a custom message queue that is smarter than a generic AMQP broker. Capillaries
+          includes an experimental message queue broker called <a
+            href="https://github.com/capillariesio/capillaries/blob/main/pkg/exe/mq/README.md">CapiMQ</a>.
+        </p>
+        <p>
+          CapiMQ understands the internal structure of Capillaries messages - a luxury that standard message brokers do
+          not have. When a message is returned to the queue because its target node is not yet ready, CapiMQ moves all
+          messages for that node to the end of the queue.
+        </p>
+        <p>
+          As of June 2026, CapiMQ is still an experimental component and is not production-ready.
+        </p>
+      </div>
+    </div>
+
+    <div class=" footer">
+      <p>&copy;
+        <script type="text/javascript">document.write("2022-" + new Date().getFullYear());</script>
+        capillaries.io
+      </p>
+    </div>
+
+  </div>
+</body>
+
+</html>
