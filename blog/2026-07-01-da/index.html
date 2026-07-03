@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HQ9863ZP35"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-HQ9863ZP35');
+  </script>
+  <title>Capillaries blog: AMQP 1.0, scalability update</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+  <link href="../../css/color.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="../index.html"><img src="../../i/logo.svg" alt="Capillaries logo"
+          style="width:20px;margin-right:10px;margin-bottom:5px;">Capillaries: notes</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="../index.html">Blog home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="https://github.com/capillariesio/capillaries">Source code</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-12">
+        <h4>2026-07-01</h4>
+        <h2>Capillaries: data acquisition</h2>
+      </div>
+    </div>
+
+    <div class="row mt-4 mb-4">
+      <div class="col-9">
+        <p>What is data acquisition?</p>
+        <p>The classic definition describes data acquisition as the "process of collecting real-world physical
+          information - such as temperature, pressure, sound, or voltage - and converting it into digital data so a computer
+          can analyze, display, and store it."</p>
+        <p>In the context of Capillaries-style batch data processing, we can define data acquisition as the process of
+          obtaining data from outside the Capillaries inputs.</p>
+        <p>Imagine that, halfway through processing a Capillaries script, we realize that we need to add a couple of
+          values to a specific data row - but we have no idea how to calculate them ourselves. We need to obtain those
+          values from an external source.</p>
+        <p>Some may argue that "external data retrieval" is a more appropriate term, since we are retrieving data from
+          external services or datasets. not PLCs or sensors.</p>
+      </div>
+      <div class="col-3">
+        <img src="./i/data-acquisition.jpg" class="img-fluid"
+          alt="A photorealistic photo of an average-aged man in a dark business suit standing on his tiptoes on the wooden chair, stretching his arm up high to reach a book sitting on a very tall wooden shelf among other books. The pair the man stands on is behind a desk with a lot of open books and papers on it. High-key lighting, shallow depth of field, natural bokeh background. Shot like a candid lifestyle photograph. The picture width-hight ratio is 1:1." />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>Why is data acquisition needed?</h3>
+        <h4>Real-time data</h4>
+        <p>This is probably not a common Capillaries use case, but a customer may need a real-time snapshot of some
+          external measurement - for example, the current price of a stock.</p>
+        <h4>The data set is too large to prepare in advance</h4>
+        <p>Capillaries simply cannot preload the entire data domain.
+          To use the analogy from the picture above, the man cannot put every book from the shelf onto his desk - there
+          are simply too many of them.</p>
+        <h4>External calculations</h4>
+        <p>The required values may:</p>
+        <ul>
+          <li>be too complex to implement within the batch-processing infrastructure;</li>
+          <li>depend on proprietary third-party data or algorithms.</li>
+        </ul>
+        </ul>
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>What does Capillaries have to offer?</h3>
+        <p>There are two possible approaches.</p>
+        <h4>1. Call an external API from Python</h4>
+        <p>Pros:</p>
+        <ul>
+          <li>Access to real-time data.</li>
+          <li>No need to wait until all rows have been processed.</li>
+        </ul>
+        <p>Cons:</p>
+        <ul>
+          <li>Chatty communication.</li>
+          <li>Security considerations - exposing an API may be off the table, for example</li>
+        </ul>
+        <h4>2. Use an intermediate file</h4>
+        <p>Prepare all data required for acquisition in a separate data file at the end of a Capillaries run or script.
+          Perform the acquisition using external (non-Capillaries) infrastructure in a scalable manner - for example, by
+          processing batches in parallel - to produce a result file. Then start the next Capillaries run or script using
+          that result file as input.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>Are there any tests to look at?</h3>
+        <p>There are no tests that implement either of these two approaches directly.
+          However, the
+          <a
+            href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/portfolio/py/portfolio_test_eod_price_provider.py">the
+            end-of-day
+            price provider</a> in
+          <a href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md">the Portfolio
+            test</a> is a good candidate for externalization.
+        </p>
+        <p>
+          Notice the hundreds of stock quotes hardcoded in the test. This is acceptable in a test environment, but in a
+          real-world system those values would probably come from an external service that provides the price of a
+          specific stock at a specific date and time.</p>
+
+        <p>For example, under Approach 1, every call to</p>
+
+        <pre>eod_price_provider.get_price(d, ticker)</pre>
+        <p>could invoke an external API.</p>
+        <p></p>
+        <p>Alternatively, under Approach 2, we could:</p>
+        <ul>
+          <li>Create a temporary request file containing ticker symbols and timestamps.</li>
+          <li>Send the file to an external processor that enriches it with stock quotes.</li>
+          <li>Start a Capillaries run that uses the enriched file.</li>
+        </ul>
+        <p>The file might look like this:</p>
+        <table class="table table-striped text-right" style="font-size:smaller">
+          <thead>
+            <th>Ticker</th>
+            <th>Ts</th>
+            <th>Quote (populated by external infrastracture)</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>AMZN</td>
+              <td>2020-10-16-18:02:03.000+0000</td>
+              <td>3272.71</td>
+            </tr>
+            <tr>
+              <td>AMZN</td>
+              <td>2020-10-16-18:02:13.000+0000</td>
+              <td>3271.21</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class=" footer">
+      <p>&copy;
+        <script type="text/javascript">document.write("2022-" + new Date().getFullYear());</script>
+        capillaries.io
+      </p>
+    </div>
+
+  </div>
+</body>
+
+</html>
