@@ -1,0 +1,16 @@
+_10_output_daemon_instances = 4
+_12_output_daemon_cpus = "8 cpus ($0.319040/hr)"
+_13_output_daemon_total_cpus = 32
+_14_output_daemon_memory_gb = "16 GiB"
+_15_output_daemon_gomemlimit_ratio = 0.75
+_16_output_daemon_gomemlimit_mb = "12288 MiB"
+_17_output_daemon_gogc = 25
+_18_output_daemon_thread_pool_size = 16
+_19_output_daemon_writer_workers = 16
+_1A_output_daemon_lookup_key_workers = 6
+_1B_output_daemon_lookup_rowid_workers = 6
+_1C_output_daemon_writers_per_cassandra_cpu = 8
+_20_output_cassandra_hosts = 4
+_21_output_cassandra_cpus = "32 cpus ($1.567680/hr)"
+_23_output_cassandra_total_cpus = 128
+_30_output_total_ec2_hourly_cost = "$7.626640/hr"
