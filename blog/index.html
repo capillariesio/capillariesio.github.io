@@ -51,22 +51,46 @@
 
 		<div class="row mt-3">
 			<div class="col-3">
-				<a href="./2026-07-01-da/index.html"><img src="./2026-07-01-da/i/data-acquisition.jpg"
-						width="100%" alt=""></a>
+				<a href="./2026-10-11-scalability-update/index.html"><img
+						src="./2026-10-11-scalability-update/i/laptops.jpg" width="100%" alt=""></a>
+			</div>
+			<div class="col-9">
+				<h4>2026-10-11</h4>
+				<h3>Capillaries: scalability update</h3>
+				<p>Basic test settings remain the same:
+					number_of_daemons = number_of_cassandra_nodes,
+					Cassandra nodes are 4x as powerful as Capillaries instances,
+					daemon's GOMEMLIMIT is still set to 75%.
+				</p>
+				<p>
+					There have been a few changes since the last scalability update in
+					<a href="./2026-05-22-updates/index.html">May 2026</a>
+					(see also the <a href="./2025-07-17-tf/index.html">Jul 2025</a> update and the original scalability testing back in <a href="./2024-08-10-scaleup-scaleout/index.html">Aug 2024</a>).
+				</p>
+			</div>
+		</div>
+
+		<div class="row mt-3">
+			<div class="col-3">
+				<a href="./2026-07-01-da/index.html"><img src="./2026-07-01-da/i/data-acquisition.jpg" width="100%"
+						alt=""></a>
 			</div>
 			<div class="col-9">
 				<h4>2026-07-01</h4>
 				<h3>Capillaries: data acquisition</h3>
 				<p>What is data acquisition?</p>
-        <p>The classic definition describes data acquisition as the "process of collecting real-world physical
-          information - such as temperature, pressure, sound, or voltage - and converting it into digital data so a computer
-          can analyze, display, and store it."</p>
-        <p>In the context of Capillaries-style batch data processing, we can define data acquisition as the process of
-          obtaining data from outside the Capillaries inputs.</p>
-        <p>Imagine that, halfway through processing a Capillaries script, we realize that we need to add a couple of
-          values to a specific data row - but we have no idea how to calculate them ourselves. We need to obtain those
-          values from an external source. <a
-						href="./2026-07-01-da/index.html">Read more...</a></p>
+				<p>The classic definition describes data acquisition as the "process of collecting real-world physical
+					information - such as temperature, pressure, sound, or voltage - and converting it into digital data
+					so a computer
+					can analyze, display, and store it."</p>
+				<p>In the context of Capillaries-style batch data processing, we can define data acquisition as the
+					process of
+					obtaining data from outside the Capillaries inputs.</p>
+				<p>Imagine that, halfway through processing a Capillaries script, we realize that we need to add a
+					couple of
+					values to a specific data row - but we have no idea how to calculate them ourselves. We need to
+					obtain those
+					values from an external source. <a href="./2026-07-01-da/index.html">Read more...</a></p>
 			</div>
 		</div>
 
@@ -78,13 +102,18 @@
 			<div class="col-9">
 				<h4>2026-06-15</h4>
 				<h3>Capillaries: single-run vs multi-run scripts</h3>
-				<p>Run is one of the Capillaries cornerstones. In simple terms, a run is the process of executing one or multiple script nodes
-					without any intervention from the operator or other external actors. Simple Capillaries scripts may	use only
-					one run. In this case, the message queue is populated with messages that instruct Capillaries to process all nodes in the script.
+				<p>Run is one of the Capillaries cornerstones. In simple terms, a run is the process of executing one or
+					multiple script nodes
+					without any intervention from the operator or other external actors. Simple Capillaries scripts may
+					use only
+					one run. In this case, the message queue is populated with messages that instruct Capillaries to
+					process all nodes in the script.
 				</p>
 				<p>Sometimes it makes sense. But in other cases, this approach puts unnecessary stress on Capillaries
-					daemons, which are asked to process nodes that are not ready yet. You can call it <i>message pollution</i> -
-					the same message has to be retried again and again until the node it targets becomes ready for processing.
+					daemons, which are asked to process nodes that are not ready yet. You can call it <i>message
+						pollution</i> -
+					the same message has to be retried again and again until the node it targets becomes ready for
+					processing.
 				</p>
 				<p>
 					Let's see how bad this pollution can get and what we can do about it. <a
@@ -164,7 +193,8 @@
 					and give those stalled batches another chance until the <i>max_batch_processing_time</i> timeout
 					expires:
 				</p>
-				<p>"will wait for another 102601ms until 120000ms timeout, some other instance may still be handling this batch"</p>
+				<p>"will wait for another 102601ms until 120000ms timeout, some other instance may still be handling
+					this batch"</p>
 				<p>This is a typical Prometheus view showing statistics from the daemons, Cassandra nodes, and the
 					bastion instance. <a href="./2026-05-20-oom/index.html">Read more...</a></p>
 			</div>

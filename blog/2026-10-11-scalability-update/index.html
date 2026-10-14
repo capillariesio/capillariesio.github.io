@@ -11,7 +11,7 @@
 
     gtag('config', 'G-HQ9863ZP35');
   </script>
-  <title>Capillaries blog: Terraform deployment, scalability updates, and thread parameters</title>
+  <title>Capillaries blog: scalability update</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
@@ -48,54 +48,72 @@
   <div class="container">
 
     <div class="row mt-4 mb-4">
-      <div class="col-12">
+      <div class="col-8">
         <h4>2026-10-11</h4>
-        <h2>Capillaries: scalability updates</h2>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-9">
-        <h3>What has changed</h3>
+        <h2>Capillaries: scalability update</h2>
         <p>Basic test settings remain the same:</p>
         <ul>
           <li>number_of_daemons = number_of_cassandra_nodes</li>
-          <li>Cassandra nodes are x4 more powerful than Capillaries instances</li>
-          <li>daemon's GOMEMLIMIT is still at 75%</li>
+          <li>Cassandra nodes are 4x as powerful as Capillaries instances</li>
+          <li>the daemon's GOMEMLIMIT is still set to 75%</li>
         </ul>
-        <p>There were a few changes since the last scalability update in <a href="../2026-05-22-updates/index.html">May
-            2026</a>.</p>
-        </div>
-
-  </div>
-  <div class="row">
-      <div class="col-12">
-  
-        <h4>Lookups with async SELECTs</h4>
-        <p>When handling lookups, Capillaries used "IN" condition in SELECT statements, which is widely considered an
-          anti-pattern. Since version 1.2.2, Capillaries runs multiple async SELECT commands to retrieve index records
-          by key and data records by rowid. As a result, we get a much better use of resources - Cassandra does not have
-          to perform internal read requests and achieve a quorum consensus. The CPU use chart for the lookup nodes
-          handling in the portfolio test looks much better:</p>
-        <img src="./i/async-lookups-before-after.png" class="img-fluid" />
-        <h4>Test deployment changes</h4>
-        <p>For daemons, GOGC=100 setting was replaced with GOGC=25, which gives us a bit more organized picture for the
-          go_memstats_heap_inuse_bytes{job="go_exporter"} Prometheus metric - memory consumption does not jump back and
-          forth as it used to (32 daemons and 32 Cassandra nodes runs, before and after): </p>
-        <img src="./i/gogc-before-after-c8g-8-32.png" class="img-fluid" />
-        <p>More important: daemon_thread_pool_factor setting was switched from 3 to 2.
-          2 worker threads per daemon instance CPU instead of 3. 3 threads turned out to be too aggressive: during
-          py_calc node handling, each thread has to spawn its own copy of Python, and too many python tend to cause <a href="../2026-05-20-oom/index.html">OOM
-          errors</a> (especially starting Python 3.13 with its JIT compiler and no-GIL mode). To compensate, the number of
-          Cassandra writers were slightly increased (see daemon_writer_workers variable).</p>
+        <h3>What has changed</h3>
+        <p>
+          There have been a few changes since the last scalability update in
+          <a href="../2026-05-22-updates/index.html">May 2026</a>
+          (see also the <a href="../2025-07-17-tf/index.html">Jul 2025</a> update and the original scalability testing
+          back in <a href="../2024-08-10-scaleup-scaleout/index.html">Aug 2024</a>).
+        </p>
       </div>
-      <div class="col-3">
-        <img src="./i/many-old-pcs.png" class="img-fluid" />
+      <div class="col-4">
+        <img src="./i/laptops.jpg" class="img-fluid" alt="Laptops in the lab" />
       </div>
     </div>
+
     <div class="row">
       <div class="col-12">
-        <p>As <a href="https://capillaries.top/blog/2024-08-10-scaleup-scaleout/index.html">before</a>, <a
+
+        <h4>Lookups with async SELECTs</h4>
+        <p>When handling lookups, Capillaries used an "IN" condition in SELECT statements, which is widely considered an
+          anti-pattern. Since version 1.2.2, Capillaries has been running multiple async SELECT commands to retrieve
+          index records
+          by key and data records by rowid. As a result, we get much better resource utilization - Cassandra does not
+          have
+          to perform internal read requests. The CPU use chart <strong>100 - (avg by(instance)
+            (rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100)</strong> for the lookup nodes
+          in the portfolio test looks much better: those Cassandra nodes that used to be loaded at 5-10% mark now do
+          some work, and daemons that were in the 10-45% range are now in the 35-70% range:</p>
+        <img src="./i/async-lookups-before-after.png" class="img-fluid" />
+        <p>The Cassandra read metric
+          <strong>sum(irate(cassandra_clientrequest_localrequests_count{clientrequest="Read"}[1m]))</strong> also
+          reflects the change: lookups now perform many more reads against the Cassandra cluster (although now they return
+          only a single data point instead of a group of data points that match those IN conditions):</p>
+        <img src="./i/reads-before-after.png" class="img-fluid" style="max-height:800px;" />
+        <h4>Test deployment changes</h4>
+        <h5>GOGC=25</h5>
+        <p>For daemons, the GOGC=100 setting was replaced with GOGC=25, which gives us a somewhat more stable picture in the
+          <strong>go_memstats_heap_inuse_bytes{job="go_exporter"}</strong> Prometheus metric. Memory consumption does
+          not jump back and
+          forth as it used to. See the following comparison for runs with 32 daemons and 32 Cassandra nodes, before and after:
+        </p>
+        <img src="./i/gogc-before-after-c8g-8-32.png" class="img-fluid" />
+        <h5>Daemon threads per CPU</h5>
+        <p>More importantly: daemon_thread_pool_factor setting was switched from 3 to 2.
+          This means 2 worker threads per daemon instance CPU instead of 3. Three threads turned out to be too aggressive: during
+          py_calc node handling, each thread has to spawn its own copy of Python, and too many Python processes tend to cause <a
+            href="../2026-05-20-oom/index.html">OOM
+            errors</a> (especially with Python 3.13 and up because of new featires like JIT compiler and no-GIL mode). To compensate, the
+          number of
+          Cassandra writers was slightly increased (see the <strong>daemon_writer_workers</strong> variable).</p>
+        <h5>c8g instances</h5>
+        <p>One more change to mention: c7g AWS EC2 instances were replaced with the newer c8g instances.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>Updated test results</h3>
+        <p>As <a href="https://capillaries.top/blog/2024-08-10-scaleup-scaleout/index.html">before</a>, the <a
             href="https://github.com/capillariesio/capillaries/blob/main/test/code/portfolio/README.md">portfolio
             test</a> (996 <a href="../2023-04-08-portfolio/index.html">ARK-inspired</a> stock portfolios with 14,683,696
           transactions and 713,800 end-of-month holding records) is used for performance benchmarking. The updated
@@ -1429,7 +1447,30 @@ _30_output_total_ec2_hourly_cost = "$15.173520/hr"
     </div>
 
     <div class="row">
-      <img src="./i/time-and-cost.png" class="img-fluid" />
+      <div class="col-12">
+        <p>As usual, the colors (green, orange, red, and black) represent scale-up options, while the number of Cassandra nodes (4, 8, 16, and 32) represents scale-out options. It is worth mentioning that the cost per run was reduced by almost half since <a
+            href="../2024-08-10-scaleup-scaleout/index.html">Aug 2024</a>, thanks to:</p>
+        <ul>
+          <li>Capillaries improvements</li>
+          <li>test environment optimization</li>
+          <li>AWS EC2 pricing changes</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <img src="./i/time-and-cost.png" class="img-fluid" style="max-width:1249px;" />
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <p>Those async SELECTs are definitely the way to go.
+          Extra thread pool workers do not seem to help.
+          The GOGC value is really up to the DevOps team.
+          Also, please keep in mind that this time, all queue messages are encrypted by Webapi
+          and decrypted by the daemons (new in Capillaries 1.2.2).
+          This is not expected to add much to the daemon CPU usage, but it brings us closer to the production setup.</p>
+      </div>
     </div>
 
     <div class=" footer">
