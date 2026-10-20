@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HQ9863ZP35"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-HQ9863ZP35');
+  </script>
+  <title>Capillaries blog: security</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+  <link href="../../css/color.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="../index.html"><img src="../../i/logo.svg" alt="Capillaries logo"
+          style="width:20px;margin-right:10px;margin-bottom:5px;">Capillaries: notes</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="../index.html">Blog home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="https://github.com/capillariesio/capillaries">Source code</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <div class="row mt-4 mb-4">
+      <div class="col-9">
+        <h4>2026-10-20</h4>
+        <h2>Capillaries: security</h2>
+        <p>The two most common questions IT managers ask are:</p>
+        <ul>
+          <li>does it scale?</li>
+          <li>is it secure?</li>
+        </ul>
+        <p>
+          We've been trying to address the first question in our series of "scalability updates" posts. Now, let's turn
+          to security.
+        </p>
+        <p>
+          The diagram below shows the major components of a Capillaries
+          deployment and the data flows between them. Capillaries provides some
+          security measures for the communication channels and components marked in <span
+            style="background:lightgray;padding-left:2px;padding-right:2px; padding-bottom: 2px; border-radius: 5px;; ">gray</span>.
+        </p>
+      </div>
+      <div class="col-3">
+        <img src="./i/miss-marple-security.jpg" class="img-fluid" alt="Ms. Jane Marple is watching" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12" style="text-align:center;">
+        <img src="./i/security-data-flow.svg" class="img-fluid" style="max-width:800px;" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>1: Access to Capillaries scripts, Python formulas and data files</h3>
+        <p>Capillaries components access scripts, Python formulas and data files via S3, HTTPS, SFTP, NFS protocols.
+          Deployment engineers can:
+        </p>
+        <ul>
+          <li>specify the list of allowed protocols</li>
+          <li>allow or prohibit access to hosts on private networks</li>
+          <li>specify allowed file URL prefixes</li>
+        </ul>
+        <p>
+          These policies help mitigate SSRF (Server-Side Request Forgery) attacks, in which bad actors replace URLs of
+          script files in messages delivered through the message queue, or URLs of data and Python files referenced in
+          the scripts.
+        </p>
+        <p>
+          NOTE: Yes, there is a data flow arrow from scripts to Webapi. When starting a run, Webapi/Toolbelt reads the
+          supplied Capillaries script before sending its URL in messages. This is mostly about failing early if
+          something is wrong with the script, so users don't have to troubleshoot Daemons that try to process data
+          according to it.
+        </p>
+        <p>Sample configuration for a Capillaries binary:</p>
+        <pre>
+"access_policy": {
+  "allowed_schemes": ["file", "http", "https", "s3"],
+  "allow_private_hosts": true,
+  "input_paths": [
+    "/var/lib/capillaries/capi_in/",
+    "file:///var/lib/capillaries/capi_cfg/",
+    "https://raw.githubusercontent.com/capillariesio/capillaries/",
+    "s3://capillaries-testbucket/capi_in/",
+    "s3://capillaries-testbucket/capi_cfg/"
+  ],
+  "output_paths": [
+    "/var/lib/capillaries/capi_out/",
+    "s3://capillaries-testbucket/capi_out/"
+  ]
+}
+        </pre>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>2: Message queue protection</h3>
+        <p>
+          Webapi/Toolbelt can sign messages before sending them to the message broker. Daemons reject messages with
+          invalid signatures.
+        </p>
+        <p>
+          Signing helps mitigate the risk of bad actors gaining access to the AMQP 1.0 message broker and sending
+          messages that point to malicious Capillaries script JSON files. As of this writing (Oct 2026), Capillaries
+          implements Ed25519 digital signatures, which provide strong cryptographic security with small keys and fast
+          performance.
+        </p>
+        <p>
+          Here is an example:
+        </p>
+        <p>
+          A signed message envelope with a base64-encoded message body:
+        </p>
+        <pre>
+{
+  "v":1,
+  "alg":"Ed25519",
+  "kid":"dummy-key-do-not-use-in-production-see-msgsig-test-go-for-details",
+  "payload":"eyJ0cyI6MTc5MDIwOTg0NzAzNCwiaWQiOiIwMDAwMDAtYzFkOWNjYjAtMjAwNC00NjkyLTgyOWYtOGY1NjQ4ODNkNTk2Iiwic2NyaXB0X3VybCI6Ii90bXAvY2FwaV9jZmcvbG9va3VwX3F1aWNrdGVzdC9zY3JpcHRfcXVpY2sueWFtbCIsInNjcmlwdF9wYXJhbXNfdXJsIjoiL3RtcC9jYXBpX2NmZy9sb29rdXBfcXVpY2t0ZXN0L3NjcmlwdF9wYXJhbXNfcXVpY2tfZnNfb25lLnlhbWwiLCJrcyI6Imxvb2t1cF9xdWlja3Rlc3RfbG9jYWxfZnNfb25lIiwicnVuX2lkIjoxLCJ0YXJnZXRfbm9kZSI6ImZpbGVfb3JkZXJfZGF0ZV92YWx1ZV9ncm91cGVkX2xlZnRfb3V0ZXIiLCJmaXJzdF90b2tlbiI6LTkyMjMzNzIwMzY4NTQ3NzU4MDgsImxhc3RfdG9rZW4iOjkyMjMzNzIwMzY4NTQ3NzU4MDcsImJhdGNoX2lkeCI6MCwiYmF0Y2hlc190b3RhbCI6MX0=",
+  "sig":"KYo5OlOhNidtAYvdqpU56KRziTrSx+tAusYSh3zyJ041FwsV9myXMNQxjUDMZ88vHJHTU8+qw1FDWOC2EfIhAQ=="
+}
+         </pre>
+        <p>
+          The base64-encoded part, decoded: the signed Capillaries message.
+        </p>
+        <pre>
+{
+  "ts":1790209847034,
+  "id":"000000-c1d9ccb0-2004-4692-829f-8f564883d596",
+  "script_url":"/tmp/capi_cfg/lookup_quicktest/script_quick.yaml",
+  "script_params_url":"/tmp/capi_cfg/lookup_quicktest/script_params_quick_fs_one.yaml",
+  "ks":"lookup_quicktest_local_fs_one",
+  "run_id":1,
+  "target_node":"file_order_date_value_grouped_left_outer",
+  "first_token":-9223372036854775808,
+  "last_token":9223372036854775807,
+  "batch_idx":0,
+  "batches_total":1
+}            
+         </pre>
+        <p>
+          NOTE: Yes, <strong>dummy-key-do-not-use-in-production-see-msgsig-test-go-for-details</strong> is the actual
+          key ID used in the sample deployment. And yes, do not use this key in production. The msgsig.test.go test can
+          generate a new key pair whenever you need one.
+        </p>
+        <p>Sample Webapi (message sender) configuration:</p>
+        <pre>
+"webapi": {
+  "message_sign": {
+    "active_kid": "dummy-key-do-not-use-in-production-see-msgsig-test-go-for-details",
+    "private_key": "..."
+  }, ...
+}
+         </pre>
+        <p>Sample Daemon (message processor) configuration:</p>
+        <pre>
+"daemon": {
+  "message_verify": {
+    "mode": "require",
+    "public_keys": {"dummy-key-do-not-use-in-production-see-msgsig-test-go-for-details": "..."}
+  }, ...
+}
+        </pre>
+        <p>
+          Capillaries uses <a href="https://github.com/Azure/go-amqp">Azure AMQP 1.0</a> library to access message
+          brokers. The library supports username/password authentication and TLS connections. Sample connection string:
+        </p>
+        <pre>
+"amqp10": {
+  "url": "amqps://someusername:somepassword@somehost:5671",
+  ...
+}
+         </pre>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>3: Access to Cassandra</h3>
+        <p>Capillaries does not provide any custom security measures for Cassandra beyond those offered by the <a
+            href="https://github.com/apache/cassandra-gocql-driver">gocql</a>. See the gocql.SslOptions type for
+          details.
+        </p>
+        <p>
+          Here's a sample configuration for a secure connection to Amazon Keyspaces:
+        </p>
+        <pre>
+"cassandra": {
+  "hosts": [ "cassandra.us-east-1.amazonaws.com" ],
+  "port": 9042,
+  "username": "<credentials generated in AWS console for an IAM user holding, say, AmazonKeyspacesFullAccess policy></credentials>",
+  "password": "<credentials generated in AWS console for an IAM user holding, say, AmazonKeyspacesFullAccess policy></credentials>",
+  "ssl_opts": {
+    "ca_path": "/home/someusername/.ssh/sf-class2-root.crt", 
+    "enable_host_verification": true
+  },
+  "keyspace_replication_config": "{ 'class' : 'SingleRegionStrategy'}",
+  "consistency": "LOCAL_QUORUM",
+  ...
+}
+        </pre>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>4: Python formulas</h3>
+        <p>
+          Capillaries executes Python scripts containing formulas. It would be nice to have some protection against a
+          situation where bad actors manage to supply malicious Python scripts to a Daemon, which then executes them on
+          the virtual machine or inside the Docker container.
+        </p>
+        <p>
+          One option is to use a process isolation tool. Below is a fragment of a Daemon configuration that wraps the
+          Python process with <a href="https://github.com/google/nsjail">nsjail</a>:
+        </p>
+        <pre>
+"custom_processors": {
+  "py_calc": {
+    "python_interpreter_path": "/usr/local/bin/nsjail",
+    "python_interpreter_params": [
+      "-Mo",
+      "--chroot", "/",
+      "--user", "99999",
+      "--group", "99999",
+      "-R", "/usr",
+      "-R", "/lib",
+      "-R", "/lib64",
+      "-R", "/bin",
+      "-R", "/sbin",
+      "--", "/usr/local/bin/python3", "-u", "-"
+    ]
+  }, ...
+}
+        </pre>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>What about Webapi security?</h3>
+        <p>
+          As of this writing (Oct 2026), the short answer is: there isn't any built-in Webapi security, and none is
+          planned.
+        </p>
+        <p>
+          Bad actors who gain access to an unprotected Webapi can send messages containing references to malicious
+          scripts, data files, and Python files.
+        </p>
+        <p>
+          Deployment engineers are encouraged to use whatever tools they have at their disposal to secure Webapi - for
+          example, NGINX + oauth2-proxy for SSO, IP whitelisting, a VPN, etc.
+        </p>
+        <p>
+          These are deployment-level security measures, not features provided by Capillaries itself. It is up to the deployment engineers to configure and maintain them, ensuring that only authorized users and systems can access Webapi.          
+        </p>
+      </div>
+    </div>
+
+    <div class=" footer">
+      <p>&copy;
+        <script type="text/javascript">document.write("2022-" + new Date().getFullYear());</script>
+        capillaries.top
+      </p>
+    </div>
+
+  </div>
+</body>
+
+</html>
