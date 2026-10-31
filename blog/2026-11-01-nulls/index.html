@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HQ9863ZP35"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-HQ9863ZP35');
+    </script>
+    <title>Capillaries blog: security</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+    <link href="../../css/color.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index.html"><img src="../../i/logo.svg" alt="Capillaries logo"
+                    style="width:20px;margin-right:10px;margin-bottom:5px;">Capillaries: notes</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="../index.html">Blog home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page"
+                            href="https://github.com/capillariesio/capillaries">Source code</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="row mt-4 mb-4">
+            <div class="col-9">
+                <h4>2026-11-01</h4>
+                <h2>Capillaries doesn't support NULLs</h2>
+                <p>The title image is AI-generated, but the book shown in it is real and was written by a renowned
+                    expert.</p>
+
+                <p>Capillaries deliberately avoids native NULL support to keep data transformations simple and
+                    predictable. This is a conscious design decision, not an oversight.</p>
+                <h3>NULLs complicate ordinary calculations</h3>
+                <p>Capillaries users write business logic in Go and Python. Neither language makes nullable values
+                    particularly convenient. Supporting NULLs would mean using pointers, introducing wrapper types such
+                    as NullableInt and NullableString, or adding explicit NULL checks throughout user-provided formulas.
+                </p>
+            </div>
+            <div class="col-3">
+                <img src="./i//generated-book-with-capillaries-background.jpg" class="img-fluid" alt="" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <p>Consider a simple calculation:</p>
+
+                <pre>r.Price * r.Quantity</pre>
+
+                <p>With nullable values, even this straightforward expression requires additional handling. The same
+                    applies to comparisons, string operations, and more complex business formulas.</p>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+
+                <h3>NULLs don't eliminate conditional logic</h3>
+
+                <p>Whether missing information is represented by NULLs, sentinel values, or validity indicators,
+                    business logic still needs to account for it. The difference is where and how that handling takes
+                    place.</p>
+
+                <p>Without native NULLs, users can represent missing information in two ways: with application-defined
+                    sentinel values or with separate validity indicators. These are distinct approaches, each with its
+                    own trade-offs.</p>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h3>Sentinel values</h3>
+
+                <p>A sentinel is an ordinary value assigned a special meaning by the application. For example, -1 might
+                    represent a missing integer, an empty string might represent missing text, or a special date might
+                    indicate an unknown date.</p>
+
+                <p>Sentinels require no additional fields and can keep calculations simple. However, they must be chosen
+                    carefully to avoid conflicts with legitimate data, and their meaning must be applied consistently
+                    throughout the pipeline.</p>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h3>Validity indicators</h3>
+
+                <p>A separate Boolean field can indicate whether a value is present and valid:</p>
+
+                <pre>
+if r.PriceValid {
+    total += r.Price
+}
+</pre>
+
+                <p>This approach is unambiguous, even when every possible value in the original field is legitimate. Its
+                    trade-off is that it requires additional fields and appropriate checks in calculations.</p>
+
+                <p>Users can choose either approach or combine them, depending on their data and application
+                    requirements.</p>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h3>NULLs are not universally accepted as a good database design choice</h3>
+
+                <p>There is a long-standing debate about NULLs among database researchers and practitioners. Some
+                    influential database experts, notably C. J. Date and Hugh Darwen, have argued that SQL-style NULLs
+                    are fundamentally problematic and should be avoided. Their position is that missing information
+                    should be represented explicitly in the data model rather than by introducing a special marker that
+                    can appear in place of an ordinary value.</p>
+
+                <p>The practical arguments are familiar: NULLs complicate comparisons and expressions, introduce special
+                    cases into query logic, and can make it harder to reason about the results of joins and other
+                    operations.</p>
+
+                <p>This is not a unanimous position. NULLs are deeply embedded in SQL databases, and many experts
+                    consider them a useful, if imperfect, way to represent incomplete information. Still, the
+                    recommendation to minimize or avoid NULLs is hardly an unusual one in database design.</p>
+
+                <p>Capillaries follows the more conservative approach: keep the internal calculation model free of
+                    native NULLs and let application designers decide explicitly how missing information should be
+                    represented.</p>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h3>What about outer joins and empty aggregations?</h3>
+
+                <p>These operations can produce results for which no actual value exists. Capillaries provides ways to
+                    detect such situations, for example, through COUNT(). If the count is zero, users know that the
+                    default values returned by the operation (zeroes, empty strings, etc.) should not be treated as
+                    actual data.</p>
+
+                <p>A zero count can serve as a validity indicator. In addition, Capillaries populates non-existent
+                    values with configurable default values, which can be used as sentinels.</p>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h3>What if external data contains NULLs?</h3>
+
+                <p>Not supporting native NULLs internally doesn't prevent Capillaries from exchanging data with systems
+                    that use them. NULL handling is supported at input and output boundaries:</p>
+
+                <p>CSV input: Readers can recognize configured NULL representations and substitute user-defined default
+                    values. This allows external NULLs to be mapped to ordinary Capillaries values.</p>
+
+                <p>Preserving missing-information status: If the distinction between a missing value and a legitimate
+                    default value matters, users can preserve it using sentinel values, separate validity fields, or
+                    both. The appropriate representation is application-defined.</p>
+
+                <p>File output: Writers can evaluate user-defined conditions to decide whether a field should be written
+                    as NULL. For CSV output, users can configure the textual representation of NULL.</p>
+
+                <p>CSV has no universal NULL standard, so the producer and consumer must agree on the representation
+                    being used.</p>
+
+                <p>This means Capillaries can consume and produce data containing NULLs without supporting NULL as an
+                    internal data type or requiring NULL-aware calculations.</p>
+                <h4>File readers</h4>
+                <p>
+                    <strong>CsvReaderSettings.NullValue (JSON/YAML attribute "null_value")</strong><br />
+                    If a CSV field text representation equals this string, it is considered non-existing/NULL and it is
+                    replaced by the "col_default_value" (see below). Default: empty string. For
+                    example, see <a
+                        href="https://github.com/capillariesio/capillaries/blob/main/pkg/sc/file_reader_def_test.go">https://github.com/capillariesio/capillaries/blob/main/pkg/sc/file_reader_def_test.go</a>.
+                </p>
+                <p>
+                    <strong>FileReaderColumnDef.DefaultValue (JSON/YAML attribute "col_default_value")</strong><br />
+                    Non-NULL Capilllaries friendly sentinel value to use when a NULL value is found in the input file.
+                    Default: empty string, zero integer or decimal, DefaultDateTime (Jan 1, 1 AD 00:00:00 UTC). For example, look for "col_default_value" in test/data/cfg files. 
+                </p>
+
+                <h4>File writers</h4>
+                <p>
+                    <strong>CsvCreatorSettings.NullValue (JSON/YAML attribute "null_value")</strong><br />
+                    Text string to write to a CSV file for NULL value when "write_null_if_expression" (see below) is TRUE for this
+                    column. Default: empty string.
+                </p>
+                <p>
+                    <strong>WriteFileColumnDef.WriteNullIfRawExpression (JSON/YAML attribute
+                        "write_null_if_expression")</strong><br />
+                    Check for a sentinel value. When this expression is not empty and TRUE, correspondent column is replaced with NULL for Parquet
+                    or "null_value" (see above) for CSV. For example, see
+                    <a
+                        href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/lookup/script_quick_csv.yaml">https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/lookup/script_quick_csv.yaml</a>
+                    (CSV) and
+                    <a
+                        href="https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/lookup/script_quick_parquet.yaml">https://github.com/capillariesio/capillaries/blob/main/test/data/cfg/lookup/script_quick_parquet.yaml</a>
+                    (Parquet).
+                </p>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h3>The bottom line</h3>
+
+                <p>Supporting NULLs would not eliminate the need to handle missing information. It would simply impose
+                    nullable types and additional handling on every user.</p>
+
+                <p>Capillaries takes a more practical approach: ordinary Go and Python values, application-defined
+                    sentinel values, and explicit validity indicators where needed. Users decide how to represent
+                    missing information instead of having a particular mechanism imposed on them.</p>
+
+                <p>We believe business calculations should work with ordinary values, without having to account for a
+                    special case in practically every expression.</p>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h3>References</h3>
+                What to read, besides the authors of "The Third Manifest" - Christopher J. Date and Hugh Darwen</p>
+
+                <p><a href="http://www.alternativetech.com/publications/Nothing%20from%20Nothing%20P4.pdf">Nothing from
+                        nothing (1994)</a> (Part 4 only)<br />
+                    David McGoveran</p>
+
+                <p><a href="" http://www.dbazine.com/ofinterest/oi-articles/pascal27">Nulls Nullified (2005)</a><br />
+                    Fabian Pascal</p>
+
+                <p><a
+                        href="https://scispace.com/pdf/nulls-three-valued-logic-and-ambiguity-in-sql-critiquing-1c14bp7irm.pdf">Nulls,
+                        Three-Valued Logic, and Ambiguity in SQL: Critiquing Date’s Critique (2007)</a><br />
+                    Claude Rubinson, University of Arizona</p>
+
+                <p><a href="https://arxiv.org/pdf/2307.15751">No More Nulls! (2023)</a><br />
+                    Yisu Remy Wang, University of Washington</p>
+
+                <p><a href="https://arxiv.org/pdf/2608.10863">Time to Move on: Querying without Nulls and Bags
+                        (2026)</a><br />
+                    Molham Aref<br />
+                    Leonid Libkin, University of Edinburgh<br />
+                    Wim Martens, University of Bayreuth</p>
+            </div>
+        </div>
+        <div class=" footer">
+            <p>&copy;
+                <script type="text/javascript">document.write("2022-" + new Date().getFullYear());</script>
+                capillaries.top
+            </p>
+        </div>
+
+    </div>
+</body>
+
+</html>
